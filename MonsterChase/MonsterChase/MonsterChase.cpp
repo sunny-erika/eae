@@ -11,7 +11,13 @@
 int main()
 {
     std::cout << "Hello World!\n"; 
+	
+
 }
+
+
+
+/*
 
 //Position
 class Position {
@@ -41,6 +47,10 @@ int Position::getX() {
 	return Position::y;
 }
 
+*/
+
+/*
+
 //Player
 class Player {
 	Position position;
@@ -52,6 +62,10 @@ public:
 	Position getPosition();
 
 };
+
+*/
+
+/*
 
 Player::Player() {
 	
@@ -69,6 +83,7 @@ Position Player::getPosition() {
 	return position;
 
 }
+*/
 
 
 
