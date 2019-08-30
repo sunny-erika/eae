@@ -13,16 +13,20 @@ int main()
     std::cout << "Hello World!\n"; 
 }
 
-
+//Position
 class Position {
 	int x, y;
 
 public:
+	Position();
 	Position(int x, int y);
 	void setX(int x);
 	int getX();
 
 };
+
+Position::Position() {
+}
 
 Position::Position(int x, int y) {
 	Position::x = x;
@@ -37,6 +41,34 @@ int Position::getX() {
 	return Position::y;
 }
 
+//Player
+class Player {
+	Position position;
+
+public:
+	Player();
+	Player(Position position);
+	void setPosition(int x, int y);
+	Position getPosition();
+
+};
+
+Player::Player() {
+	
+}
+Player::Player(Position position) {
+	Player::position = position;
+}
+
+void Player::setPosition(int x, int y) {
+	Player::position.setX(x);
+	
+}
+
+Position Player::getPosition() {
+	return position;
+
+}
 
 
 
