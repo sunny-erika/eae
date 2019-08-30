@@ -8,8 +8,10 @@ Position::Position()
 }
 
 Position::Position(int x, int y) {
-	Position::x = x;
-	Position::y = y;
+	//Position::x = x;
+	//Position::y = y;
+	setX(x);
+	setY(y);
 }
 
 Position::~Position()
@@ -18,9 +20,18 @@ Position::~Position()
 
 //setter & getter
 void Position::setX(int x) {
-	Position::x = x;
+	//Position::x = x;
+	x = x;
 }
 
 int Position::getX() {
+	return Position::x;
+}
+
+void Position::setY(int y) {
+	Position::y = y;
+}
+
+int Position::getY() {
 	return Position::y;
 }

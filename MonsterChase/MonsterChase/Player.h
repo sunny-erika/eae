@@ -1,6 +1,11 @@
 #pragma once
+#include "Player.h"
+#include "Position.h"
+
+
 class Player
 {
+private:
 	Position position;
 public:
 	Player();

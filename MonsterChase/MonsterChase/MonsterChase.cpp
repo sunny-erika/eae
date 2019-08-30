@@ -7,12 +7,21 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+//including classes
+#include "Position.h"
+#include "Player.h"
+#include "Monster.h"
+
 
 int main()
 {
     std::cout << "Hello World!\n"; 
 	
+	Player player;
+	player.setPosition(1, 2);
+	std::cout << "position " << player.getPosition().getX();
 
+	   
 }
 
 
