@@ -20,8 +20,8 @@ Position::~Position()
 
 //setter & getter
 void Position::setX(int x) {
-	//Position::x = x;
-	x = x;
+	Position::x = x;
+	//x = x;
 }
 
 int Position::getX() {
