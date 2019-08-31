@@ -1,5 +1,5 @@
 #include "Player.h"
-#include "Position.h"
+
 
 
 //constructors
@@ -16,7 +16,7 @@ Player::~Player()
 }
 
 
-//setter & getter
+//setter & getter for Player
 void Player::setPosition(int x, int y) {
 	Player::position.setX(x);
 

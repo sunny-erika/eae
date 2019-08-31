@@ -11,6 +11,7 @@
 #include "Position.h"
 #include "Player.h"
 #include "Monster.h"
+#include "Board.h"
 
 
 int main()
@@ -20,6 +21,7 @@ int main()
 	Player player;
 	player.setPosition(1, 2);
 	std::cout << "position " << player.getPosition().getX();
+	
 
 	   
 }
