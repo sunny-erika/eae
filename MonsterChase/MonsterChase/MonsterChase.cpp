@@ -19,8 +19,20 @@ int main()
     std::cout << "Hello World!\n"; 
 	
 	Player player;
-	player.setPosition(1, 2);
+	Player player2;
+	//Position position = new Position(3, 4);
+	Position position;
+	position.setX (3);
+	position.setY (4);
+
+	Position position2(5, 6);
+
+	//player.setPosition(1, 2);
+	player.setPosition(position);
+	player2.setPosition(position2);
+
 	std::cout << "position " << player.getPosition().getX();
+	std::cout << "position " << player2.getPosition().getX();
 	   
 }
 

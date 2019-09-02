@@ -14,6 +14,7 @@ Player::~Player()
 {
 }
 
+/*
 
 //setter & getter for Player
 void Player::setPosition(int x, int y) {
@@ -25,3 +26,5 @@ Position Player::getPosition() {
 	return position;
 
 }
+
+*/

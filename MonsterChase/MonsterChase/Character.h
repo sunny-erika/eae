@@ -8,7 +8,7 @@ class Character
 
 {
 
-private:
+protected:
 	Position position;
 
 public:

@@ -1,18 +1,19 @@
 #pragma once
 #include "Player.h"
 #include "Position.h"
+#include "Character.h"
 
 
-class Player
+class Player: public Character
 {
 private:
-	Position position;
+	//Position position;
 public:
 	Player();
 	Player(Position position);
 	~Player();
 
-	void setPosition(int x, int y);
-	Position getPosition();
+	//void setPosition(int x, int y);
+	//Position getPosition();
 };
 
