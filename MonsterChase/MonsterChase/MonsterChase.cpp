@@ -21,8 +21,6 @@ int main()
 	Player player;
 	player.setPosition(1, 2);
 	std::cout << "position " << player.getPosition().getX();
-	
-
 	   
 }
 

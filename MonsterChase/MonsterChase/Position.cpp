@@ -1,6 +1,6 @@
 #include "Position.h" 
 //header files include the membervar declarations & all function prototypes incl constructors
-//cpp files include the function definitions
+//cpp files include function definitions
 
 //constructors & deconstructor
 Position::Position()
