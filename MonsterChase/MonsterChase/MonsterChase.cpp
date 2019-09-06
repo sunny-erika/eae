@@ -2,7 +2,8 @@
 //
 
 
-#include <conio.h>
+#include <conio.h>//for getch()
+//Because it is unbuffered, getch() returns each character as soon as the key is pressed
 #include <iostream>
 #include <stdlib.h>
 #include <stdio.h>
@@ -31,8 +32,55 @@ int main()
 	player.setPosition(position);
 	player2.setPosition(position2);
 
+	
 	std::cout << "position " << player.getPosition().getX();
 	std::cout << "position " << player2.getPosition().getX();
+
+	//testing input
+	int n, m;
+
+	std::cout << "Enter No. of rows: ";
+	std::cin >> n;
+	std::cout << "Enter No. of columns: ";
+	std::cin >> m;
+
+	//enter a name
+	std::cout << "Enter a name for the player: ";
+	//using getch()
+	char ch;
+	char ch_monster;
+
+	ch = _getch();
+
+	std::cout << "Name: " << ch;
+
+	std::cout << "Enter a name for the monster: ";
+	ch_monster = _getch();
+	std::cout << "Name: " << ch_monster;
+	/*
+	std::cout << "Enter a name for the monster: ";
+
+	while ((ch = _getch()) != '\r')
+
+		putchar(ch);
+	std::cout << "Name: " << ch;//output is 13
+	*/
+
+	//count characters +1 - size of char
+
+	char ch1;
+	int i=0;
+
+	while ((ch1 = _getch()) != '\r') {
+		i++;//9 chars = 8 iterations
+		putchar(ch1);
+	}
+
+	std::cout << "iterations: " << i;
+	std::cout << "char: " << ch1;
+	
+
+
 	   
 }
 

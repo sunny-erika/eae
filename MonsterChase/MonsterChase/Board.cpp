@@ -6,17 +6,32 @@ Board::Board()
 {
 }
 
+Board::Board(int row, int col)
+{
+	this->row = row;
+	this->column = col;
+}
+
 
 Board::~Board()
 {
 }
 
-void initBoardArray(Board board);
+void Board::printBoard() {
 
+	board = new int*[row];
 
-//setter & getter Board
-void Board::initBoard(Board board) {
-	
-
+	for (int row = 1; row < this->row; ++row)
+	{
+		for (int col = 1; col < this->column; ++col)
+		{
+			//std::cout << 
+		}
+	}
 }
+
+
+
+
+
 

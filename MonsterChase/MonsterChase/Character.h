@@ -3,13 +3,16 @@
 #include "Board.h"
 
 class Character
-	//a character can be at a certain position
-	//a character can move from its current position to a new Position - vector distance
+	//a character can have a position
+	//a character can mark its position with a specific letter;
+	//a character can move from its current position to a new Position within the matrix (Board)
+	//a character can print its position
 
 {
 
 protected:
 	Position position;
+	char positionMark;
 
 public:
 	Character();
@@ -19,6 +22,14 @@ public:
 	void setPosition(Position position);
 	Position getPosition();
 
-	void move(Position newPosition);
+	bool move(Position newPosition, Board board);
+
+	Position printPosition(Board board) {
+
+	}
+
+	void markPositionOnBoard() {
+		
+	}
 };
 
