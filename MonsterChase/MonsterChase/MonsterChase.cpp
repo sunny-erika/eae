@@ -10,17 +10,19 @@
 
 //including classes
 //#include "Position.h"
-//#include "Player.h"
-//#include "Monster.h"
+#include "Player.h"
+#include "Monster.h"
 //#include "Board.h"
+
+#include "Entity.h"
 
 
 int main()
 {
     std::cout << "Hello World!\n"; 
 	
-	/*Player player;
-	Player player2;*/
+	//Player player;
+	//Player player2;
 	//Position position = new Position(3, 4);
 	//Position position;
 	//position.setX (3);
@@ -37,6 +39,9 @@ int main()
 	//std::cout << "position " << player2.getPosition().getX();
 
 	//testing input
+
+	//Engine::Init();
+
 	int n, m;
 
 	std::cout << "Enter No. of rows: ";

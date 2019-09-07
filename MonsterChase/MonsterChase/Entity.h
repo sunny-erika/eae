@@ -27,6 +27,7 @@ public:
 	//Position printPosition(Board board) {
 
 	//}
+	
 
 	void markPositionOnBoard() {
 		

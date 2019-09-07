@@ -2,7 +2,10 @@
 class Engine
 {
 public:
-	Engine();
+	/*Engine();
 	~Engine();
+	*/
+
+	void Init();
 };
 
