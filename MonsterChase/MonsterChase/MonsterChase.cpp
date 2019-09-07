@@ -15,8 +15,9 @@
 //#include "Board.h"
 
 #include "Entity.h"
+#include "Engine.h"
 
-
+//Game.cpp
 int main()
 {
     std::cout << "Hello World!\n"; 
@@ -40,7 +41,7 @@ int main()
 
 	//testing input
 
-	//Engine::Init();
+	Engine::Init();
 
 	int n, m;
 
