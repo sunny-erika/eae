@@ -1,8 +1,8 @@
 #pragma once
-#include "Position.h"
-#include "Board.h"
+//#include "Position.h"
+//#include "Board.h"
 
-class Character
+class Entity
 	//a character can have a position
 	//a character can mark its position with a specific letter;
 	//a character can move from its current position to a new Position within the matrix (Board)
@@ -11,22 +11,22 @@ class Character
 {
 
 protected:
-	Position position;
+	//Position position;
 	char positionMark;
 
 public:
-	Character();
-	Character(Position newPosition);
-	~Character();
+	Entity();
+	//Entity(Position newPosition);
+	//~Entity();
 
-	void setPosition(Position position);
-	Position getPosition();
+	//void setPosition(Position position);
+	//Position getPosition();
 
-	bool move(Position newPosition, Board board);
+	//bool move(Position newPosition, Board board);
 
-	Position printPosition(Board board) {
+	//Position printPosition(Board board) {
 
-	}
+	//}
 
 	void markPositionOnBoard() {
 		

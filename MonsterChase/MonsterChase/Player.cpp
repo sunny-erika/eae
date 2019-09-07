@@ -5,10 +5,10 @@
 Player::Player()
 {
 }
-
-Player::Player(Position position) {
-	Player::position = position;
-}
+//
+//Player::Player(Position position) {
+//	Player::position = position;
+//}
 
 Player::~Player()
 {
