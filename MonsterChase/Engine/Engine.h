@@ -1,11 +1,11 @@
 #pragma once
-class Engine
+namespace Engine
 {
-public:
+
 	/*Engine();
 	~Engine();
 	*/
 
 	void Init();
-};
+}
 
