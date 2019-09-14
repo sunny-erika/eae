@@ -22,11 +22,13 @@
     <ClCompile Include="Board.cpp" />
     <ClCompile Include="Engine.cpp" />
     <ClCompile Include="Position.cpp" />
+    <ClCompile Include="Vector2D.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Board.h" />
     <ClInclude Include="Engine.h" />
     <ClInclude Include="Position.h" />
+    <ClInclude Include="Vector2D.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>

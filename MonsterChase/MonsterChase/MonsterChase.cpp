@@ -1,5 +1,6 @@
 // MonsterChase.cpp : This file contains the 'main' function. Program execution begins and ends there.
 //
+//MyController
 
 
 #include <conio.h>//for getch()
@@ -7,6 +8,7 @@
 #include <iostream>
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 
 //including classes
 //#include "Position.h"
