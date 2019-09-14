@@ -9,40 +9,60 @@
 #include <stdio.h>
 
 //including classes
-//#include "Position.h"
-#include "Player.h"
-#include "Monster.h"
-//#include "Board.h"
+#include "Position.h"
+#include "Character.h"
+#include "Board.h"
 
-#include "Entity.h"
-#include "Engine.h"
+/*
+typedef struct userInput {
+	int numberOfMonsters;
+	char * ptrPlayerName;
+}USERINPUT;
+*/
 
-//Game.cpp
+struct UserInput {
+	int numberOfMonsters;
+	char * ptrPlayerName;
+};
+
+UserInput *ptr_userInput;
+
+void start();
+void getInput(UserInput * ptr_userInput);
+
+
 int main()
 {
-    std::cout << "Hello World!\n"; 
+
+	start();
+	free(ptr_userInput);
+
+	   
+}
+
+void start() {
+
+	ptr_userInput = new UserInput;
+	getInput(ptr_userInput);
+
+	std::cout << "Hello World!\n";
+
+	//Character player;
+	//Character monsterArray;
 	
-	//Player player;
-	//Player player2;
-	//Position position = new Position(3, 4);
-	//Position position;
-	//position.setX (3);
-	//position.setY (4);
 
-	////Position position2(5, 6);
+	Position position;
+	position.setX(3);
+	position.setY(4);
 
-	////player.setPosition(1, 2);
+	Position position2(5, 6);
+
 	//player.setPosition(position);
-	//player2.setPosition(position2);
-
-	//
+	   
 	//std::cout << "position " << player.getPosition().getX();
 	//std::cout << "position " << player2.getPosition().getX();
 
 	//testing input
-
-	Engine::Init();
-
 	int n, m;
 
 	std::cout << "Enter No. of rows: ";
@@ -75,7 +95,7 @@ int main()
 	//count characters +1 - size of char
 
 	char ch1;
-	int i=0;
+	int i = 0;
 
 	while ((ch1 = _getch()) != '\r') {
 		i++;//9 chars = 8 iterations
@@ -84,82 +104,23 @@ int main()
 
 	std::cout << "iterations: " << i;
 	std::cout << "char: " << ch1;
-	
 
 
-	   
 }
 
 
 
-/*
+void getInput(UserInput *ptr_userInput) {
 
-//Position
-class Position {
-	int x, y;
+	//cout << "How many monsters to start (max 5): " << index.name << '\n';
+	std::cout << "How many monsters to start(max 5) :" ;
+	std::cin >> ptr_userInput->numberOfMonsters;
+	std::cout << "\nnumber of monsters :" << ptr_userInput->numberOfMonsters << '\n';
+	_getch(); //keeps it open
 
-public:
-	Position();
-	Position(int x, int y);
-	void setX(int x);
-	int getX();
 
-};
-
-Position::Position() {
-}
-
-Position::Position(int x, int y) {
-	Position::x = x;
-	Position::y = y;
-}
-
-void Position::setX(int x) {
-	Position::x = x;
-}
-
-int Position::getX() {
-	return Position::y;
-}
-
-*/
-
-/*
-
-//Player
-class Player {
-	Position position;
-
-public:
-	Player();
-	Player(Position position);
-	void setPosition(int x, int y);
-	Position getPosition();
-
-};
-
-*/
-
-/*
-
-Player::Player() {
-	
-}
-Player::Player(Position position) {
-	Player::position = position;
-}
-
-void Player::setPosition(int x, int y) {
-	Player::position.setX(x);
-	
-}
-
-Position Player::getPosition() {
-	return position;
 
 }
-*/
-
 
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
