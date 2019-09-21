@@ -20,14 +20,14 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Board.cpp" />
+    <ClCompile Include="Character.cpp" />
     <ClCompile Include="Engine.cpp" />
-    <ClCompile Include="Entity.cpp" />
     <ClCompile Include="Vector2D.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\u1274217\MonsterChase\Engine\Engine.h" />
     <ClInclude Include="Board.h" />
-    <ClInclude Include="Engine.h" />
-    <ClInclude Include="Entity.h" />
+    <ClInclude Include="Character.h" />
     <ClInclude Include="Vector2D.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

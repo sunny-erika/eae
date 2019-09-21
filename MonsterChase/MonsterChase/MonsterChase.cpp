@@ -9,21 +9,15 @@
 #include <stdio.h>
 #include <string.h>
 
-//including classes
-//#include "Position.h"
-//#include "Player.h"
-//#include "Monster.h"
-//#include "Board.h"
 
-#include "Entity.h"
 #include "Engine.h"
 #include "Vector2D.h"
 
 //Game.cpp
 int main()
 {
-    std::cout << "Hello World!\n"; 
-	
+	std::cout << "Hello World!\n";
+
 	//Player player;
 	//Player player2;
 	//Position position = new Position(3, 4);
@@ -77,7 +71,7 @@ int main()
 	//count characters +1 - size of char
 
 	char ch1;
-	int i=0;
+	int i = 0;
 
 	while ((ch1 = _getch()) != '\r') {
 		i++;//9 chars = 8 iterations
@@ -86,16 +80,10 @@ int main()
 
 	std::cout << "iterations: " << i;
 	std::cout << "char: " << ch1;
-	
-	Vector2D p1; 
-	Entity a (p1);//creates an entity instead of new
 
-	   
-}
+	Vector2D p1;
 
-
-
-/*
+}/*
 
 //Position
 class Position {

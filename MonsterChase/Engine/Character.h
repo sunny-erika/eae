@@ -1,19 +1,22 @@
 #pragma once
-class Entity
+#include "Vector2D.h"
+
+
+class Character
 {
+
 private:
 	Vector2D position;
 
 public:
-	Entity();
-	Entity(Vector2D newPosition);
-	~Entity();
+	Character();
+	Character(Vector2D newPosition);
+	~Character();
 
 	bool move(Vector2D position);
 
 	//
 	void setPosition(Vector2D position);
 	Vector2D getPosition();
-
 };
 
