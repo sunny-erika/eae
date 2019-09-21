@@ -9,8 +9,10 @@ Vector2D::Vector2D()
 //overloaded constructor
 Vector2D::Vector2D(int x, int y)
 {
-	setX(x);
-	setY(y);
+	
+	this->x = x;
+	this->y = y;
+	
 }
 
 
@@ -34,4 +36,26 @@ void Vector2D::setY(int y) {
 
 int Vector2D::getY() {
 	return Vector2D::y;
+}
+
+/*
+	Vector2D operator+(Vector2D vector2);
+	Vector2D operator-(Vector2D vector2);
+	Vector2D operator*(Vector2D vector2);//scalar multiplication
+	Vector2D operator/(Vector2D vector2);//scalar division
+	Vector2D operator% (Vector2D vector2);//cross product
+	int operator^(Vector2D vector2);//dot operator
+	bool operator==(Vector2D vector2);
+	bool operator!=(Vector2D vector2);
+*/
+
+// Addition 
+Vector2D Vector2D::operator+(Vector2D vector2)
+{
+	int x_result, y_result;
+	x_result = x + vector2.getX();
+	y_result = y + vector2.getY();
+	Vector2D result = Vector2D(x_result, y_result);
+	
+	return result;
 }

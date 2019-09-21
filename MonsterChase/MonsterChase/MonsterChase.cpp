@@ -39,6 +39,7 @@ int main()
 
 	Engine::Init();
 
+	/*
 	int n, m;
 
 	std::cout << "Enter No. of rows: ";
@@ -69,7 +70,8 @@ int main()
 	*/
 
 	//count characters +1 - size of char
-
+	
+	
 	char ch1;
 	int i = 0;
 
@@ -81,9 +83,19 @@ int main()
 	std::cout << "iterations: " << i;
 	std::cout << "char: " << ch1;
 
-	Vector2D p1;
+	//Vector2D vector1 = new Vector2D v1(1,2);
+	//Engine::Vector2D vector1(1, 2);
+	Vector2D vector2(3, 4);
 
-}/*
+	//std::cout << "Vector1 = " << vector1;
+	std::cout << "Vector2 = " << vector2;
+
+	//std::cout << "Vector1 + Vector2 = " << (vector1 + vector2);
+
+
+}
+
+/*
 
 //Position
 class Position {
