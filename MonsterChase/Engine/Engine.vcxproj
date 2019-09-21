@@ -21,13 +21,13 @@
   <ItemGroup>
     <ClCompile Include="Board.cpp" />
     <ClCompile Include="Engine.cpp" />
-    <ClCompile Include="Position.cpp" />
+    <ClCompile Include="Entity.cpp" />
     <ClCompile Include="Vector2D.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Board.h" />
     <ClInclude Include="Engine.h" />
-    <ClInclude Include="Position.h" />
+    <ClInclude Include="Entity.h" />
     <ClInclude Include="Vector2D.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

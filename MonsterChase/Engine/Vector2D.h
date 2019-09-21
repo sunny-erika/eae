@@ -1,4 +1,9 @@
 #pragma once
+
+//or
+//#ifndef __VECTOR2_H
+//#define __VECTOR2_H
+
 class Vector2D
 {
 

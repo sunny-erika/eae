@@ -1,6 +1,5 @@
 // MonsterChase.cpp : This file contains the 'main' function. Program execution begins and ends there.
 //
-//MyController
 
 
 #include <conio.h>//for getch()
@@ -12,12 +11,13 @@
 
 //including classes
 //#include "Position.h"
-#include "Player.h"
-#include "Monster.h"
+//#include "Player.h"
+//#include "Monster.h"
 //#include "Board.h"
 
 #include "Entity.h"
 #include "Engine.h"
+#include "Vector2D.h"
 
 //Game.cpp
 int main()
@@ -87,7 +87,8 @@ int main()
 	std::cout << "iterations: " << i;
 	std::cout << "char: " << ch1;
 	
-
+	Vector2D p1; 
+	Entity a (p1);//creates an entity instead of new
 
 	   
 }
