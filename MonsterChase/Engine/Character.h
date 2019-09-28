@@ -1,7 +1,8 @@
 #pragma once
-#include "Position.h"
-#include "Board.h"
+
 #include <stdlib.h>
+#include <Vector2D.h>
+
 
 class Character
 	//a character can have a position
@@ -12,18 +13,18 @@ class Character
 {
 
 private:
-	Position position;
+	Vector2D position;
 	//char positionMark;
 	char * ptrName;
 
 public:
 	Character();
-	Character(Position newPosition);
+	Character(Vector2D newPosition);
 	~Character();
 
 	//getter setter
-	void setPosition(Position position);
-	Position getPosition();
+	void setPosition(Vector2D position);
+	Vector2D getPosition();
 
 	void setPtrName( char * ptrName);
 	char* getPtrName();
@@ -32,7 +33,7 @@ public:
 
 	//bool move(Position newPosition, Board board);
 
-	Position printPosition(Board board) {
+	Vector2D printPosition() {
 
 	}
 

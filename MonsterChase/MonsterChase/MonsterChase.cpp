@@ -7,62 +7,134 @@
 #include <iostream>
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 
-//including classes
-#include "Position.h"
+
+#include "Engine.h"
 #include "Character.h"
-#include "Board.h"
-
-/*
-typedef struct userInput {
-	int numberOfMonsters;
-	char * ptrPlayerName;
-}USERINPUT;
-*/
-
-struct UserInput {
-	int numberOfMonsters;
-	char * ptrPlayerName;
-};
-
-UserInput *ptr_userInput;
-
-void start();
-void getInput(UserInput * ptr_userInput);
+#include "Vector2D.h"
+#include "List.h"
 
 
+static char* getName(const char* type) {
+
+	char name[255];
+	std::cout << "Enter a name for the " << type << " : ";
+
+	std::cin >> name;//abc = 3 letters -> +1 for delimiter
+	int length = strlen(name);
+	char* playerName = (char*)malloc(strlen(name) + 1);
+
+	for (int i = 0; i < length; i++) {
+		playerName[i] = name[i];
+	}
+	playerName[length] = '\0';//" " for string literals
+		
+    return playerName;
+}
+
+static char* MakeSentence(const char* type) {
+
+	char name[255];
+	
+	int length = strlen(name);
+	char* word = (char*)malloc(strlen(name) + 1);
+
+	//for (i = 0; s[i] != '\0'; ++i);
+
+	for (int i = 0; i < length; i++) {
+		word[i] = name[i];
+	}
+	word[length] = '\0';//" " for string literals
+
+	return word;
+}
+
+int my_strlen(const char * ptr) {
+	int len = 0;
+	const char * p = ptr;
+	while (*p != '\0') {
+		len++;
+		p++;
+	}
+	return len;
+}
+
+int sizeOfArray(const char *array) {
+	int size = *(&array + 1) - array;
+	printf("\nSize: %d", size);
+
+	return size;
+}
+
+
+//Game.cpp
 int main()
 {
 
-	start();
-	free(ptr_userInput);
 
-	   
-}
 
-void start() {
+	//std::cout << length;
 
-	ptr_userInput = new UserInput;
-	getInput(ptr_userInput);
+	//char * pSentence = MakeSentence();
+
+	//printf("The Sentence is: %s", pSentence);
+
+	//free(pSentence);
+
+	//char s[1000];
+	//int i;
+	//printf("Enter a string: ");
+	//scanf_s("%s", s);
+	//for (i = 0; s[i] != '\0'; ++i);
+	//printf("Length of string: %d", i);
+
+	//char* pReceivedWord = getWord();
+	//printf("The Word is: %s", pReceivedWord);
+
+	//char * pSentence = MakeSentence(strings[0]);
+
+	//printf("The Sentence is: %s", pSentence);
+
+	//free(pSentence);
+
+#if defined(_DEBUG)
+	_CrtDumpMemoryLeaks();
+#endif // _DEBUG
+
+	/*
+	Vector2D* ptrVector1 = (Vector2D*)malloc(sizeof(Vector2D));//preferred
+	ptrVector1->setX(11);
+
+	Vector2D* ptrVector2 = (Vector2D*)malloc(sizeof(int)*2);//that's what new does
+	ptrVector2->setX(22);
+
 
 	std::cout << "Hello World!\n";
 
-	//Character player;
-	//Character monsterArray;
-	
-
-	Position position;
-	position.setX(3);
-	position.setY(4);
-
-	Position position2(5, 6);
-
-	//player.setPosition(position);
-	   
-	//std::cout << "position " << player.getPosition().getX();
-	//std::cout << "position " << player2.getPosition().getX();
 
 	//testing input
+	//buffer only on the stack, no malloc needed
+
+	Character player(Vector2D(0,0));
+	_LinkNode<Character>* monsterList = (_LinkNode<Character>*)malloc(sizeof(_LinkNode<Character>));
+
+	
+	Engine::Init();
+	//char* player = {'p', ;
+	
+	//enter a player
+	player.setPtrName(getName("player"));
+	std::cout << player.getPtrName();
+
+	
+
+
+
+
+
+
+	/*
 	int n, m;
 
 	std::cout << "Enter No. of rows: ";
@@ -93,34 +165,92 @@ void start() {
 	*/
 
 	//count characters +1 - size of char
-
-	char ch1;
-	int i = 0;
-
-	while ((ch1 = _getch()) != '\r') {
-		i++;//9 chars = 8 iterations
-		putchar(ch1);
-	}
-
-	std::cout << "iterations: " << i;
-	std::cout << "char: " << ch1;
+	
 
 
-}
+	//Vector2D vector1 = new Vector2D v1(1,2);
+	//Engine::Vector2D vector1(1, 2);
+	//Vector2D vector1 = new Vector2D (1, 2);//new nur wenn man ptr hat
+	//Vector2D vector1(1, 2);
+	//Vector2D vector2(3, 4);
 
+	//std::cout << "Vector1 = " << vector1;
+	//std::cout << "Vector2 = " << vector2;
 
+	//std::cout << "Vector1 + Vector2 = " << (vector1 + vector2);
 
-void getInput(UserInput *ptr_userInput) {
-
-	//cout << "How many monsters to start (max 5): " << index.name << '\n';
-	std::cout << "How many monsters to start(max 5) :" ;
-	std::cin >> ptr_userInput->numberOfMonsters;
-	std::cout << "\nnumber of monsters :" << ptr_userInput->numberOfMonsters << '\n';
-	_getch(); //keeps it open
-
-
+	//
 
 }
+
+/*
+
+//Position
+class Position {
+	int x, y;
+
+public:
+	Position();
+	Position(int x, int y);
+	void setX(int x);
+	int getX();
+
+};
+
+Position::Position() {
+}
+
+Position::Position(int x, int y) {
+	Position::x = x;
+	Position::y = y;
+}
+
+void Position::setX(int x) {
+	Position::x = x;
+}
+
+int Position::getX() {
+	return Position::y;
+}
+
+*/
+
+/*
+
+//Player
+class Player {
+	Position position;
+
+public:
+	Player();
+	Player(Position position);
+	void setPosition(int x, int y);
+	Position getPosition();
+
+};
+
+*/
+
+/*
+
+Player::Player() {
+	
+}
+Player::Player(Position position) {
+	Player::position = position;
+}
+
+void Player::setPosition(int x, int y) {
+	Player::position.setX(x);
+	
+}
+
+Position Player::getPosition() {
+	return position;
+
+}
+*/
+
 
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu

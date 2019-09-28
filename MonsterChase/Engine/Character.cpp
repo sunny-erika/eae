@@ -5,14 +5,15 @@ Character::Character()
 {
 }
 
-Character::Character(Position newPosition)
+Character::Character(Vector2D newPosition)
 {
+	this->position = newPosition;
 }
 
 
 Character::~Character()
 {
-	free (ptrName);
+	free (ptrName);//delete if new is used - distinguish arrays/ptr
 }
 
 /*
@@ -25,11 +26,11 @@ bool Character::move(Position position) {
 
 //getters, setters
 
-void Character::setPosition(Position position) {
+void Character::setPosition(Vector2D position) {
 	Character::position = position;
 }
 
-Position Character::getPosition() {
+Vector2D Character::getPosition() {
 	return Character::position;
 }
 
