@@ -1,0 +1,3 @@
+﻿  MakeSentenceConsole.cpp
+c:\users\u1274217\source\repos\c++\u1274217\makesentenceconsole\makesentenceconsole\makesentenceconsole.cpp(61): warning C4477: 'printf' : format string '%s' requires an argument of type 'char *', but variadic argument 1 has type 'int'
+  MakeSentenceConsole.vcxproj -> C:\Users\u1274217\source\repos\C++\u1274217\MakeSentenceConsole\Debug\MakeSentenceConsole.exe
