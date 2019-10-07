@@ -1,6 +1,0 @@
-﻿C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\Common7\IDE\VC\VCTargets\Microsoft.CppBuild.targets(391,5): warning MSB8028: The intermediate directory (Release\) contains files shared from another project (MonsterChase.vcxproj).  This can lead to incorrect clean and rebuild behavior.
-  MonsterChase.cpp
-c:\users\u1274217\source\repos\c++\u1274217\monsterchase\monsterchase\monsterchase.cpp(88): error C2440: 'initializing': cannot convert from 'Vector2D *' to 'Vector2D'
-  c:\users\u1274217\source\repos\c++\u1274217\monsterchase\monsterchase\monsterchase.cpp(88): note: No constructor could take the source type, or constructor overload resolution was ambiguous
-c:\users\u1274217\source\repos\c++\u1274217\monsterchase\monsterchase\monsterchase.cpp(88): error C2146: syntax error: missing ';' before identifier 'v1'
-c:\users\u1274217\source\repos\c++\u1274217\monsterchase\monsterchase\monsterchase.cpp(88): error C3861: 'v1': identifier not found
