@@ -35,7 +35,7 @@ public:
 	bool operator==(Vector2D vector2);
 	bool operator!=(Vector2D vector2);
 
-
+	static const Vector2D Zero;
 
 };
 

@@ -4,6 +4,7 @@
 
 Vector2D::Vector2D()
 {
+
 }
 
 //overloaded constructor
@@ -48,6 +49,8 @@ int Vector2D::getY() {
 	bool operator==(Vector2D vector2);
 	bool operator!=(Vector2D vector2);
 */
+
+const Vector2D Vector2D::Zero(0, 0);
 
 // Addition 
 Vector2D Vector2D::operator+(Vector2D vector2)

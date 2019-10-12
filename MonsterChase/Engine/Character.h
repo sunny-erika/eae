@@ -1,22 +1,44 @@
 #pragma once
-#include "Vector2D.h"
+
+#include <stdlib.h>
+#include <Vector2D.h>
 
 
 class Character
+	//a character can have a position
+	//a character can mark its position with a specific letter;
+	//a character can move from its current position to a new Position within the matrix (Board)
+	//a character can print its position
+
 {
 
 private:
 	Vector2D position;
+	//char positionMark;
+	char * ptrName;
 
 public:
 	Character();
 	Character(Vector2D newPosition);
 	~Character();
 
-	bool move(Vector2D position);
-
-	//
+	//getter setter
 	void setPosition(Vector2D position);
 	Vector2D getPosition();
+
+	void setPtrName( char * ptrName);
+	char* getPtrName();
+
+	
+
+	//bool move(Position newPosition, Board board);
+
+	Vector2D printPosition() {
+
+	}
+
+	void markPositionOnBoard() {
+		
+	}
 };
 
