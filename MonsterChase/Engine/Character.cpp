@@ -13,7 +13,7 @@ Character::Character(Vector2D newPosition)
 
 Character::~Character()
 {
-	free (ptrName);//delete if new is used - distinguish arrays/ptr
+	free (ptrName);//delete() if new is used - distinguish arrays/ptr
 }
 
 /*

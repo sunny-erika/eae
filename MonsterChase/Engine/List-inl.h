@@ -45,3 +45,4 @@ void RemoveAt(struct _LinkNode<T> * & i_pList, int i_ItemNumber)
 
 	delete pToRemove;
 }
+

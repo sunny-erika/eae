@@ -19,7 +19,7 @@
 static char* getName(const char* type) {
 
 	char name[255];
-	std::cout << "Enter a name for the " << type << " : ";
+	std::cout << "Enter a name for the " << type << " : ";//player or monster
 
 	std::cin >> name;//abc = 3 letters -> +1 for delimiter
 	int length = strlen(name);
@@ -28,7 +28,7 @@ static char* getName(const char* type) {
 	for (int i = 0; i < length; i++) {
 		playerName[i] = name[i];
 	}
-	playerName[length] = '\0';//" " for string literals
+	playerName[length] = '\0';//" " for string literals 
 		
     return playerName;
 }
@@ -37,6 +37,7 @@ static char* getName(const char* type) {
 //Game.cpp
 int main()
 {
+	int numberOfMonsters = 0;
 
 	Vector2D* ptrVector1 = (Vector2D*)malloc(sizeof(Vector2D));//preferred
 	ptrVector1->setX(11);
@@ -59,15 +60,17 @@ int main()
 	//char* player = {'p', ;
 	
 	//enter a player
-	player.setPtrName(getName("player"));
-	std::cout << player.getPtrName();
+	player.setPtrName(getName("player"));//mem for name reserved in getName() with malloc - free in Character
+	//std::cout << player.getPtrName();
 
-	
+	std::cout << "/n Enter the number of monsters: ";
+	std::cin >> numberOfMonsters;
 
+	for (int i = 0; i < numberOfMonsters; i++) {
+		getName("monster");
+	}
 
-
-
-
+	   	 
 
 	/*
 	int n, m;
