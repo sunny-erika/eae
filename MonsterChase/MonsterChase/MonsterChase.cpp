@@ -19,8 +19,117 @@
 struct ListNode
 {
 	Character character;
+	int testVal;
 	ListNode *next;//recursive
 };
+
+//Iterating over the list
+void print_list(ListNode * head) {
+	ListNode * current = head;//current pointer that will keep track of the node we are currently printing
+
+	while (current != NULL) {
+		printf("%d\n", current->testVal);
+		current = current->next;//setting the current pointer to the next node until we've reached the end of the list (the next node is NULL
+	}
+}
+
+//adding to the beginning of the list - push (to the end: pop)
+/*
+	Create a new item and set its value
+	Link the new item to point to the head of the list
+	Set the head of the list to be our new item
+*/
+void push(ListNode ** head, int test) {//Since we use a function to do this operation, we want to be able to modify the head variable
+	//To do this, we must pass a pointer to the pointer variable,so we will be able to modify the pointer itself
+	ListNode * new_node;
+	new_node = (ListNode*)malloc(sizeof(ListNode));
+		
+	new_node->testVal = test;
+	new_node->next = *head;
+	*head = new_node;
+}
+
+//removing the first
+/*
+Take the next item that the head points to and save it
+Free the head item
+Set the head to be the next item that we've stored on the side
+*/
+int pop(ListNode ** head) {
+	int retval = -1;
+	ListNode * next_node = NULL;
+
+	if (*head == NULL) {
+		return -1;
+	}
+
+	next_node = (*head)->next;
+	retval = (*head)->testVal;
+	free(*head);
+	*head = next_node;
+
+	return retval;
+}
+
+
+//removing last item
+/*
+	Iterate to the node before the node we wish to delete
+	Save the node we wish to delete in a temporary pointer
+	Set the previous node's next pointer to point to the node after the node we wish to delete
+	Delete the node using the temporary pointer
+*/
+
+int remove_last(ListNode * head) {
+	int retval = 0;
+	/* if there is only one item in the list, remove it */
+	if (head->next == NULL) {
+		retval = head->testVal;
+		free(head);
+		return retval;
+	}
+
+	/* get to the second to last node in the list */
+	ListNode * current = head;
+	while (current->next->next != NULL) {
+		current = current->next;
+	}
+
+	/* now current points to the second to last item of the list, so let's remove current->next */
+	retval = current->next->testVal;
+	free(current->next);
+	current->next = NULL;
+	return retval;
+}
+
+//remove specific
+//looking ahead to find out if we've reached the node before the item we wish to remove. This is because we need to change the location to where the previous node points to as well
+int remove_by_index(ListNode ** head, int n) {
+	int i = 0;
+	int retval = -1;
+	ListNode * current = *head;
+	ListNode * temp_node = NULL;
+
+	if (n == 0) {
+		return pop(head);
+	}
+
+	for (i = 0; i < n - 1; i++) {
+		if (current->next == NULL) {
+			return -1;
+		}
+		current = current->next;
+	}
+
+	temp_node = current->next;
+	retval = temp_node->testVal;
+	current->next = temp_node->next;
+	free(temp_node);
+
+	return retval;
+
+}
+
 
 static char* getName(const char* type) {
 
@@ -61,15 +170,13 @@ int main()
 	//linked list nodes are dynamically allocated
 	//advantages over vectors: insertion/deletion speed
 	//vector req all other elements to be moved
-	Character player(Vector2D(0,0));
-	//head 
-
+	
+	
 	
 	Engine::Init();
 	//char* player = {'p', ;
 	
-	//enter a player
-	player.setPtrName(getName("player"));//mem for name reserved in getName() with malloc - free in Character
+	
 	//std::cout << player.getPtrName();
 
 	std::cout << "Enter the number of monsters: ";
@@ -79,21 +186,45 @@ int main()
 
 	//_LinkNode<Character>* ptr_monsterList = (_LinkNode<Character>*)malloc(sizeof(_LinkNode<Character>));
 	
-	ListNode *head = nullptr;
-	head = (ListNode*) malloc(sizeof(ListNode));
-	 
+	
+
+	ListNode *ptrHead = nullptr;
+	ptrHead = (ListNode*) malloc(sizeof(ListNode));
+	if (ptrHead == NULL) {//if ptrHead is null then memory not sufficient
+		return 1;
+	}
+	
 	for (int i = 0; i < numberOfMonsters; i++) {
 		getName("monster");
-		if (head == NULL) {//if ptr_monsterList is null then memory not sufficient
-			return 1;
-		}
-		
-		//head->val = 1;
-		head->next = NULL;
-		
+
+			
+	}
+	
+	Character player(Vector2D(0, 0));
+	//enter a player
+	player.setPtrName(getName("player"));//mem for name reserved in getName() with malloc - free in Character
+
+	/*
+	struct _LinkNode<Character>* ptr_monsterList = nullptr;//head of the list
+	ptr_monsterList = (_LinkNode<Character>*)malloc(sizeof(_LinkNode<Character>));
+
+	if (ptr_monsterList == NULL) {//if ptr_monsterList is null then memory not sufficient
+		return 1;
 	}
 
-	   	 
+	for (int i = 0; i < numberOfMonsters; i++) {
+		getName("monster");
+				
+		if (ptr_monsterList == NULL) {//if ptr_monsterList is null then memory not sufficient
+			return 1;
+		}
+
+		ptr_monsterList->pNext = nullptr;
+
+
+	}
+	*/
+
 
 	/*
 	int n, m;
