@@ -16,6 +16,12 @@
 #include "List.h"
 
 
+struct ListNode
+{
+	Character character;
+	ListNode *next;//recursive
+};
+
 static char* getName(const char* type) {
 
 	char name[255];
@@ -52,8 +58,11 @@ int main()
 	//testing input
 	//buffer only on the stack, no malloc needed
 
+	//linked list nodes are dynamically allocated
+	//advantages over vectors: insertion/deletion speed
+	//vector req all other elements to be moved
 	Character player(Vector2D(0,0));
-	_LinkNode<Character>* monsterList = (_LinkNode<Character>*)malloc(sizeof(_LinkNode<Character>));
+	//head 
 
 	
 	Engine::Init();
@@ -63,11 +72,25 @@ int main()
 	player.setPtrName(getName("player"));//mem for name reserved in getName() with malloc - free in Character
 	//std::cout << player.getPtrName();
 
-	std::cout << "/n Enter the number of monsters: ";
+	std::cout << "Enter the number of monsters: ";
 	std::cin >> numberOfMonsters;
 
+	//_LinkNode<Character>* ptr_monsterList = NULL;
+
+	//_LinkNode<Character>* ptr_monsterList = (_LinkNode<Character>*)malloc(sizeof(_LinkNode<Character>));
+	
+	ListNode *head = nullptr;
+	head = (ListNode*) malloc(sizeof(ListNode));
+	 
 	for (int i = 0; i < numberOfMonsters; i++) {
 		getName("monster");
+		if (head == NULL) {//if ptr_monsterList is null then memory not sufficient
+			return 1;
+		}
+		
+		//head->val = 1;
+		head->next = NULL;
+		
 	}
 
 	   	 
