@@ -26,14 +26,13 @@ struct ListNode
 //Iterating over the list
 void print_list(ListNode * head) {
 	ListNode * current = head;//current pointer that will keep track of the node we are currently printing
-
 	while (current != NULL) {
 		printf("%d\n", current->testVal);
 		current = current->next;//setting the current pointer to the next node until we've reached the end of the list (the next node is NULL
 	}
 }
 
-//adding to the beginning of the list - push (to the end: pop)
+//adding to the beginning of the list - push (removing: pop)
 /*
 	Create a new item and set its value
 	Link the new item to point to the head of the list
@@ -41,7 +40,7 @@ void print_list(ListNode * head) {
 */
 void push(ListNode ** head, int test) {//Since we use a function to do this operation, we want to be able to modify the head variable
 	//To do this, we must pass a pointer to the pointer variable,so we will be able to modify the pointer itself
-	ListNode * new_node;
+	ListNode * new_node = nullptr;
 	new_node = (ListNode*)malloc(sizeof(ListNode));
 		
 	new_node->testVal = test;
@@ -186,24 +185,26 @@ int main()
 
 	//_LinkNode<Character>* ptr_monsterList = (_LinkNode<Character>*)malloc(sizeof(_LinkNode<Character>));
 	
-	
+	Character player(Vector2D(0, 0));
+	//enter a player
+	player.setPtrName(getName("player"));//mem for name reserved in getName() with malloc - free in Character
+
 
 	ListNode *ptrHead = nullptr;
 	ptrHead = (ListNode*) malloc(sizeof(ListNode));
 	if (ptrHead == NULL) {//if ptrHead is null then memory not sufficient
 		return 1;
 	}
+	ptrHead->testVal = 0;
+	ptrHead->next = nullptr;
 	
 	for (int i = 0; i < numberOfMonsters; i++) {
 		getName("monster");
-
+		push(&ptrHead, 2);
 			
 	}
+	print_list(ptrHead);
 	
-	Character player(Vector2D(0, 0));
-	//enter a player
-	player.setPtrName(getName("player"));//mem for name reserved in getName() with malloc - free in Character
-
 	/*
 	struct _LinkNode<Character>* ptr_monsterList = nullptr;//head of the list
 	ptr_monsterList = (_LinkNode<Character>*)malloc(sizeof(_LinkNode<Character>));
