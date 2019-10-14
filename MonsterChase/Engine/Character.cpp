@@ -1,4 +1,5 @@
 #include "Character.h"
+#include< cstdio>
 
 
 Character::Character()
@@ -7,13 +8,16 @@ Character::Character()
 
 Character::Character(Vector2D newPosition)
 {
-	this->position = newPosition;
+	Character::position = newPosition;
+	//this->position = newPosition;
+	//Character::position(newPosition.getX(), newPosition.getY());
 }
 
 
 Character::~Character()
 {
 	free (ptrName);//delete() if new is used - distinguish arrays/ptr
+	//free (position);
 }
 
 /*
@@ -23,6 +27,11 @@ bool Character::move(Position position) {
 	return true;
 }
 */
+
+void Character::printPosition() {
+	printf("position: [%d, %d]\n", position.getX(), position.getY());
+}
+
 
 //getters, setters
 

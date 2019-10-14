@@ -18,7 +18,7 @@
 
 struct ListNode
 {
-	Character character;
+	Character* character;
 	int testVal;
 	ListNode *next;//recursive
 };
@@ -28,6 +28,13 @@ void print_list(ListNode * head) {
 	ListNode * current = head;//current pointer that will keep track of the node we are currently printing
 	while (current != NULL) {
 		printf("%d\n", current->testVal);
+		//Vector2D vectorTmp = current->character->getPosition();
+		
+		
+				
+		//printf("position: [%d, %d]\n", vectorTmp.getX(), vectorTmp.getY());
+		//std::cout << current->character.getPtrName();
+		//std::cout << current->character->getPtrName();
 		current = current->next;//setting the current pointer to the next node until we've reached the end of the list (the next node is NULL
 	}
 }
@@ -38,12 +45,69 @@ void print_list(ListNode * head) {
 	Link the new item to point to the head of the list
 	Set the head of the list to be our new item
 */
+
+/*
 void push(ListNode ** head, int test) {//Since we use a function to do this operation, we want to be able to modify the head variable
 	//To do this, we must pass a pointer to the pointer variable,so we will be able to modify the pointer itself
 	ListNode * new_node = nullptr;
 	new_node = (ListNode*)malloc(sizeof(ListNode));
 		
 	new_node->testVal = test;
+	new_node->next = *head;
+	*head = new_node;
+}
+*/
+/*
+void push(ListNode ** head, char* name) {//Since we use a function to do this operation, we want to be able to modify the head variable
+	//To do this, we must pass a pointer to the pointer variable,so we will be able to modify the pointer itself
+	ListNode * new_node = nullptr;
+	new_node = (ListNode*)malloc(sizeof(ListNode));
+
+	
+
+	//malloc for str
+	//new_node->character = nullptr;
+	//new_node->character = (Character*)malloc(sizeof(Character));
+	//new_node->character->setPtrName(name);
+	//new_node->character.setPtrName(name);
+	//new_node->character.setPosition();
+	new_node->next = *head;
+	*head = new_node;
+}*/
+
+/*
+void push(ListNode ** head, char* name, Vector2D* vector) {//Since we use a function to do this operation, we want to be able to modify the head variable
+	//To do this, we must pass a pointer to the pointer variable,so we will be able to modify the pointer itself
+	ListNode * new_node = nullptr;
+	new_node = (ListNode*)malloc(sizeof(ListNode));
+	new_node->character = (Character*)malloc(sizeof(Character));
+	new_node->character->setPosition(vector);
+
+	//malloc for str
+	//new_node->character = nullptr;
+	//new_node->character = (Character*)malloc(sizeof(Character));
+	//new_node->character->setPtrName(name);
+	//new_node->character.setPtrName(name);
+	//new_node->character.setPosition();
+	new_node->next = *head;
+	*head = new_node;
+}
+*/
+
+void push(ListNode ** head, char* name, Vector2D vector) {//Since we use a function to do this operation, we want to be able to modify the head variable
+	//To do this, we must pass a pointer to the pointer variable,so we will be able to modify the pointer itself
+	ListNode * new_node = nullptr;
+	new_node = (ListNode*)malloc(sizeof(ListNode));
+	new_node->character = (Character*)malloc(sizeof(Character));
+	new_node->character->setPosition(vector);
+	new_node->character->printPosition();
+
+	//malloc for str
+	//new_node->character = nullptr;
+	//new_node->character = (Character*)malloc(sizeof(Character));
+	//new_node->character->setPtrName(name);
+	//new_node->character.setPtrName(name);
+	//new_node->character.setPosition();
 	new_node->next = *head;
 	*head = new_node;
 }
@@ -153,11 +217,7 @@ int main()
 {
 	int numberOfMonsters = 0;
 
-	Vector2D* ptrVector1 = (Vector2D*)malloc(sizeof(Vector2D));//preferred
-	ptrVector1->setX(11);
-
-	Vector2D* ptrVector2 = (Vector2D*)malloc(sizeof(int)*2);//that's what new does
-	ptrVector2->setX(22);
+	
 
 
 	std::cout << "Hello World!\n";
@@ -185,7 +245,19 @@ int main()
 
 	//_LinkNode<Character>* ptr_monsterList = (_LinkNode<Character>*)malloc(sizeof(_LinkNode<Character>));
 	
+	
+	Vector2D* ptrVector1 = (Vector2D*)malloc(sizeof(Vector2D));//preferred
+	ptrVector1->setX(11);
+	ptrVector1->setY(11);
+
+	Vector2D* ptrVector2 = (Vector2D*)malloc(sizeof(int) * 2);//that's what new does
+	ptrVector2->setX(22);
+
+	Vector2D vector3(5, 6);
+	Vector2D vector4(7, 8);
+	
 	Character player(Vector2D(0, 0));
+	//Character player(ptrVector1);
 	//enter a player
 	player.setPtrName(getName("player"));//mem for name reserved in getName() with malloc - free in Character
 
@@ -199,11 +271,14 @@ int main()
 	ptrHead->next = nullptr;
 	
 	for (int i = 0; i < numberOfMonsters; i++) {
-		getName("monster");
-		push(&ptrHead, 2);
-			
+		char* name = getName("monster");
+		//push(&ptrHead, 2);
+		//push(&ptrHead, name, ptrector2);
+		push(&ptrHead, name, vector3);
+
 	}
-	print_list(ptrHead);
+	//print_list(ptrHead);
+	
 	
 	/*
 	struct _LinkNode<Character>* ptr_monsterList = nullptr;//head of the list

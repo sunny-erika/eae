@@ -33,12 +33,7 @@ public:
 
 	//bool move(Position newPosition, Board board);
 
-	Vector2D printPosition() {
-
-	}
-
-	void markPositionOnBoard() {
-		
-	}
+	void printPosition();
+	void markPositionOnBoard();
 };
 
