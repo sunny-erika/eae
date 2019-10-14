@@ -301,40 +301,60 @@ int main()
 	player.move(Vector2D(0, 1));
 	player.printPosition();
 
-	
-	std::cout << "Press A to move left, D to move right, W to move up, S to move down or Q to quit";
-		//std::cin >> input;
-	char input= _getch();
-
-	//user input
-	switch (input)
+	while (1) 
 	{
-	case 'a':
-	case 'A':
-		player.move(Vector2D(-1, 0));
-		break;
-	case 'd':
-	case 'D':
-		player.move(Vector2D(1, 0));
-		break;
-	case 'w':
-	case 'W':
-		player.move(Vector2D(0, 1));
-		break;
-	case 's':
-	case 'S':
-		player.move(Vector2D(0, -1));
-		break;
-	case 'q':
-	case 'Q':
-		//bQuit = true;
-		break;
-	default:
-		printf("Unknown input.\n");
-		//bValidInput = false;
-		break;
-	}
 
+		int monsterindex = 1;
+		std::cout << "Press A to move left, D to move right, W to move up, S to move down or Q to quit";
+		//std::cin >> input;
+		char input = _getch();
+		bool valid = true;
+		//user input
+		switch (input)
+		{
+		case 'a':
+		case 'A':
+			player.move(Vector2D(-1, 0));
+			break;
+		case 'd':
+		case 'D':
+			player.move(Vector2D(1, 0));
+			break;
+		case 'w':
+		case 'W':
+			player.move(Vector2D(0, 1));
+			break;
+		case 's':
+		case 'S':
+			player.move(Vector2D(0, -1));
+			break;
+		case 'q':
+		case 'Q':
+			//bQuit = true;
+			break;
+		case 'm':
+		case 'M':
+			//add monster
+
+			//char * monsterName;
+			//monsterName = getName("monster");
+			//char* monsterName = getName("monster");
+			char monsterName[255];
+			std::cout << "Enter a name for the monster " << " : ";//player or monster
+
+			std::cin >> monsterName;
+			push(&ptrHead, monsterName, createRandomVector(rand() % 10 + 1, rand() % 10 + 1));
+
+			break;
+		default:
+			printf("Unknown input.\n");
+			valid = false;
+			break;
+		}
+
+		if (valid)
+			break;
+	}
 
 
 	/*
