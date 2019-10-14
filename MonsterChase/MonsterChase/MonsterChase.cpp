@@ -8,6 +8,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include <time.h>      
 
 
 #include "Engine.h"
@@ -212,17 +213,37 @@ static char* getName(const char* type) {
 }
 
 
+
+int random(int min, int max) //range : [min, max)
+{
+	static bool first = true;
+	if (first)
+	{
+		srand(time(NULL)); //seeding for the first time only!
+		first = false;
+	}
+	return min + rand() % ((max + 1) - min);
+}
+
+Vector2D createRandomVector(int min, int max) {
+	return Vector2D(random(0, 10), random(0, 10));
+}
+
 //Game.cpp
 int main()
 {
 	int numberOfMonsters = 0;
+	//matrix size 10x10
+	int dimension = 100;
+	int lowerRange = 0;
+	int upperRange = 0;
 
-	
-
-
-	std::cout << "Hello World!\n";
-
-
+	/* initialize random seed: */
+	srand(time(NULL));
+	/* generate secret number between 1 and 10: */
+	lowerRange = rand() % 10 + 1;
+	upperRange = rand() % 10 + 1;
+	//std::cout << "Hello World!\n";
 	//testing input
 	//buffer only on the stack, no malloc needed
 
@@ -230,21 +251,15 @@ int main()
 	//advantages over vectors: insertion/deletion speed
 	//vector req all other elements to be moved
 	
-	
-	
 	Engine::Init();
 	//char* player = {'p', ;
-	
-	
 	//std::cout << player.getPtrName();
 
 	std::cout << "Enter the number of monsters: ";
 	std::cin >> numberOfMonsters;
 
 	//_LinkNode<Character>* ptr_monsterList = NULL;
-
 	//_LinkNode<Character>* ptr_monsterList = (_LinkNode<Character>*)malloc(sizeof(_LinkNode<Character>));
-	
 	
 	Vector2D* ptrVector1 = (Vector2D*)malloc(sizeof(Vector2D));//preferred
 	ptrVector1->setX(11);
@@ -255,6 +270,8 @@ int main()
 
 	Vector2D vector3(5, 6);
 	Vector2D vector4(7, 8);
+	//Vector2D randomVector(lowerRange, upperRange);
+	//Vector2D randomVector(rand() % 10 + 1 , rand() % 10 + 1);
 	
 	Character player(Vector2D(0, 0));
 	//Character player(ptrVector1);
@@ -274,7 +291,9 @@ int main()
 		char* name = getName("monster");
 		//push(&ptrHead, 2);
 		//push(&ptrHead, name, ptrector2);
-		push(&ptrHead, name, vector3);
+		//push(&ptrHead, name, vector3);
+		//push(&ptrHead, name, randomVector);
+		push(&ptrHead, name, createRandomVector(rand() % 10 + 1, rand() % 10 + 1));
 
 	}
 	//print_list(ptrHead);
