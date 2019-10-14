@@ -301,6 +301,42 @@ int main()
 	player.move(Vector2D(0, 1));
 	player.printPosition();
 
+	
+	std::cout << "Press A to move left, D to move right, W to move up, S to move down or Q to quit";
+		//std::cin >> input;
+	char input= _getch();
+
+	//user input
+	switch (input)
+	{
+	case 'a':
+	case 'A':
+		player.move(Vector2D(-1, 0));
+		break;
+	case 'd':
+	case 'D':
+		player.move(Vector2D(1, 0));
+		break;
+	case 'w':
+	case 'W':
+		player.move(Vector2D(0, 1));
+		break;
+	case 's':
+	case 'S':
+		player.move(Vector2D(0, -1));
+		break;
+	case 'q':
+	case 'Q':
+		//bQuit = true;
+		break;
+	default:
+		printf("Unknown input.\n");
+		//bValidInput = false;
+		break;
+	}
+
+
+
 	/*
 	struct _LinkNode<Character>* ptr_monsterList = nullptr;//head of the list
 	ptr_monsterList = (_LinkNode<Character>*)malloc(sizeof(_LinkNode<Character>));
@@ -356,16 +392,16 @@ int main()
 	//count characters +1 - size of char
 	
 	
-	char ch1;
-	int i = 0;
-
+	
+	/*
 	while ((ch1 = _getch()) != '\r') {
 		i++;//9 chars = 8 iterations
 		putchar(ch1);
 	}
+	*/
 
-	std::cout << "iterations: " << i;
-	std::cout << "char: " << ch1;
+	//std::cout << "iterations: " << i;
+	//std::cout << "char: " << ch1;
 
 	//Vector2D vector1 = new Vector2D v1(1,2);
 	//Engine::Vector2D vector1(1, 2);

@@ -34,7 +34,7 @@ void Character::printPosition() {
 
 void Character::move(Vector2D moveVector) {
 	position += moveVector;
-	printf("new position: [%d, %d]\n", position.getX(), position.getY());
+	printf("\n new position: [%d, %d]\n", position.getX(), position.getY());
 }
 
 
