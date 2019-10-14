@@ -297,8 +297,10 @@ int main()
 
 	}
 	//print_list(ptrHead);
-	
-	
+	player.printPosition();
+	player.move(Vector2D(0, 1));
+	player.printPosition();
+
 	/*
 	struct _LinkNode<Character>* ptr_monsterList = nullptr;//head of the list
 	ptr_monsterList = (_LinkNode<Character>*)malloc(sizeof(_LinkNode<Character>));

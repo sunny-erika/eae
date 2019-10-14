@@ -26,8 +26,8 @@ public:
 	//
 	//Addition - vector addition, each vector component are individually added to the corresponding component in the second vector
 	//implement vector addition by overloading C++ operators
-	Vector2D operator+(Vector2D vector2);
-	Vector2D operator-(Vector2D vector2);
+	Vector2D & operator+=(Vector2D & vector2);
+	Vector2D & operator-=(Vector2D & vector2);
 	Vector2D operator*(Vector2D vector2);//scalar multiplication
 	Vector2D operator/(Vector2D vector2);//scalar division
 	Vector2D operator% (Vector2D vector2);//cross product

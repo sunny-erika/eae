@@ -34,6 +34,6 @@ public:
 	//bool move(Position newPosition, Board board);
 
 	void printPosition();
-	void markPositionOnBoard();
+	void move(Vector2D);
 };
 

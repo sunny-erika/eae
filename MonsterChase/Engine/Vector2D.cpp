@@ -21,6 +21,15 @@ Vector2D::~Vector2D()
 {
 }
 
+Vector2D & Vector2D::operator+=(Vector2D & vector)
+{
+	x += vector.x;
+	y += vector.y;
+
+	return *this;
+}
+
+
 //setter & getter
 void Vector2D::setX(int x) {
 	Vector2D::x = x;
@@ -52,6 +61,7 @@ int Vector2D::getY() {
 
 const Vector2D Vector2D::Zero(0, 0);
 
+/*
 // Addition 
 Vector2D Vector2D::operator+(Vector2D vector2)
 {
@@ -62,3 +72,4 @@ Vector2D Vector2D::operator+(Vector2D vector2)
 	
 	return result;
 }
+*/
