@@ -212,6 +212,19 @@ static char* getName(const char* type) {
     return playerName;
 }
 
+void removeOnCollision(ListNode *head, Character player) {
+	//iterate thru list
+	ListNode * current = head;//current pointer that will keep track of the node we are currently printing
+	while (current != NULL) {
+		int index = 0;
+		if (current->character->getPosition() == player.getPosition()) {
+			remove_by_index(&head, index);
+		}
+		
+		current = current->next;//setting the current pointer to the next node until we've reached the end of the list (the next node is NULL
+		index++;
+	}
+}
 
 
 int random(int min, int max) //range : [min, max)
@@ -294,12 +307,15 @@ int main()
 		//push(&ptrHead, name, vector3);
 		//push(&ptrHead, name, randomVector);
 		push(&ptrHead, name, createRandomVector(rand() % 10 + 1, rand() % 10 + 1));
-
+		push(&ptrHead, name, Vector2D(0, 1));//for testing		
 	}
 	//print_list(ptrHead);
 	player.printPosition();
 	player.move(Vector2D(0, 1));
 	player.printPosition();
+	remove_by_index(&ptrHead, 1);//2nd monster //could be randomly range 0 - numberOfMonsters-1
+
+	
 
 	while (1) 
 	{
@@ -341,7 +357,6 @@ int main()
 			//char* monsterName = getName("monster");
 			char monsterName[255];
 			std::cout << "Enter a name for the monster " << " : ";//player or monster
-
 			std::cin >> monsterName;
 			push(&ptrHead, monsterName, createRandomVector(rand() % 10 + 1, rand() % 10 + 1));
 
