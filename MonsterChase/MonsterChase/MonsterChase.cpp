@@ -28,12 +28,12 @@ struct ListNode
 void print_list(ListNode * head) {
 	ListNode * current = head;//current pointer that will keep track of the node we are currently printing
 	while (current != NULL) {
-		printf("%d\n", current->testVal);
-		//Vector2D vectorTmp = current->character->getPosition();
-		
-		
-				
-		//printf("position: [%d, %d]\n", vectorTmp.getX(), vectorTmp.getY());
+		//printf("%d\n", current->testVal);
+		if (current->character != NULL) {
+			Vector2D vectorTmp = current->character->getPosition();
+
+			printf("position: [%d, %d]\n", vectorTmp.getX(), vectorTmp.getY());
+		}
 		//std::cout << current->character.getPtrName();
 		//std::cout << current->character->getPtrName();
 		current = current->next;//setting the current pointer to the next node until we've reached the end of the list (the next node is NULL
@@ -101,7 +101,7 @@ void push(ListNode ** head, char* name, Vector2D vector) {//Since we use a funct
 	new_node = (ListNode*)malloc(sizeof(ListNode));
 	new_node->character = (Character*)malloc(sizeof(Character));
 	new_node->character->setPosition(vector);
-	new_node->character->printPosition();
+	//new_node->character->printPosition();
 
 	//malloc for str
 	//new_node->character = nullptr;
@@ -212,6 +212,7 @@ static char* getName(const char* type) {
     return playerName;
 }
 
+/*
 void removeOnCollision(ListNode *head, Character player) {
 	//iterate thru list
 	ListNode * current = head;//current pointer that will keep track of the node we are currently printing
@@ -225,7 +226,7 @@ void removeOnCollision(ListNode *head, Character player) {
 		index++;
 	}
 }
-
+*/
 
 int random(int min, int max) //range : [min, max)
 {
@@ -291,14 +292,14 @@ int main()
 	//enter a player
 	player.setPtrName(getName("player"));//mem for name reserved in getName() with malloc - free in Character
 
-
+	
 	ListNode *ptrHead = nullptr;
-	ptrHead = (ListNode*) malloc(sizeof(ListNode));
-	if (ptrHead == NULL) {//if ptrHead is null then memory not sufficient
-		return 1;
-	}
-	ptrHead->testVal = 0;
-	ptrHead->next = nullptr;
+	//ptrHead = (ListNode*) malloc(sizeof(ListNode));
+	//if (ptrHead == NULL) {//if ptrHead is null then memory not sufficient
+	//	return 1;
+	//}
+	////ptrHead->testVal = 0;
+	//ptrHead->next = nullptr;
 	
 	for (int i = 0; i < numberOfMonsters; i++) {
 		char* name = getName("monster");
@@ -307,24 +308,23 @@ int main()
 		//push(&ptrHead, name, vector3);
 		//push(&ptrHead, name, randomVector);
 		push(&ptrHead, name, createRandomVector(rand() % 10 + 1, rand() % 10 + 1));
-		push(&ptrHead, name, Vector2D(0, 1));//for testing		
+		//push(&ptrHead, name, Vector2D(0, 1));//for testing		
 	}
-	//print_list(ptrHead);
-	player.printPosition();
-	player.move(Vector2D(0, 1));
-	player.printPosition();
-	remove_by_index(&ptrHead, 1);//2nd monster //could be randomly range 0 - numberOfMonsters-1
+	print_list(ptrHead);
+	//player.printPosition();
+	//player.move(Vector2D(0, 1));
+	//player.printPosition();
+	//remove_by_index(&ptrHead, 1);//2nd monster //could be randomly range 0 - numberOfMonsters-1
 
 	
-
-	while (1) 
+	bool running = true;
+	while (running) 
 	{
-
 		int monsterindex = 1;
 		std::cout << "Press A to move left, D to move right, W to move up, S to move down or Q to quit";
 		//std::cin >> input;
 		char input = _getch();
-		bool valid = true;
+		////bool valid = true;
 		//user input
 		switch (input)
 		{
@@ -346,7 +346,7 @@ int main()
 			break;
 		case 'q':
 		case 'Q':
-			//bQuit = true;
+			running = false;
 			break;
 		case 'm':
 		case 'M':
@@ -354,21 +354,49 @@ int main()
 
 			//char * monsterName;
 			//monsterName = getName("monster");
-			//char* monsterName = getName("monster");
+		{
+			char* monsterName = getName("monster");
+			/*
 			char monsterName[255];
 			std::cout << "Enter a name for the monster " << " : ";//player or monster
 			std::cin >> monsterName;
+			*/
 			push(&ptrHead, monsterName, createRandomVector(rand() % 10 + 1, rand() % 10 + 1));
+			print_list(ptrHead);
 
-			break;
-		default:
-			printf("Unknown input.\n");
-			valid = false;
 			break;
 		}
 
+		case 'l':
+			//add monster
+
+			//char * monsterName;
+			//monsterName = getName("monster");
+		{
+			//* monsterName = getName("monster");
+			/*
+			char monsterName[255];
+			std::cout << "Enter a name for the monster " << " : ";//player or monster
+			std::cin >> monsterName;
+			*/
+			//push(&ptrHead, monsterName, createRandomVector(rand() % 10 + 1, rand() % 10 + 1));
+			
+			remove_by_index(&ptrHead, 1);
+				print_list(ptrHead);
+
+			break;
+		}
+
+		default:
+			printf("Unknown input.\n");
+			//valid = false;
+			break;
+		}
+
+		/*
 		if (valid)
 			break;
+		*/
 	}
 
 
