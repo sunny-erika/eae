@@ -1,0 +1,6 @@
+﻿  MonsterChase.cpp
+c:\users\u1274217\documents\github\u1274217\monsterchase\monsterchase\monsterchase.cpp(204): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+c:\users\u1274217\documents\github\u1274217\monsterchase\monsterchase\monsterchase.cpp(236): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+c:\users\u1274217\documents\github\u1274217\monsterchase\monsterchase\monsterchase.cpp(256): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+MonsterChase.obj : error LNK2019: unresolved external symbol "public: bool __cdecl Vector2D::operator==(class Vector2D)" (??8Vector2D@@QEAA_NV0@@Z) referenced in function "void __cdecl removeOnCollision(struct ListNode *,class Character)" (?removeOnCollision@@YAXPEAUListNode@@VCharacter@@@Z)
+C:\Users\u1274217\Documents\GitHub\u1274217\MonsterChase\x64\Debug\Game.exe : fatal error LNK1120: 1 unresolved externals
