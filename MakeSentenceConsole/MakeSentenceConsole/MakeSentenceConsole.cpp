@@ -22,6 +22,41 @@ int sizeOfArray(const char *array) {
 	return size;
 }
 
+static char* MakeSentenceConst(const char* type) {
+
+	char name[255];
+
+	int length = strlen(name);
+	char* word = (char*)malloc(strlen(name) + 1);
+
+	//for (i = 0; s[i] != '\0'; ++i);
+
+	for (int i = 0; i < length; i++) {
+		word[i] = name[i];
+	}
+	word[length] = '\0';//" " for string literals
+
+	return word;
+}
+
+char* MakeSentence(char** array) {
+	
+	int length = my_strlen(*array);
+	char* words = (char*)malloc(length + 1);
+	if (words == NULL) {
+		printf("No memory\n");
+		exit;
+	}
+
+	words = *array;
+	//free(array);
+	printf("Length: %i\n", length);
+	//printf("%s", words);
+	return words;
+}
+
+
+
 int main()
 {
     std::cout << "Hello World!\n"; 
@@ -39,7 +74,24 @@ int main()
 	length = my_strlen(strings[0]);
 	printf("Length: %i\n", length);
 
-	//printf("\nWord: %s", strings[0]);
+	//printf("\nWord: %s", strings[0]);//prints first word
+	
+	char *buffer = (char*)malloc(256);
+	if (buffer == NULL) {
+		printf("No memory\n");
+		return 1;
+	}
+
+	printf("Enter your sentence: ");
+	fgets(buffer, 1000, stdin);
+	//scanf_s("%s", buffer);
+	//length = (my_strlen(buffer));
+	//printf("Length: %i\n", length);
+
+	//printf("%s", buffer);
+	//MakeSentence(&buffer);
+	printf("%s", MakeSentence(&buffer));
+
 
 	int array_size = *(&strings + 1) - strings;
 	//printf("\nSize: %d", array_size);
@@ -54,6 +106,8 @@ int main()
 		}
 
 	}
+
+	getchar();
 
 #if defined(_DEBUG)
 	_CrtDumpMemoryLeaks();
