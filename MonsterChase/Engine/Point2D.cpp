@@ -169,12 +169,15 @@ bool Point2D::operator !=(Point2D& vector)const
 }
 
 
-Point2D & Point2D::operator-()
+Point2D Point2D::operator-()
 {
+	/*
 	Point2D v;
 	v.x = -x;
 	v.y = -y;
 	return v;
+	*/
+	return Point2D((float)-x, (float) -y);
 
 }
 
@@ -194,7 +197,7 @@ void Point2D::setY(float y) {
 }
 
 float Point2D::getY() {
-	return Point2D::y;
+	return (float) Point2D::y;
 }
 
 /*

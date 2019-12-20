@@ -45,7 +45,8 @@ public:
 	Point2D & operator/=(const Point2D & vector2);
 	Point2D & operator/=(const double & scalar);
 	Point2D & operator/(const double & scalar);
-	Point2D & operator-();//negate
+	//void operator-();//negate
+	Point2D operator-();//negate
 	double operator% (const Point2D & vector2);//cross product
 	double operator^(const Point2D vector2);//dot operator
 	bool operator==(Point2D & vector2)const;
