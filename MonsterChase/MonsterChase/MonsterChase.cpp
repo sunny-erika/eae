@@ -298,7 +298,7 @@ int random(int min, int max) //range : [min, max)
 }
 
 Point2D createRandomVector(int min, int max) {
-	return Point2D(random(0, 10), random(0, 10));
+	return Point2D((float)random(0, 10), (float)random(0, 10));
 }
 void Point2D_UnitTest()
 {
@@ -593,6 +593,11 @@ int main()
 	//std::cout << "Vector1 + Vector2 = " << (vector1 + vector2);
 
 	//
+
+#ifdef _DEBUG	
+	_CrtDumpMemoryLeaks();
+#endif // _DEBUG	
+
 
 }
 
