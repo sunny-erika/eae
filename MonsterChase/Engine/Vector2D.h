@@ -26,14 +26,21 @@ public:
 	//
 	//Addition - vector addition, each vector component are individually added to the corresponding component in the second vector
 	//implement vector addition by overloading C++ operators
-	Vector2D & operator+=(Vector2D & vector2);
-	Vector2D & operator-=(Vector2D & vector2);
-	Vector2D operator*(Vector2D vector2);//scalar multiplication
-	Vector2D operator/(Vector2D vector2);//scalar division
-	Vector2D operator% (Vector2D vector2);//cross product
-	int operator^(Vector2D vector2);//dot operator
-	bool operator==(Vector2D vector2);
-	bool operator!=(Vector2D vector2);
+	Vector2D & operator+=(const Vector2D & vector2);
+	Vector2D & operator-=(const Vector2D & vector2);
+	Vector2D & operator*=(const Vector2D & vector2);
+	Vector2D & operator/=(const Vector2D & vector2);
+	Vector2D & operator-(const Vector2D & vector2);//negate
+	float operator% (const Vector2D & vector2);//cross product
+	float operator^(const Vector2D vector2);//dot operator
+	bool operator==(Vector2D & vector2)const;
+	bool operator!=(Vector2D & vector2)const;
+
+	
+	
+	
+	
+	//void Vector2D::Normalize();
 
 	static const Vector2D Zero;
 

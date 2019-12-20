@@ -21,10 +21,69 @@ Vector2D::~Vector2D()
 {
 }
 
-Vector2D & Vector2D::operator+=(Vector2D & vector)
+const Vector2D Vector2D::Zero(0, 0);
+
+Vector2D & Vector2D::operator+=(const Vector2D & vector)
 {
 	x += vector.x;
 	y += vector.y;
+
+	return *this;
+}
+
+Vector2D & Vector2D::operator-=(const Vector2D & vector)
+{
+	x -= vector.x;
+	y -= vector.y;
+
+	return *this;
+}
+
+Vector2D & Vector2D::operator*=(const Vector2D & vector)//Calculates the componentwise product with the vector v.
+{ 
+	x *= vector.x;
+	y *= vector.y;
+
+	return *this;
+}
+
+Vector2D & Vector2D::operator/=(const Vector2D & vector)
+{
+	x /= vector.x;
+	y /= vector.y;
+
+	return *this;
+}
+
+float Vector2D::operator%(const Vector2D & vector)//crossproduct
+{
+	
+	return (x * vector.y) - (y *vector.x);;
+}
+
+float Vector2D::operator^(const Vector2D vector) {//dot product
+	
+	return (x * vector.x) + (y * vector.y);
+}
+
+
+bool Vector2D::operator ==(Vector2D& vector)const
+{
+	//return (isEqual(x, vector.x) && isEqual(y, vector.y));
+	return (x == vector.x && y == vector.y);
+}
+
+bool Vector2D::operator !=(Vector2D& vector)const
+{
+	//return !(isEqual(x, vector.x) && isEqual(y, vector.y));
+	return !(x == vector.x && y == vector.y);
+}
+
+
+Vector2D & Vector2D::operator-(const Vector2D & vector)
+{
+	x = -vector.x;
+	y = -vector.y;
 
 	return *this;
 }
@@ -51,10 +110,10 @@ int Vector2D::getY() {
 /*
 	Vector2D operator+(Vector2D vector2);
 	Vector2D operator-(Vector2D vector2);
-	Vector2D operator*(Vector2D vector2);//scalar multiplication
-	Vector2D operator/(Vector2D vector2);//scalar division
-	Vector2D operator% (Vector2D vector2);//cross product
-	int operator^(Vector2D vector2);//dot operator
+	Vector2D operator*(Vector2D vector2);//
+	Vector2D operator/(Vector2D vector2);//
+	Vector2D operator% (Vector2D vector2);//cross product, vector product
+	int operator^(Vector2D vector2);//dot operator, scalar product
 	bool operator==(Vector2D vector2);
 	bool operator!=(Vector2D vector2);
 */
