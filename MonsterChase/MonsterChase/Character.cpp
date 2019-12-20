@@ -7,7 +7,7 @@ Character::Character()
 {
 }
 
-Character::Character(Vector2D newPosition)
+Character::Character(Point2D newPosition)
 {
 	Character::position = newPosition;
 	//this->position = newPosition;
@@ -34,7 +34,7 @@ void Character::printPosition() {
 	
 }
 
-void Character::move(Vector2D moveVector) {
+void Character::move(Point2D moveVector) {
 	position += moveVector;
 	//printf("\nNew position of player: [%d, %d]\n", position.getX(), position.getY());
 
@@ -47,11 +47,11 @@ void Character::printName(char * ptrName) {
 
 //getters, setters
 
-void Character::setPosition(Vector2D position) {
+void Character::setPosition(Point2D position) {
 	Character::position = position;
 }
 
-Vector2D Character::getPosition() {
+Point2D Character::getPosition() {
 	return Character::position;
 }
 

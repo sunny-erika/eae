@@ -13,7 +13,7 @@
 
 #include "Engine.h"
 #include "Character.h"
-#include "Vector2D.h"
+#include "Point2D.h"
 #include "List.h"
 
 
@@ -32,7 +32,7 @@ void print_list(ListNode * head) {
 	while (current != NULL) {
 		//printf("%d\n", current->testVal);
 		if (current->character != NULL) {
-			Vector2D vectorTmp = current->character->getPosition();
+			Point2D vectorTmp = current->character->getPosition();
 
 			//printf("position of monster: [%d, %d]\n", vectorTmp.getX(), vectorTmp.getY());
 			std::cout << "\n position of monster " << current->character->getPtrName() << ": is [" << vectorTmp.getX() << "," <<vectorTmp.getY() << "]";
@@ -44,7 +44,7 @@ void print_list(ListNode * head) {
 	}
 }
 
-void moveMonsters(ListNode * head, Vector2D vector) {
+void moveMonsters(ListNode * head, Point2D vector) {
 	ListNode * current = head;
 	
 	while (current != NULL) {
@@ -95,7 +95,7 @@ void push(ListNode ** head, char* name) {//Since we use a function to do this op
 }*/
 
 /*
-void push(ListNode ** head, char* name, Vector2D* vector) {//Since we use a function to do this operation, we want to be able to modify the head variable
+void push(ListNode ** head, char* name, Point2D* vector) {//Since we use a function to do this operation, we want to be able to modify the head variable
 	//To do this, we must pass a pointer to the pointer variable,so we will be able to modify the pointer itself
 	ListNode * new_node = nullptr;
 	new_node = (ListNode*)malloc(sizeof(ListNode));
@@ -113,7 +113,7 @@ void push(ListNode ** head, char* name, Vector2D* vector) {//Since we use a func
 }
 */
 
-void push(ListNode ** head, char* name, Vector2D vector) {//Since we use a function to do this operation, we want to be able to modify the head variable
+void push(ListNode ** head, char* name, Point2D vector) {//Since we use a function to do this operation, we want to be able to modify the head variable
 	//To do this, we must pass a pointer to the pointer variable,so we will be able to modify the pointer itself
 	ListNode * new_node = nullptr;
 	new_node = (ListNode*)malloc(sizeof(ListNode));
@@ -297,10 +297,33 @@ int random(int min, int max) //range : [min, max)
 	return min + rand() % ((max + 1) - min);
 }
 
-Vector2D createRandomVector(int min, int max) {
-	return Vector2D(random(0, 10), random(0, 10));
+Point2D createRandomVector(int min, int max) {
+	return Point2D(random(0, 10), random(0, 10));
 }
+void Point2D_UnitTest()
+{
+	Point2D P1(0.0f, 0.0f);
+	Point2D P2(0.0f, 0.0f);
 
+	Point2D P3 = P1 + P2;
+	P3 = P1 - P2;
+
+	Point2D P4 = P1 * 0.5f;
+
+	Point2D P5 = P1 / 2.0f;
+
+	Point2D P6 = -P4;
+
+	P6 *= 2.0f;
+	P5 /= 4.0f;
+
+	P2 += P1;
+	P3 -= P1;
+
+	Point2D P7 = (((P1 + P2) * 2.0f) - -P3) / 2.0f;
+
+	bool bArentEqual = P6 != P4;
+}
 //Game.cpp
 int main()
 {
@@ -337,19 +360,19 @@ int main()
 	//_LinkNode<Character>* ptr_monsterList = NULL;
 	//_LinkNode<Character>* ptr_monsterList = (_LinkNode<Character>*)malloc(sizeof(_LinkNode<Character>));
 	
-	Vector2D* ptrVector1 = (Vector2D*)malloc(sizeof(Vector2D));//preferred
+	Point2D* ptrVector1 = (Point2D*)malloc(sizeof(Point2D));//preferred
 	ptrVector1->setX(11);
 	ptrVector1->setY(11);
 
-	Vector2D* ptrVector2 = (Vector2D*)malloc(sizeof(int) * 2);//that's what new does
+	Point2D* ptrVector2 = (Point2D*)malloc(sizeof(int) * 2);//that's what new does
 	ptrVector2->setX(22);
 
-	Vector2D vector3(5, 6);
-	Vector2D vector4(7, 8);
-	//Vector2D randomVector(lowerRange, upperRange);
-	//Vector2D randomVector(rand() % 10 + 1 , rand() % 10 + 1);
+	Point2D vector3(5, 6);
+	Point2D vector4(7, 8);
+	//Point2D randomVector(lowerRange, upperRange);
+	//Point2D randomVector(rand() % 10 + 1 , rand() % 10 + 1);
 	
-	Character player(Vector2D(0, 0));
+	Character player(Point2D(0, 0));
 	//Character player(ptrVector1);
 	//enter a player
 	//char* buffer = getName("player");
@@ -383,12 +406,12 @@ int main()
 		//push(&ptrHead, name, vector3);
 		//push(&ptrHead, name, randomVector);
 		push(&ptrHead, name, createRandomVector(rand() % 10 + 1, rand() % 10 + 1));
-		//push(&ptrHead, name, Vector2D(0, 1));//for testing		
+		//push(&ptrHead, name, Point2D(0, 1));//for testing		
 	}
 	player.printPosition();
 	print_list(ptrHead);
 	//player.printPosition();
-	//player.move(Vector2D(0, 1));
+	//player.move(Point2D(0, 1));
 	//player.printPosition();
 	//remove_by_index(&ptrHead, 1);//2nd monster //could be randomly range 0 - numberOfMonsters-1
 
@@ -407,32 +430,32 @@ int main()
 		{
 		case 'a':
 		case 'A':
-			player.move(Vector2D(-1, 0));
+			player.move(Point2D(-1, 0));
 			player.printPosition();
-			moveMonsters(ptrHead, Vector2D(-1, 0));
+			moveMonsters(ptrHead, Point2D(-1, 0));
 
 			print_list(ptrHead);//position of monster 
 			break;
 		case 'd':
 		case 'D':
-			player.move(Vector2D(1, 0));
+			player.move(Point2D(1, 0));
 			player.printPosition();
-			moveMonsters(ptrHead, Vector2D(1, 0));
+			moveMonsters(ptrHead, Point2D(1, 0));
 			print_list(ptrHead);
 
 			break;
 		case 'w':
 		case 'W':
-			player.move(Vector2D(0, 1));
+			player.move(Point2D(0, 1));
 			player.printPosition();
-			moveMonsters(ptrHead, Vector2D(0, 1));
+			moveMonsters(ptrHead, Point2D(0, 1));
 			print_list(ptrHead);
 			break;
 		case 's':
 		case 'S':
-			player.move(Vector2D(0, -1));
+			player.move(Point2D(0, -1));
 			player.printPosition();
-			moveMonsters(ptrHead, Vector2D(0, -1));
+			moveMonsters(ptrHead, Point2D(0, -1));
 			print_list(ptrHead);
 			break;
 		case 'q':
@@ -558,11 +581,11 @@ int main()
 	//std::cout << "iterations: " << i;
 	//std::cout << "char: " << ch1;
 
-	//Vector2D vector1 = new Vector2D v1(1,2);
-	//Engine::Vector2D vector1(1, 2);
-	//Vector2D vector1 = new Vector2D (1, 2);//new nur wenn man ptr hat
-	Vector2D vector1(1, 2);
-	Vector2D vector2(3, 4);
+	//Point2D vector1 = new Point2D v1(1,2);
+	//Engine::Point2D vector1(1, 2);
+	//Point2D vector1 = new Point2D (1, 2);//new nur wenn man ptr hat
+	Point2D vector1(1, 2);
+	Point2D vector2(3, 4);
 
 	//std::cout << "Vector1 = " << vector1;
 	//std::cout << "Vector2 = " << vector2;
