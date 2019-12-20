@@ -15,6 +15,13 @@ Point2D::Point2D(int x, int y)
 	this->y = y;
 	
 }
+Point2D::Point2D(float x, float y)
+{
+
+	this->x = x;
+	this->y = y;
+
+}
 
 
 Point2D::~Point2D()
@@ -70,6 +77,7 @@ Point2D & Point2D::operator*=(const Point2D & vector)//Calculates the componentw
 
 	return *this;
 }
+/*
 Point2D & Point2D::operator*(const Point2D & vector)//Calculates the componentwise product with the vector v.
 {
 	x *= vector.x;
@@ -77,6 +85,7 @@ Point2D & Point2D::operator*(const Point2D & vector)//Calculates the componentwi
 
 	return *this;
 }
+*/
 Point2D & Point2D::operator*(const double & scalar)//Calculates the componentwise product with the vector v.
 {
 	x *= scalar;

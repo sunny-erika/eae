@@ -8,7 +8,7 @@ class Point2D
 {
 
 private:
-	int x, y;
+	double x, y;
 
 public:
 	Point2D();
