@@ -8,6 +8,7 @@ Point2D::Point2D()
 }
 
 //overloaded constructor
+/*
 Point2D::Point2D(int x, int y)
 {
 	
@@ -15,6 +16,7 @@ Point2D::Point2D(int x, int y)
 	this->y = y;
 	
 }
+*/
 Point2D::Point2D(float x, float y)
 {
 
@@ -22,6 +24,15 @@ Point2D::Point2D(float x, float y)
 	this->y = y;
 
 }
+/*
+Point2D::Point2D(double x, double y)
+{
+
+	this->x = x;
+	this->y = y;
+
+}
+*/
 
 
 Point2D::~Point2D()
@@ -133,13 +144,13 @@ Point2D & Point2D::operator/=(const double & scalar)
 	return *this;
 }
 
-float Point2D::operator%(const Point2D & vector)//crossproduct
+double Point2D::operator%(const Point2D & vector)//crossproduct
 {
 	
 	return (x * vector.y) - (y *vector.x);;
 }
 
-float Point2D::operator^(const Point2D vector) {//dot product
+double Point2D::operator^(const Point2D vector) {//dot product
 	
 	return (x * vector.x) + (y * vector.y);
 }
@@ -169,20 +180,20 @@ Point2D & Point2D::operator-()
 
 
 //setter & getter
-void Point2D::setX(int x) {
+void Point2D::setX(float x) {
 	Point2D::x = x;
 	//x = x;
 }
 
-int Point2D::getX() {
-	return Point2D::x;
+float Point2D::getX() {
+	return (float) Point2D::x;
 }
 
-void Point2D::setY(int y) {
+void Point2D::setY(float y) {
 	Point2D::y = y;
 }
 
-int Point2D::getY() {
+float Point2D::getY() {
 	return Point2D::y;
 }
 

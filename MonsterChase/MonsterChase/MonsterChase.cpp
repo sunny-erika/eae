@@ -387,7 +387,7 @@ int main()
 	}
 	*/
 	//player.setPtrName(getPlayerName());
-	std::cout << player.getPtrName();
+	//std::cout << player.getPtrName();
 	
 	ListNode *ptrHead = nullptr;
 	//ptrHead = (ListNode*) malloc(sizeof(ListNode));
