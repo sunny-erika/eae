@@ -2,6 +2,7 @@
 #include <cstdio>
 
 
+
 Character::Character()
 {
 }
@@ -30,6 +31,7 @@ bool Character::move(Position position) {
 
 void Character::printPosition() {
 	printf("\nposition of player: [%d, %d]\n", position.getX(), position.getY());
+	
 }
 
 void Character::move(Vector2D moveVector) {

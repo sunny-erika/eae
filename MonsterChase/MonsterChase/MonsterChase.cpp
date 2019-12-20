@@ -17,6 +17,7 @@
 #include "List.h"
 
 
+
 struct ListNode
 {
 	Character* character;
@@ -212,14 +213,21 @@ int remove_by_index(ListNode ** head, int n) {
 
 
 static char* getName(const char* type) {
-
+	int c, i = 0;
 	char name[255];
 	std::cout << "\nEnter a name for the " << type << " : ";//player or monster
-	
+	//std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+	//std::cin.ignore(200, '\n');
+	//scanf_s("%s", name);
+	//scanf_s("%[^\n]s", name);
+	//fgets(name, 100, stdin);
 	//std::cin >> name;//abc = 3 letters -> +1 for delimiter
-	std::cin.getline(name, 255);
-	
-	
+	//getchar();
+	//std::cin.getline(name, sizeof(name)); 
+	//fgets(name, 20, stdin);
+//	scanf_s("%[^\n]%*c", name);
+	gets_s(name, 255);
+
 	int length = (int) strlen(name);
 	char* playerName = (char*)malloc(strlen(name) + 1);
 
@@ -229,47 +237,19 @@ static char* getName(const char* type) {
 	playerName[length] = '\0';//" " for string literals 
 		
     return playerName;
+	/*
+	do
+	{
+	c = getchar();
+	name[i] = c;
+	i++;
+	} while (c != '\0');
+
+	*/
 }
 
-static char* getPlayerName() {
-
-	char name[255];
-	std::cout << "\nEnter a name for the player: " ;//player or monster
-
-															//std::cin >> name;//abc = 3 letters -> +1 for delimiter
-	std::cin.getline(name, 255);
 
 
-	int length = (int) strlen(name);
-	char* playerName = (char*)malloc(strlen(name) + 1);
-
-	for (int i = 0; i < length; i++) {
-		playerName[i] = name[i];
-	}
-	playerName[length] = '\0';//" " for string literals 
-
-	return playerName;
-}
-
-static char* getMonsterName() {
-
-	char name[255];
-	std::cout << "\nEnter a name for the monster " ;//player or monster
-
-															//std::cin >> name;//abc = 3 letters -> +1 for delimiter
-	std::cin.getline(name, 255);
-
-
-	int length = (int) strlen(name);
-	char* playerName = (char*)malloc(strlen(name) + 1);
-
-	for (int i = 0; i < length; i++) {
-		playerName[i] = name[i];
-	}
-	playerName[length] = '\0';//" " for string literals 
-
-	return playerName;
-}
 
 /*
 void removeOnCollision(ListNode *head, Character player) {
@@ -351,7 +331,15 @@ int main()
 	//enter a player
 	//char* buffer = getName("player");
 	//player.setPtrName(buffer);
+	//std::cout << "\nBelow you will be asked to enter names: ";
 	player.setPtrName(getName("player"));//mem for name reserved in getName() with malloc - free in Character
+	/*
+	if (player.getPtrName() == NULL) {
+		char name[255];
+		std::cin.getline(name, 255);
+		player.setPtrName(name);
+	}
+	*/
 	//player.setPtrName(getPlayerName());
 	std::cout << player.getPtrName();
 	
