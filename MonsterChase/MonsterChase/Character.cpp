@@ -17,8 +17,9 @@ Character::Character(Point2D newPosition)
 
 Character::~Character()
 {
-	//free (ptrName);//delete() if new is used - distinguish arrays/ptr
-	//free (position);
+	free (ptrName);//delete() if new is used - distinguish arrays/ptr
+	Character::position.setX(0.0f);
+	Character::position.setY(0.0f);
 }
 
 /*
@@ -30,7 +31,7 @@ bool Character::move(Position position) {
 */
 
 void Character::printPosition() {
-	printf("\nposition of player: [%d, %d]\n", position.getX(), position.getY());
+	printf("\nposition of player: [%d, %d]\n", (int)position.getX(), (int)position.getY());
 	
 }
 
