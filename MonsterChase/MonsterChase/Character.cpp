@@ -38,6 +38,10 @@ void Character::move(Vector2D moveVector) {
 
 }
 
+void Character::printName(char * ptrName) {
+	
+}
+
 
 //getters, setters
 

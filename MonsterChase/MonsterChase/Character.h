@@ -28,6 +28,7 @@ public:
 
 	void setPtrName( char * ptrName);
 	char* getPtrName();
+	void printName(char * ptrName); 
 
 	
 

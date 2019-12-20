@@ -215,9 +215,12 @@ static char* getName(const char* type) {
 
 	char name[255];
 	std::cout << "\nEnter a name for the " << type << " : ";//player or monster
-
-	std::cin >> name;//abc = 3 letters -> +1 for delimiter
-	int length = strlen(name);
+	
+	//std::cin >> name;//abc = 3 letters -> +1 for delimiter
+	std::cin.getline(name, 255);
+	
+	
+	int length = (int) strlen(name);
 	char* playerName = (char*)malloc(strlen(name) + 1);
 
 	for (int i = 0; i < length; i++) {
@@ -226,6 +229,46 @@ static char* getName(const char* type) {
 	playerName[length] = '\0';//" " for string literals 
 		
     return playerName;
+}
+
+static char* getPlayerName() {
+
+	char name[255];
+	std::cout << "\nEnter a name for the player: " ;//player or monster
+
+															//std::cin >> name;//abc = 3 letters -> +1 for delimiter
+	std::cin.getline(name, 255);
+
+
+	int length = (int) strlen(name);
+	char* playerName = (char*)malloc(strlen(name) + 1);
+
+	for (int i = 0; i < length; i++) {
+		playerName[i] = name[i];
+	}
+	playerName[length] = '\0';//" " for string literals 
+
+	return playerName;
+}
+
+static char* getMonsterName() {
+
+	char name[255];
+	std::cout << "\nEnter a name for the monster " ;//player or monster
+
+															//std::cin >> name;//abc = 3 letters -> +1 for delimiter
+	std::cin.getline(name, 255);
+
+
+	int length = (int) strlen(name);
+	char* playerName = (char*)malloc(strlen(name) + 1);
+
+	for (int i = 0; i < length; i++) {
+		playerName[i] = name[i];
+	}
+	playerName[length] = '\0';//" " for string literals 
+
+	return playerName;
 }
 
 /*
@@ -249,7 +292,7 @@ int random(int min, int max) //range : [min, max)
 	static bool first = true;
 	if (first)
 	{
-		srand(time(NULL)); //seeding for the first time only!
+		srand((int)time(NULL)); //seeding for the first time only!
 		first = false;
 	}
 	return min + rand() % ((max + 1) - min);
@@ -269,7 +312,7 @@ int main()
 	int upperRange = 0;
 
 	/* initialize random seed: */
-	srand(time(NULL));
+	srand((int)time(NULL));
 	/* generate secret number between 1 and 10: */
 	lowerRange = rand() % 10 + 1;
 	upperRange = rand() % 10 + 1;
@@ -306,7 +349,10 @@ int main()
 	Character player(Vector2D(0, 0));
 	//Character player(ptrVector1);
 	//enter a player
+	//char* buffer = getName("player");
+	//player.setPtrName(buffer);
 	player.setPtrName(getName("player"));//mem for name reserved in getName() with malloc - free in Character
+	//player.setPtrName(getPlayerName());
 	std::cout << player.getPtrName();
 	
 	ListNode *ptrHead = nullptr;
@@ -319,6 +365,7 @@ int main()
 	
 	for (int i = 0; i < numberOfMonsters; i++) {
 		char* name = getName("monster");
+		//char* name = getMonsterName();
 
 		//push(&ptrHead, 2);
 		//push(&ptrHead, name, ptrector2);
