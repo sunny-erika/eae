@@ -115,20 +115,29 @@ void push(ListNode ** head, char* name, Point2D* vector) {//Since we use a funct
 
 void push(ListNode ** head, char* name, Point2D vector) {//Since we use a function to do this operation, we want to be able to modify the head variable
 	//To do this, we must pass a pointer to the pointer variable,so we will be able to modify the pointer itself
-	ListNode * new_node = nullptr;
-	new_node = (ListNode*)malloc(sizeof(ListNode));
-	new_node->character = (Character*)malloc(sizeof(Character));
+	
+	ListNode * new_node = (ListNode*)malloc(sizeof(ListNode));
+	//ListNode * new_node = nullptr;
+	//new_node = (ListNode*)malloc(sizeof(ListNode));
+	if (new_node != NULL) {
+		//printf("No memory\n");
+		//exit;
+		new_node->character = (Character*)malloc(sizeof(Character));
 	new_node->character->setPosition(vector);
+	new_node->character->setPtrName(name);
+	new_node->next = *head;
+	*head = new_node;
+	}
+	
 	//new_node->character->printPosition();
 
 	//malloc for str
 	//new_node->character = nullptr;
 	//new_node->character = (Character*)malloc(sizeof(Character));
-	new_node->character->setPtrName(name);
+	
 	//new_node->character.setPtrName(name);
 	//new_node->character.setPosition();
-	new_node->next = *head;
-	*head = new_node;
+	
 }
 
 //removing the first
@@ -250,12 +259,17 @@ static char* getName(const char* type) {
 	int length = (int) strlen(name);
 	char* playerName = (char*)malloc(strlen(name) + 1);
 
-	for (int i = 0; i < length; i++) {
+	if (playerName != NULL) {
+for (int i = 0; i < length; i++) {
 		playerName[i] = name[i];
 	}
 	playerName[length] = '\0';//" " for string literals 
 		
     return playerName;
+
+	}
+
+	
 	/*
 	do
 	{
