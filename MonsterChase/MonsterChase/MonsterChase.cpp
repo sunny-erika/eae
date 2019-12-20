@@ -32,13 +32,17 @@ void print_list(ListNode * head) {
 		if (current->character != NULL) {
 			Vector2D vectorTmp = current->character->getPosition();
 
-			printf("position: [%d, %d]\n", vectorTmp.getX(), vectorTmp.getY());
+			//printf("position of monster: [%d, %d]\n", vectorTmp.getX(), vectorTmp.getY());
+			std::cout << "\n position of monster " << current->character->getPtrName() << ": is [" << vectorTmp.getX() << "," <<vectorTmp.getY() << "]";
+			//std::cout << "position of monster: " << current->character->getPtrName();
 		}
 		//std::cout << current->character.getPtrName();
 		//std::cout << current->character->getPtrName();
 		current = current->next;//setting the current pointer to the next node until we've reached the end of the list (the next node is NULL
 	}
 }
+
+
 
 //adding to the beginning of the list - push (removing: pop)
 /*
@@ -106,7 +110,7 @@ void push(ListNode ** head, char* name, Vector2D vector) {//Since we use a funct
 	//malloc for str
 	//new_node->character = nullptr;
 	//new_node->character = (Character*)malloc(sizeof(Character));
-	//new_node->character->setPtrName(name);
+	new_node->character->setPtrName(name);
 	//new_node->character.setPtrName(name);
 	//new_node->character.setPosition();
 	new_node->next = *head;
@@ -198,7 +202,7 @@ int remove_by_index(ListNode ** head, int n) {
 static char* getName(const char* type) {
 
 	char name[255];
-	std::cout << "Enter a name for the " << type << " : ";//player or monster
+	std::cout << "\nEnter a name for the " << type << " : ";//player or monster
 
 	std::cin >> name;//abc = 3 letters -> +1 for delimiter
 	int length = strlen(name);
@@ -265,9 +269,9 @@ int main()
 	//advantages over vectors: insertion/deletion speed
 	//vector req all other elements to be moved
 	
-	Engine::Init();
+	//Engine::Init();
 	//char* player = {'p', ;
-	//std::cout << player.getPtrName();
+	
 
 	std::cout << "Enter the number of monsters: ";
 	std::cin >> numberOfMonsters;
@@ -291,7 +295,7 @@ int main()
 	//Character player(ptrVector1);
 	//enter a player
 	player.setPtrName(getName("player"));//mem for name reserved in getName() with malloc - free in Character
-
+	std::cout << player.getPtrName();
 	
 	ListNode *ptrHead = nullptr;
 	//ptrHead = (ListNode*) malloc(sizeof(ListNode));
@@ -303,6 +307,7 @@ int main()
 	
 	for (int i = 0; i < numberOfMonsters; i++) {
 		char* name = getName("monster");
+
 		//push(&ptrHead, 2);
 		//push(&ptrHead, name, ptrector2);
 		//push(&ptrHead, name, vector3);
@@ -317,11 +322,12 @@ int main()
 	//remove_by_index(&ptrHead, 1);//2nd monster //could be randomly range 0 - numberOfMonsters-1
 
 	
+	
 	bool running = true;
 	while (running) 
 	{
 		int monsterindex = 1;
-		std::cout << "Press A to move left, D to move right, W to move up, S to move down or Q to quit";
+		std::cout << "\n Press A to move left, D to move right, W to move up, S to move down or Q to quit";
 		//std::cin >> input;
 		char input = _getch();
 		////bool valid = true;
@@ -331,6 +337,8 @@ int main()
 		case 'a':
 		case 'A':
 			player.move(Vector2D(-1, 0));
+
+			print_list(ptrHead);
 			break;
 		case 'd':
 		case 'D':
@@ -367,7 +375,7 @@ int main()
 			break;
 		}
 
-		case 'l':
+		case 'r':
 			//add monster
 
 			//char * monsterName;

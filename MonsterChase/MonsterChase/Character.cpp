@@ -29,12 +29,13 @@ bool Character::move(Position position) {
 */
 
 void Character::printPosition() {
-	printf("position: [%d, %d]\n", position.getX(), position.getY());
+	printf("position of player: [%d, %d]\n", position.getX(), position.getY());
 }
 
 void Character::move(Vector2D moveVector) {
 	position += moveVector;
-	printf("\nNew position: [%d, %d]\n", position.getX(), position.getY());
+	printf("\nNew position of player: [%d, %d]\n", position.getX(), position.getY());
+
 }
 
 
