@@ -118,7 +118,7 @@ int Vector2D::getY() {
 	bool operator!=(Vector2D vector2);
 */
 
-const Vector2D Vector2D::Zero(0, 0);
+//const Vector2D Vector2D::Zero(0, 0);
 
 /*
 // Addition 

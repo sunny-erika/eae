@@ -25,6 +25,7 @@ struct ListNode
 	ListNode *next;//recursive
 };
 
+int gotName = 0;
 //Iterating over the list
 void print_list(ListNode * head) {
 	ListNode * current = head;//current pointer that will keep track of the node we are currently printing
@@ -213,20 +214,38 @@ int remove_by_index(ListNode ** head, int n) {
 
 
 static char* getName(const char* type) {
-	int c, i = 0;
+	gotName++;
+	//int c, i = 0;
 	char name[255];
 	std::cout << "\nEnter a name for the " << type << " : ";//player or monster
-	//std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+	//if (gotName >= 1) {
+		//std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+	//}
 	//std::cin.ignore(200, '\n');
 	//scanf_s("%s", name);
 	//scanf_s("%[^\n]s", name);
 	//fgets(name, 100, stdin);
-	//std::cin >> name;//abc = 3 letters -> +1 for delimiter
+	std::cin >> name;//abc = 3 letters -> +1 for delimiter
 	//getchar();
+	/*
+	for (int i = 0; i < 256; i++)
+	{
+		char ch = getchar();
+		//while (ch != '\n' && ch != EOF) {
+		//while (ch != '\n') {
+			while (ch != EOF) {
+			name[i] = ch;
+			i++;
+			ch = getchar();
+		}
+		name[i] = '\0';
+	}
+	*/
+	//printf("Entered string is: %s", name);
 	//std::cin.getline(name, sizeof(name)); 
 	//fgets(name, 20, stdin);
 //	scanf_s("%[^\n]%*c", name);
-	gets_s(name, 255);
+	//gets_s(name, 255);
 
 	int length = (int) strlen(name);
 	char* playerName = (char*)malloc(strlen(name) + 1);
@@ -310,6 +329,10 @@ int main()
 
 	std::cout << "Enter the number of monsters: ";
 	std::cin >> numberOfMonsters;
+	/*
+	if (numberOfMonsters == 0)
+		printf("Bad input. Please enter an integer greater than 0.");
+		*/
 
 	//_LinkNode<Character>* ptr_monsterList = NULL;
 	//_LinkNode<Character>* ptr_monsterList = (_LinkNode<Character>*)malloc(sizeof(_LinkNode<Character>));
