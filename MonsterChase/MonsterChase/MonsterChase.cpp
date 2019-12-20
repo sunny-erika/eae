@@ -226,6 +226,7 @@ static char* getName(const char* type) {
 	gotName++;
 	//int c, i = 0;
 	char name[255];
+	char *error = (char*)malloc(2);
 	std::cout << "\nEnter a name for the " << type << " : ";//player or monster
 	//if (gotName >= 1) {
 		//std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
@@ -268,6 +269,13 @@ for (int i = 0; i < length; i++) {
     return playerName;
 
 	}
+	else {
+		if (error != NULL) {
+		error[1] = 1;
+		return error;
+		}
+		
+	}
 
 	
 	/*
@@ -279,6 +287,7 @@ for (int i = 0; i < length; i++) {
 	} while (c != '\0');
 
 	*/
+	return playerName;
 }
 
 
