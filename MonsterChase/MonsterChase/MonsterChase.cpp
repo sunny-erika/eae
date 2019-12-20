@@ -42,7 +42,19 @@ void print_list(ListNode * head) {
 	}
 }
 
+void moveMonsters(ListNode * head, Vector2D vector) {
+	ListNode * current = head;
+	
+	while (current != NULL) {
+	
+		if (current->character != NULL) {
+			current->character->move(vector);
+			
+		}
 
+		current = current->next;//setting the current pointer to the next node until we've reached the end of the list (the next node is NULL
+	}
+}
 
 //adding to the beginning of the list - push (removing: pop)
 /*
@@ -315,6 +327,7 @@ int main()
 		push(&ptrHead, name, createRandomVector(rand() % 10 + 1, rand() % 10 + 1));
 		//push(&ptrHead, name, Vector2D(0, 1));//for testing		
 	}
+	player.printPosition();
 	print_list(ptrHead);
 	//player.printPosition();
 	//player.move(Vector2D(0, 1));
@@ -327,7 +340,7 @@ int main()
 	while (running) 
 	{
 		int monsterindex = 1;
-		std::cout << "\n Press A to move left, D to move right, W to move up, S to move down or Q to quit";
+		std::cout << "\n Press A to move left, D to move right, W to move up, S to move down, M to add a monster, R to remove a monster or Q to quit";
 		//std::cin >> input;
 		char input = _getch();
 		////bool valid = true;
@@ -337,20 +350,32 @@ int main()
 		case 'a':
 		case 'A':
 			player.move(Vector2D(-1, 0));
+			player.printPosition();
+			moveMonsters(ptrHead, Vector2D(-1, 0));
 
-			print_list(ptrHead);
+			print_list(ptrHead);//position of monster 
 			break;
 		case 'd':
 		case 'D':
 			player.move(Vector2D(1, 0));
+			player.printPosition();
+			moveMonsters(ptrHead, Vector2D(1, 0));
+			print_list(ptrHead);
+
 			break;
 		case 'w':
 		case 'W':
 			player.move(Vector2D(0, 1));
+			player.printPosition();
+			moveMonsters(ptrHead, Vector2D(0, 1));
+			print_list(ptrHead);
 			break;
 		case 's':
 		case 'S':
 			player.move(Vector2D(0, -1));
+			player.printPosition();
+			moveMonsters(ptrHead, Vector2D(0, -1));
+			print_list(ptrHead);
 			break;
 		case 'q':
 		case 'Q':
@@ -376,6 +401,7 @@ int main()
 		}
 
 		case 'r':
+		case 'R':
 			//add monster
 
 			//char * monsterName;
