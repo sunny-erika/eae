@@ -16,6 +16,35 @@
 #include "Point2D.h"
 #include "List.h"
 
+#pragma warning(disable: 6386)
+/*
+static code analysis Warning
+https://docs.microsoft.com/en-us/visualstudio/code-quality/c6386?f1url=https%3A%2F%2Fmsdn.microsoft.com%2Fquery%2Fdev16.query%3FappId%3DDev16IDEF1%26k%3Dk(C6386)&view=vs-2019
+warning C6386:
+
+code causing the warning
+#define MAX 25
+
+void f ( )
+{
+char ar[MAX];
+// code ...
+ar[MAX] = '\0';
+}
+
+suggested solution:
+#define MAX 25
+
+void f ( )
+{
+char a[MAX];
+// code ...
+a[MAX - 1] = '\0';
+}
+
+but this would cut one character of the name
+
+*/
 
 
 struct ListNode
@@ -271,7 +300,9 @@ static char* getName(const char* type) {
 	//gets_s(name, 255);
 
 	int length = (int) strlen(name);
-	char* playerName = (char*)malloc(strlen(name) + 1);
+	//printf("Entered string is: %i", length);//excluding sentinel character
+	//char* playerName = (char*)malloc(strlen(name) + 1);//6
+	char* playerName = (char*)malloc(length + 1);
 
 	if (playerName != NULL) {
 		/*
