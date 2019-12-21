@@ -225,17 +225,30 @@ int remove_by_index(ListNode ** head, int n) {
 static char* getName(const char* type) {
 	gotName++;
 	//int c, i = 0;
-	char name[255];
+	//char name[255];
+	const size_t lenName = 255;
+	char name[lenName];
+	//char *p;
 	char *error = (char*)malloc(2);
-	std::cout << "\nEnter a name for the " << type << " : ";//player or monster
-	//if (gotName >= 1) {
+	//std::cout << "\nEnter a name for the " << type << " : ";//player or monster
+	(void)getchar();
+	printf("\n Enter a name for the %s: ", type);
+	/*
+	fgets(name, sizeof name, stdin);
+	if ((p = strchr(name, '\n')) != NULL)
+		*p = '\0';
+	printf("You typed \"%s\"\n", name);
+	*/
+															//if (gotName >= 1) {
 		//std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 	//}
 	//std::cin.ignore(200, '\n');
 	//scanf_s("%s", name);
 	//scanf_s("%[^\n]s", name);
 	//fgets(name, 100, stdin);
-	std::cin >> name;//abc = 3 letters -> +1 for delimiter
+	//sscanf_s("%[^\n]s", name);
+	//std::cin >> name;//abc = 3 letters -> +1 for delimiter
+	
 	//getchar();
 	/*
 	for (int i = 0; i < 256; i++)
@@ -252,7 +265,7 @@ static char* getName(const char* type) {
 	}
 	*/
 	//printf("Entered string is: %s", name);
-	//std::cin.getline(name, sizeof(name)); 
+	std::cin.getline(name, sizeof(name)); 
 	//fgets(name, 20, stdin);
 //	scanf_s("%[^\n]%*c", name);
 	//gets_s(name, 255);
@@ -418,7 +431,30 @@ int main()
 	//char* buffer = getName("player");
 	//player.setPtrName(buffer);
 	//std::cout << "\nBelow you will be asked to enter names: ";
+		
 	player.setPtrName(getName("player"));//mem for name reserved in getName() with malloc - free in Character
+	/*
+	const size_t	lenInput = 128;
+	char			Input[lenInput];
+
+	while (1)
+	{
+		printf("Enter a name for the player: ");
+		gets_s(Input, lenInput);
+
+		if (strlen(Input))
+		{
+			player.setPtrName(Input);
+			std::cout << player.getPtrName();
+			break;
+		}
+		else
+		{
+
+			printf("Empty name not allowed.");
+		}
+	}
+	*/
 	/*
 	if (player.getPtrName() == NULL) {
 		char name[255];
@@ -427,6 +463,9 @@ int main()
 	}
 	*/
 	//player.setPtrName(getPlayerName());
+	std::cout << "\nThe Player's name is " << player.getPtrName();//player or monster
+	
+
 	//std::cout << player.getPtrName();
 	
 	ListNode *ptrHead = nullptr;
@@ -446,6 +485,7 @@ int main()
 		//push(&ptrHead, name, vector3);
 		//push(&ptrHead, name, randomVector);
 		push(&ptrHead, name, createRandomVector(rand() % 10 + 1, rand() % 10 + 1));
+		std::cout << "\nThe name of monster number "<<i+1 << " is " << name;
 		//push(&ptrHead, name, Point2D(0, 1));//for testing		
 	}
 	player.printPosition();
