@@ -5,6 +5,7 @@
 
 Character::Character()
 {
+	ptrName = nullptr;
 }
 
 /*
