@@ -261,18 +261,31 @@ static char* getName(const char* type) {
 	char* playerName = (char*)malloc(strlen(name) + 1);
 
 	if (playerName != NULL) {
-for (int i = 0; i < length; i++) {
+		/*
+	for (int i = 0; i < length; i++) {
 		playerName[i] = name[i];
 	}
 	playerName[length] = '\0';//" " for string literals 
-		
+		*/
+		int index = 0;
+
+		while (name[index] != '\0') {
+			playerName[index] = name[index];
+			index++;
+		}
+		playerName[index] = '\0';
+
     return playerName;
 
 	}
 	else {
+		
 		if (error != NULL) {
 		error[1] = 1;
+		exit(1);
 		return error;
+		
+		
 		}
 		
 	}
