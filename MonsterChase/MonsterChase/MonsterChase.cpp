@@ -396,6 +396,7 @@ int main()
 	//_LinkNode<Character>* ptr_monsterList = NULL;
 	//_LinkNode<Character>* ptr_monsterList = (_LinkNode<Character>*)malloc(sizeof(_LinkNode<Character>));
 	
+	/*
 	Point2D* ptrVector1 = (Point2D*)malloc(sizeof(Point2D));//preferred
 	ptrVector1->setX(11);
 	ptrVector1->setY(11);
@@ -407,8 +408,11 @@ int main()
 	Point2D vector4(7, 8);
 	//Point2D randomVector(lowerRange, upperRange);
 	//Point2D randomVector(rand() % 10 + 1 , rand() % 10 + 1);
-	
-	Character player(Point2D(0, 0));
+	*/
+	//Character player(Point2D(0, 0));
+	Character player;
+	player.setPosition(Point2D(0, 0));
+
 	//Character player(ptrVector1);
 	//enter a player
 	//char* buffer = getName("player");

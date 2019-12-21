@@ -19,7 +19,7 @@ private:
 
 public:
 	Character();
-	Character(Point2D newPosition);
+	//Character(Point2D newPosition);
 	~Character();
 
 	//getter setter

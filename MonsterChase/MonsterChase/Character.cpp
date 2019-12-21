@@ -7,12 +7,13 @@ Character::Character()
 {
 }
 
+/*
 Character::Character(Point2D newPosition)
 {
 	Character::position = newPosition;
 	//this->position = newPosition;
 	//Character::position(newPosition.getX(), newPosition.getY());
-}
+}*/
 
 
 Character::~Character()
