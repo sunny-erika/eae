@@ -1,5 +1,6 @@
 #include "HeapManager.h"
 
+
 //TODO
 /*
 static HeapManager* create(void* i_pHeapMemory, size_t i_HeapMemorySize, unsigned int i_numDescriptors);
@@ -14,3 +15,5 @@ bool IsAllocated(void* i_ptr);
 void ShowFreeBlocks();
 void ShowOutstandingAllocations(const HeapManager * i_pManager);
 */
+
+
