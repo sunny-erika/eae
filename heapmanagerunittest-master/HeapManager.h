@@ -1,7 +1,20 @@
 #pragma once
+
 class HeapManager
 {
+	void* m_pHeapMemory;
+	size_t m_HeapMemorySize;
+	unsigned int m_numDescriptors;
+	//List of allocated blocks
+	//list of block descriptors
+	//list of free blocks
+
+
 public:
+
+	HeapManager();
+	HeapManager(void* i_pHeapMemory, size_t i_HeapMemorySize, unsigned int i_numDescriptors);
+
 	static HeapManager* create(void* i_pHeapMemory, size_t i_HeapMemorySize, unsigned int i_numDescriptors);
 
 	// allocation
