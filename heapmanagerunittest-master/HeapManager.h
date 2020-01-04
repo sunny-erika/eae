@@ -8,29 +8,28 @@ class HeapManager
 
 	struct BlockDescriptor
 	{
-		//void* m_pBlockStartAddr; // pointer to the block of memory this BlockDescriptor describes - only needed for pool of blockdescriptors
+		void* m_pBlockStartAddr; // pointer to the block of memory this BlockDescriptor describes
 		size_t m_sizeBlock; // size of that block of memory
 		BlockDescriptor* next; 
 		BlockDescriptor* prev;
 	};
 
-	BlockDescriptor * m_freeBlocks;
-	BlockDescriptor * m_oustandingBlocks;
+	BlockDescriptor * m_freeBlocks;//freelist
+	BlockDescriptor * m_oustandingBlocks;//allocated
 	//list of block descriptors - 
 	//need block descriptors for free blocks & outstanding(allocated) blocks
 	
-
+	HeapManager() {};
 
 public:
-
-	HeapManager();
-	HeapManager(void* i_pHeapMemory, size_t i_HeapMemorySize, unsigned int i_numDescriptors);
+	   
 	~HeapManager();
 
-	HeapManager(void * i_pHeapMemory, size_t i_HeapMemorySize);
+	
 
-	//static HeapManager* create(void* i_pHeapMemory, size_t i_HeapMemorySize, unsigned int i_numDescriptors);
-	static HeapManager* create(void* i_pHeapMemory, size_t i_HeapMemorySize);
+	static HeapManager* create(void* i_pHeapMemory, size_t i_HeapMemorySize, unsigned int i_numDescriptors);
+
+	void initialize(void* i_pHeapMemory, size_t i_HeapMemorySize);
 
 	// allocation
 	//allocates memory. named with a underscore to resolve name clash 

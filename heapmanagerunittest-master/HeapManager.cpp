@@ -1,21 +1,18 @@
+
 #include "HeapManager.h"
+#include <Windows.h>
 #include <malloc.h>
 #include <stdio.h>
 
+#include <algorithm>
+#include <stdint.h>
+
+
 
 //constructor
-HeapManager::HeapManager(){
-	m_HeapMemorySize = 0;
-	m_pHeapMemory = nullptr;	
-	m_freeBlocks = nullptr;
-	m_oustandingBlocks = nullptr;
-	//m_numDescriptors = 0;
-}
 
-HeapManager::HeapManager(void* i_pHeapMemory, size_t i_HeapMemorySize) {
-	m_pHeapMemory = i_pHeapMemory;
-	m_HeapMemorySize = i_HeapMemorySize;
-}
+
+
 
 //destructor
 HeapManager::~HeapManager() {
@@ -25,9 +22,32 @@ HeapManager::~HeapManager() {
 	m_oustandingBlocks = nullptr;
 }
 
-HeapManager * HeapManager::create(void * i_pHeapMemory, size_t i_HeapMemorySize)
-{//TODO
-	return nullptr;
+
+
+HeapManager * HeapManager::create(void * i_pHeapMemory, size_t i_HeapMemorySize, unsigned int i_numDescriptors)
+{
+	const size_t 		sizeHeapManager = sizeof(HeapManager);//
+	SYSTEM_INFO SysInfo;
+	GetSystemInfo(&SysInfo);
+	size_t sizeHeapInPageMultiples = SysInfo.dwPageSize * ((sizeHeapManager + SysInfo.dwPageSize) / SysInfo.dwPageSize);
+	void* pHeapMemory = VirtualAlloc(NULL, sizeHeapInPageMultiples, MEM_RESERVE | MEM_COMMIT, PAGE_READWRITE);
+	HeapManager* o_pHeapManager = (HeapManager*) pHeapMemory;
+	o_pHeapManager->initialize(i_pHeapMemory, i_HeapMemorySize);
+	
+	return o_pHeapManager;
+
+	/*
+	MyClass *objp = (MyClass*)malloc(sizeof(MyClass));*objp = MyClass();
+*/
+	
+}
+
+void HeapManager::initialize(void * i_pHeapMemory, size_t i_HeapMemorySize)
+{
+	m_pHeapMemory = i_pHeapMemory;
+	m_HeapMemorySize = i_HeapMemorySize;
+	m_freeBlocks = nullptr;
+	m_oustandingBlocks = nullptr;
 }
 
 void * HeapManager::_alloc(size_t i_bytes)
@@ -38,6 +58,10 @@ void * HeapManager::_alloc(size_t i_bytes)
 void * HeapManager::_alloc(size_t i_bytes, unsigned int i_alignment)
 {//TODO
 	return nullptr;
+}
+
+void HeapManager::_free(void * i_ptr)
+{
 }
 
 void HeapManager::collect()
