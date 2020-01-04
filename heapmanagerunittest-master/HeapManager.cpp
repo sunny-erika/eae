@@ -50,51 +50,9 @@ void HeapManager::initialize(void * i_pHeapMemory, size_t i_HeapMemorySize)
 	m_oustandingBlocks = nullptr;
 }
 
-void * HeapManager::_alloc(size_t i_bytes)
-{//TODO
-	return nullptr;
-}
 
-void * HeapManager::_alloc(size_t i_bytes, unsigned int i_alignment)
-{//TODO
-	return nullptr;
-}
 
-void HeapManager::_free(void * i_ptr)
-{
-}
 
-void HeapManager::collect()
-{//TODO
-}
-
-size_t HeapManager::getLargestFreeBlock()
-{//TODO
-	return size_t();
-}
-
-size_t HeapManager::getTotalFreeMemory()
-{//TODO
-	return size_t();
-}
-
-bool HeapManager::Contains(void * i_ptr)
-{//TODO
-	return false;
-}
-
-bool HeapManager::IsAllocated(void * i_ptr)
-{//TODO
-	return false;
-}
-
-void HeapManager::ShowFreeBlocks()
-{//TODO
-}
-
-void HeapManager::ShowOutstandingAllocations(const HeapManager * i_pManager)
-{//TODO
-}
 
 //doubly linked list
 	//inserts node at the front of the list

@@ -1,5 +1,9 @@
 #pragma once
 
+#ifndef HEAP_MANAGER_H
+#define HEAP_MANAGER_H
+
+
 class HeapManager
 {
 	void* m_pHeapMemory;
@@ -68,3 +72,4 @@ public:
 
 };
 
+#endif
