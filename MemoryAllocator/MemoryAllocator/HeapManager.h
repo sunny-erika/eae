@@ -16,14 +16,17 @@ class HeapManager
 		BlockDescriptor* prev;
 	};
 
-	BlockDescriptor * m_freeBlocks;//freelist
-	BlockDescriptor * m_oustandingBlocks;//allocated
+	//BlockDescriptor * m_freeBlocks;//freelist
+	//BlockDescriptor * m_oustandingBlocks;//allocated
 	//list of block descriptors - 
 	//need block descriptors for free blocks & outstanding(allocated) blocks
 
 	HeapManager() {};
 
 public:
+
+	BlockDescriptor * m_freeBlocks;//freelist
+	BlockDescriptor * m_oustandingBlocks;
 
 	~HeapManager();
 	   
@@ -65,6 +68,16 @@ public:
 
 	//to show us all the outstanding blocks.
 	void ShowOutstandingAllocations(const HeapManager * i_pManager);
+
+	
+		// Setter
+	void setMemory(void* mAddress) {
+		m_pHeapMemory = mAddress;
+	}
+	// Getter
+	void* getMemory() {
+		return m_pHeapMemory;
+	}
 
 };
 
