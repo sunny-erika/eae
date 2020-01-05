@@ -2,6 +2,26 @@
 #include "HeapManager.h"
 #include <Windows.h>
 
+HeapManager::HeapManager() {
+	m_pHeapMemory = nullptr;
+	m_freeBlocks = nullptr;
+	m_oustandingBlocks = nullptr;
+	test = 3;
+}
+
+HeapManager::HeapManager(void * i_pHeapMemory, size_t i_HeapMemorySize)
+{
+	m_pHeapMemory = i_pHeapMemory;
+	m_HeapMemorySize = i_HeapMemorySize;
+	m_freeBlocks = nullptr;
+	m_oustandingBlocks = nullptr;
+}
+
+HeapManager::HeapManager(int i_test)
+{
+	test = i_test;
+}
+
 HeapManager::~HeapManager()
 {
 	m_pHeapMemory = nullptr;
@@ -9,29 +29,47 @@ HeapManager::~HeapManager()
 	m_oustandingBlocks = nullptr;
 }
 
+
 HeapManager * HeapManager::create(void * i_pHeapMemory, size_t i_HeapMemorySize, unsigned int i_numDescriptors)
 {
-	const size_t 		sizeHeapManager = sizeof(HeapManager);//
+	const size_t sizeHeapManager = sizeof(HeapManager);//
 	SYSTEM_INFO SysInfo;
 	GetSystemInfo(&SysInfo);
 	size_t sizeHeapInPageMultiples = SysInfo.dwPageSize * ((sizeHeapManager + SysInfo.dwPageSize) / SysInfo.dwPageSize);
 	void* pHeapMemory = VirtualAlloc(NULL, sizeHeapInPageMultiples, MEM_RESERVE | MEM_COMMIT, PAGE_READWRITE);
-	HeapManager* o_pHeapManager = (HeapManager*)pHeapMemory;
-	o_pHeapManager->initialize(i_pHeapMemory, i_HeapMemorySize);
+	//HeapManager* o_pHeapManager = (HeapManager*)pHeapMemory;
+	//o_pHeapManager->initialize(i_pHeapMemory, i_HeapMemorySize);
+	HeapManager * pHeapManager = &HeapManager::HeapManager();
+	pHeapManager->m_pHeapMemory = i_pHeapMemory;
+	pHeapManager->m_HeapMemorySize = i_HeapMemorySize;
+	pHeapManager->m_freeBlocks = (BlockDescriptor*)pHeapManager->m_pHeapMemory;
+	//pHeapManager->m_freeBlocks->m_pBlockStartAddr = i_pHeapMemory;
+	pHeapManager->m_freeBlocks->m_pBlockStartAddr = pHeapManager->m_pHeapMemory;
+	return pHeapManager;
 
-	return o_pHeapManager;
+	//return o_pHeapManager;
 }
+
+/*
+HeapManager * HeapManager::create(void * i_pHeapMemory, size_t i_HeapMemorySize, unsigned int i_numDescriptors)
+{
+	//return &HeapManager::HeapManager();//works
+	return &HeapManager::HeapManager(i_pHeapMemory, i_HeapMemorySize);
+
+}*/
 
 void HeapManager::initialize(void * i_pHeapMemory, size_t i_HeapMemorySize)
 {
-	//m_pHeapMemory = i_pHeapMemory;
-	//m_HeapMemorySize = i_HeapMemorySize;
+	m_pHeapMemory = i_pHeapMemory;
+	m_HeapMemorySize = i_HeapMemorySize;
 	m_freeBlocks = nullptr;
 	m_oustandingBlocks = nullptr;
 }
 
 void * HeapManager::_alloc(size_t i_bytes)
 {
+	size_t block_size = ALIGN(i_bytes + SIZE_T_SIZE);
+
 	return nullptr;
 }
 

@@ -52,7 +52,33 @@ void HeapManager::initialize(void * i_pHeapMemory, size_t i_HeapMemorySize)
 
 
 
+size_t HeapManager::getLargestFreeBlock()
+{//TODO
+	return size_t();
+}
 
+size_t HeapManager::getTotalFreeMemory()
+{//TODO
+	return size_t();
+}
+
+bool HeapManager::Contains(void * i_ptr)
+{//TODO
+	return false;
+}
+
+bool HeapManager::IsAllocated(void * i_ptr)
+{//TODO
+	return false;
+}
+
+void HeapManager::ShowFreeBlocks()
+{//TODO
+}
+
+void HeapManager::ShowOutstandingAllocations(const HeapManager * i_pManager)
+{//TODO
+}
 
 //doubly linked list
 	//inserts node at the front of the list

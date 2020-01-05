@@ -2,13 +2,25 @@
 #ifndef HEAP_MANAGER_H
 #define HEAP_MANAGER_H
 
+#define ALIGNMENT 4
+#define ALIGN(size) (((size) + (ALIGNMENT-1)) & ~(ALIGNMENT-1))
+#define SIZE_T_SIZE (ALIGN(sizeof(size_t))) // header size
+
 class HeapManager
 
 	
 {
-	void* m_pHeapMemory;
-	size_t m_HeapMemorySize;
+	//BlockDescriptor * m_freeBlocks;//freelist
+	//BlockDescriptor * m_oustandingBlocks;//allocated
+	//list of block descriptors - 
+	//need block descriptors for free blocks & outstanding(allocated) blocks
 
+	//HeapManager() {};
+
+public:
+	void* m_pHeapMemory = nullptr;
+	size_t m_HeapMemorySize;
+	int test;
 
 	struct BlockDescriptor
 	{
@@ -18,18 +30,13 @@ class HeapManager
 		BlockDescriptor* prev;
 	};
 
-	//BlockDescriptor * m_freeBlocks;//freelist
-	//BlockDescriptor * m_oustandingBlocks;//allocated
-	//list of block descriptors - 
-	//need block descriptors for free blocks & outstanding(allocated) blocks
-
-	HeapManager() {};
-
-public:
-
-	BlockDescriptor * m_freeBlocks;//freelist
+	BlockDescriptor * m_freeBlocks = nullptr;//freelist
 	BlockDescriptor * m_oustandingBlocks;
+	
 
+	HeapManager();
+	HeapManager(void* i_pHeapMemory, size_t i_HeapMemorySize);
+	HeapManager(int test);
 	~HeapManager();
 	   
 	static HeapManager* create(void* i_pHeapMemory, size_t i_HeapMemorySize, unsigned int i_numDescriptors);
