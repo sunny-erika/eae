@@ -107,12 +107,51 @@ void * HeapManager::_alloc(size_t i_bytes)
 
 void * HeapManager::_alloc(size_t i_bytes, unsigned int i_alignment)
 {
-	size_t block_size = ALIGN(i_bytes + SIZE_T_SIZE);
+	//size_t block_size = ALIGN(i_bytes + SIZE_T_SIZE);
 	//find: iterate through free list/check size of free block/reduce 
 	BlockDescriptor* node;//set by find()
 	BlockDescriptor* prevNode;//set by find()
 	size_t padding;//set by find()
 	find(i_bytes, i_alignment, padding, prevNode, node);
+	
+	size_t blockDescriptorSize = sizeof(BlockDescriptor);
+	size_t requiredSize = i_bytes + padding;
+	size_t sizeDifference = node->m_sizeBlock - requiredSize;//check
+
+	if (sizeDifference > 0) {//splitting
+		BlockDescriptor* newFreeBlock = (BlockDescriptor*)((size_t)node + requiredSize);
+		newFreeBlock->m_sizeBlock = sizeDifference;
+		//insert split free block in free list
+		m_freeBlocks;
+		if (prevNode == nullptr) {//1st element
+			if (m_freeBlocks != nullptr) {
+				node->next = m_freeBlocks;
+				node->next->prev = node;
+			}
+			else {
+				node->next = nullptr;
+			}
+			m_freeBlocks = node;
+			m_freeBlocks->prev = nullptr;
+		}
+		else {
+			if (prevNode->next == nullptr) {//if last
+				prevNode->next = node;
+				node->next = nullptr;
+			}
+			else { //middle
+				node->next = prevNode->next;
+				if (node->next != nullptr) {
+					node->next->prev = node;
+				}
+				prevNode->next = node;
+				node->prev = prevNode;
+			}
+		}
+
+	}//remove from free list and put in outstanding list
+
+
 	return nullptr;
 }
 
