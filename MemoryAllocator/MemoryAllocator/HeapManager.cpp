@@ -66,13 +66,22 @@ void HeapManager::initialize(void * i_pHeapMemory, size_t i_HeapMemorySize)
 	m_oustandingBlocks = nullptr;
 }
 
+size_t HeapManager::calculateAlignment(size_t baseAddress, size_t alignment)
+{
+	size_t multiplier = (baseAddress / alignment) + 1;
+	size_t alignedAddress = multiplier * alignment;
+	size_t padding = alignedAddress - baseAddress;
+	return padding;
+
+}
+
 void HeapManager::find(size_t size, size_t alignment, size_t& padding, BlockDescriptor *& previousNode, BlockDescriptor *& foundNode)
 {
 	BlockDescriptor* ptr_iteration = m_freeBlocks;
 	BlockDescriptor* ptr_iterationPrev = nullptr;
 	while (ptr_iteration != nullptr) {
-	
-		size_t requiredSize = size;//plus guardbanding, plus alignment
+		padding = calculateAlignment((size_t)ptr_iteration, alignment);
+		size_t requiredSize = size + padding;//plus guardbanding, plus alignment
 		if (ptr_iteration->m_sizeBlock >= requiredSize) {//found
 			break;
 		}
@@ -82,6 +91,8 @@ void HeapManager::find(size_t size, size_t alignment, size_t& padding, BlockDesc
 	previousNode = ptr_iterationPrev;
 	foundNode = ptr_iteration;
 }
+
+
 
 //within find() split()
 

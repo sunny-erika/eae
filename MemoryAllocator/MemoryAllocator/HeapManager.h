@@ -43,6 +43,7 @@ public:
 
 	void initialize(void* i_pHeapMemory, size_t i_HeapMemorySize);
 	void find(size_t size, size_t alignment, size_t& padding, BlockDescriptor* &previousNode, BlockDescriptor* &foundNode);
+	size_t calculateAlignment(size_t baseAddress, size_t alignment);
 	//the top ones are from the 'better samples
 
 	// allocation
