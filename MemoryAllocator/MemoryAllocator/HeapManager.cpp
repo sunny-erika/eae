@@ -109,6 +109,28 @@ void HeapManager::insert(BlockDescriptor* head, BlockDescriptor * previousNode, 
 
 }
 
+void HeapManager::remove(BlockDescriptor * head, BlockDescriptor * deleteNode)
+{
+	if (deleteNode->prev == nullptr) {//is first
+		if (deleteNode->next == nullptr) {//has only one
+			head = nullptr;
+		}
+		else {
+			head = deleteNode->next;
+			head->prev = nullptr;
+		}
+	}
+	else {
+		if (deleteNode->next == nullptr) {//is last
+			deleteNode->prev->next = nullptr;
+		}
+		else {//is middle
+			deleteNode->prev->next = deleteNode->next;
+			deleteNode->next->prev = deleteNode->prev;
+		}
+	}
+}
+
 void HeapManager::find(size_t size, size_t alignment, size_t& padding, BlockDescriptor *& previousNode, BlockDescriptor *& foundNode)
 {
 	BlockDescriptor* ptr_iteration = m_freeBlocks;
@@ -157,33 +179,7 @@ void * HeapManager::_alloc(size_t i_bytes, unsigned int i_alignment)
 		newFreeBlock->m_sizeBlock = sizeDifference;
 		//insert split free block in free list
 		m_freeBlocks;
-		/*
-		if (prevNode == nullptr) {//1st element
-			if (m_freeBlocks != nullptr) {
-				node->next = m_freeBlocks;
-				node->next->prev = node;
-			}
-			else {
-				node->next = nullptr;
-			}
-			m_freeBlocks = node;
-			m_freeBlocks->prev = nullptr;
-		}
-		else {
-			if (prevNode->next == nullptr) {//if last
-				prevNode->next = node;
-				node->next = nullptr;
-			}
-			else { //middle
-				node->next = prevNode->next;
-				if (node->next != nullptr) {
-					node->next->prev = node;
-				}
-				prevNode->next = node;
-				node->prev = prevNode;
-			}
-		}*/
-
+		insert(m_freeBlocks, prevNode, node);
 	}//remove from free list and put in outstanding list - insertion sort
 
 
