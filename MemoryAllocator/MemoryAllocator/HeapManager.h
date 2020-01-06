@@ -42,7 +42,7 @@ public:
 	static HeapManager* create(void* i_pHeapMemory, size_t i_HeapMemorySize, unsigned int i_numDescriptors);
 
 	void initialize(void* i_pHeapMemory, size_t i_HeapMemorySize);
-
+	void find(size_t size, size_t alignment, size_t& padding, BlockDescriptor* &previousNode, BlockDescriptor* &foundNode);
 	//the top ones are from the 'better samples
 
 	// allocation

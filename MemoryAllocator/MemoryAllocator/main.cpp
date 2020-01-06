@@ -28,7 +28,7 @@ int main()
 	//std::cout << pHeapManager->m_HeapMemorySize;
     std::cout << pHeapManager->m_pHeapMemory;
     std::cout << pHeapMemory;
-	std::cout << pHeapManager->m_freeBlocks->m_pBlockStartAddr;
+	//std::cout << pHeapManager->m_freeBlocks->m_pBlockStartAddr;
 
 
 	//void * pT1 = malloc(1);
