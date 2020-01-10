@@ -20,7 +20,7 @@ class HeapManager
 public:
 	void* m_pHeapMemory = nullptr;
 	size_t m_HeapMemorySize;
-	int test;
+	int test =8;
 
 	struct BlockDescriptor
 	{
@@ -42,7 +42,7 @@ public:
 	static HeapManager* create(void* i_pHeapMemory, size_t i_HeapMemorySize, unsigned int i_numDescriptors);
 
 	void initialize(void* i_pHeapMemory, size_t i_HeapMemorySize);
-	void find(size_t size, size_t alignment, size_t& padding, BlockDescriptor* &previousNode, BlockDescriptor* &foundNode);
+	void find(size_t size, size_t alignment, size_t &padding, BlockDescriptor* &previousNode, BlockDescriptor* &foundNode);
 	size_t calculateAlignment(size_t baseAddress, size_t alignment);
 	void insert(BlockDescriptor* head, BlockDescriptor* previousNode, BlockDescriptor* newNode);
 	void remove(BlockDescriptor* head, BlockDescriptor* deleteNode);
