@@ -19,19 +19,27 @@ int main()
 	void* pHeapMemory = VirtualAlloc(NULL, sizeHeapInPageMultiples, MEM_RESERVE | MEM_COMMIT, PAGE_READWRITE);
 	
 	//HeapManager * pHeapManager = HeapManager::create(pHeapMemory, 512, 0);
-	HeapManager * pHeapManager = HeapManager::create(pHeapMemory, sizeHeapInPageMultiples, 0);
+	//HeapManager * pHeapManager = HeapManager::create(pHeapMemory, sizeHeapInPageMultiples, 0);
 	//static HeapManager* create(void* i_pHeapMemory, size_t i_HeapMemorySize, unsigned int i_numDescriptors);
 
 	//std::cout << pHeapManager->test
 	//std::cout << pHeapManager->m_freeBlocks;
 
 	//std::cout << pHeapManager->m_HeapMemorySize;
+	/*
     std::cout << pHeapManager->m_pHeapMemory;
     std::cout << pHeapMemory;
 	std::cout << pHeapManager->m_freeBlocks->m_pBlockStartAddr;
+	*/
 	//pHeapManager->_alloc(20, 4);
 
+	HeapManager * pHeapManagerNew = new HeapManager(pHeapMemory, sizeHeapInPageMultiples);
+	std::cout << sizeHeapInPageMultiples;
+	std::cout << pHeapManagerNew->m_pHeapMemory;
+	std::cout << pHeapManagerNew->m_freeBlocks->m_pBlockStartAddr;
+	std::cout << pHeapManagerNew->m_freeBlocks->m_sizeBlock;
 
+	pHeapManagerNew->_alloc(20, 4);
 
 	//void * pT1 = malloc(1);
 	//void * pT2 = malloc(1);

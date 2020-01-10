@@ -14,7 +14,10 @@ HeapManager::HeapManager(void * i_pHeapMemory, size_t i_HeapMemorySize)
 {
 	m_pHeapMemory = i_pHeapMemory;
 	m_HeapMemorySize = i_HeapMemorySize;
-	m_freeBlocks = nullptr;
+	m_freeBlocks = (BlockDescriptor*)m_pHeapMemory;
+	//m_freeBlocks = nullptr;
+	m_freeBlocks->m_pBlockStartAddr = m_pHeapMemory;
+	m_freeBlocks->m_sizeBlock = m_HeapMemorySize;
 	m_oustandingBlocks = nullptr;
 }
 
