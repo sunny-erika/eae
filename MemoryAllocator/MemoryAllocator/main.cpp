@@ -34,10 +34,11 @@ int main()
 	//pHeapManager->_alloc(20, 4);
 
 	HeapManager * pHeapManagerNew = new HeapManager(pHeapMemory, sizeHeapInPageMultiples);
-	std::cout << sizeHeapInPageMultiples;
-	std::cout << pHeapManagerNew->m_pHeapMemory;
-	std::cout << pHeapManagerNew->m_freeBlocks->m_pBlockStartAddr;
-	std::cout << pHeapManagerNew->m_freeBlocks->m_sizeBlock;
+	std::cout << sizeHeapInPageMultiples << "\n";
+	std::cout << pHeapManagerNew->m_pHeapMemory << "\n";
+	std::cout << pHeapManagerNew->m_freeBlocks->m_pBlockStartAddr << "\n";
+	std::cout << pHeapManagerNew->m_freeBlocks->m_sizeBlock << "\n";
+	std::cout << "call to malloc:\n";
 
 	pHeapManagerNew->_alloc(20, 4);
 

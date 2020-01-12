@@ -139,7 +139,7 @@ void HeapManager::find(size_t size, size_t alignment, size_t& padding, BlockDesc
 {
 	BlockDescriptor* ptr_iteration = m_freeBlocks;//
 	BlockDescriptor* ptr_iterationPrev = nullptr;
-	std::cout << "within find(): size of head: " << ptr_iteration->m_sizeBlock;
+	std::cout << "within find(): size of head: " << ptr_iteration->m_sizeBlock << "\n";
 	while (ptr_iteration != nullptr) {
 		padding = calculateAlignment((size_t)ptr_iteration, alignment);
 		size_t requiredSize = size + padding;//plus guardbanding, plus alignment
@@ -151,7 +151,7 @@ void HeapManager::find(size_t size, size_t alignment, size_t& padding, BlockDesc
 	}
 	previousNode = ptr_iterationPrev;
 	foundNode = ptr_iteration;
-	std::cout << "node found in find() at: " << foundNode->m_pBlockStartAddr << "size:  " << foundNode->m_sizeBlock;
+	std::cout << "node found in find() at: " << foundNode->m_pBlockStartAddr << "size:  " << foundNode->m_sizeBlock << "\n";
 }
 
 
@@ -172,11 +172,11 @@ void * HeapManager::_alloc(size_t i_bytes, unsigned int i_alignment)
 	//size_t block_size = ALIGN(i_bytes + SIZE_T_SIZE);
 	//find: iterate through free list/check size of free block/reduce 
 	BlockDescriptor* node = nullptr;//set by find()//foundNode in find() 
-	std::cout << "node in _alloc at start of function call: " << node;
+	std::cout << "node in _alloc at start of function call: " << node << "\n";
 	BlockDescriptor* prevNode = nullptr;//set by find()
 	size_t padding = 0;
 	find(i_bytes, i_alignment, padding, prevNode, node);//reference
-	std::cout << "node in _alloc after find function call: " << node;
+	std::cout << "node in _alloc after find function call: " << node << "\n";
 	std::cout << " blocksize: " << node ->m_sizeBlock;
 
 	size_t blockDescriptorSize = sizeof(BlockDescriptor);
@@ -198,7 +198,7 @@ void * HeapManager::_alloc(size_t i_bytes, unsigned int i_alignment)
 	size_t userPtr = blockDescriptorAddress + blockDescriptorSize;//includes padding for alignment
 	
 	insert(m_oustandingBlocks, nullptr, node);//insert at front
-	std::cout << "inserted to outstanding and returning as void ptr: node address: " << node->m_pBlockStartAddr << "  size: " << node->m_sizeBlock;
+	std::cout << "\n inserted to outstanding and returning as void ptr: node address: " << node->m_pBlockStartAddr << " \n size: " << node->m_sizeBlock << "\n";
 	
 	//return node ->m_pBlockStartAddr;//return user pointer to data block - therefore the return address needs to be adjusted
 	return nullptr;
