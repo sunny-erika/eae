@@ -135,6 +135,53 @@ void HeapManager::remove(BlockDescriptor * head, BlockDescriptor * deleteNode)
 	}
 }
 
+void HeapManager::s_insert(BlockDescriptor * head, BlockDescriptor * previousNode, BlockDescriptor * newNode)
+{
+	if (previousNode == nullptr) {
+		// Is the first node
+		if (head != nullptr) {
+			// The list has more elements
+			newNode->next = head;
+		}
+		else {
+			newNode->next = nullptr;
+		}
+		head = newNode;
+	}
+	else {
+		if (previousNode->next == nullptr) {
+			// Is the last node
+			previousNode->next = newNode;
+			newNode->next = nullptr;
+		}
+		else {
+			// Is a middle node
+			newNode->next = previousNode->next;
+			previousNode->next = newNode;
+		}
+	}
+}
+
+void HeapManager::s_remove(BlockDescriptor * head, BlockDescriptor * previousNode, BlockDescriptor * deleteNode)
+{
+	if (previousNode == nullptr) {
+		// Is the first node
+		if (deleteNode->next == nullptr) {
+			// List only has one element
+			head = nullptr;
+		}
+		else {
+			// List has more elements
+			head = deleteNode->next;
+		}
+	}
+	else {
+		previousNode->next = deleteNode->next;
+	}
+}
+
+
+
 void HeapManager::find(size_t size, size_t alignment, size_t& padding, BlockDescriptor *& previousNode, BlockDescriptor *& foundNode)
 {
 	BlockDescriptor* ptr_iteration = m_freeBlocks;//
@@ -177,31 +224,43 @@ void * HeapManager::_alloc(size_t i_bytes, unsigned int i_alignment)
 	size_t padding = 0;
 	find(i_bytes, i_alignment, padding, prevNode, node);//reference
 	std::cout << "node in _alloc after find function call: " << node << "\n";
-	std::cout << " blocksize: " << node ->m_sizeBlock;
+	std::cout << " blocksize: " << node ->m_sizeBlock << "\n";
+	std::cout << "previous node : " << prevNode << "\n";
 
 	size_t blockDescriptorSize = sizeof(BlockDescriptor);
 	size_t requiredSize = i_bytes + padding;
 	size_t sizeDifference = node->m_sizeBlock - requiredSize;
 	size_t alignmentPadding = padding - blockDescriptorSize;
+	std::cout << "size of BD " << blockDescriptorSize << "\n";
+	std::cout << "padding " << padding << "\n";
+	std::cout << "requiredSize = bytes +padding: " << requiredSize << "\n";
+	std::cout << "sizedifference: " << sizeDifference << "\n";
+	std::cout << "alignmentPadding " << alignmentPadding << "\n";
+
 
 	if (sizeDifference > 0) {//splitting
 		BlockDescriptor* newFreeBlock = (BlockDescriptor*)((size_t)node + requiredSize);
 		newFreeBlock->m_sizeBlock = sizeDifference;
 		//insert split free block in free list
-		insert(m_freeBlocks, prevNode, node);
+		s_insert(m_freeBlocks, node, newFreeBlock);
+		std::cout << "newFreeBlockBD's address " << newFreeBlock << "\n";
 	}
 	else {//remove from free list 
-		remove(m_freeBlocks, node);
+		s_remove(m_freeBlocks, prevNode, node);
 	}
 
-	size_t blockDescriptorAddress = (size_t)node + alignmentPadding;
+	//size_t blockDescriptorAddress = (size_t)node + alignmentPadding;
+	size_t blockDescriptorAddress = (size_t)node + padding;
 	size_t userPtr = blockDescriptorAddress + blockDescriptorSize;//includes padding for alignment
+	((BlockDescriptor*)blockDescriptorAddress)->m_sizeBlock = requiredSize;
+	std::cout << "BDaddress(node+alignment) " << blockDescriptorAddress << "\n";
+	std::cout << "userPtr(BDaddress+BDsize) " << userPtr << "\n";
 	
-	insert(m_oustandingBlocks, nullptr, node);//insert at front
-	std::cout << "\n inserted to outstanding and returning as void ptr: node address: " << node->m_pBlockStartAddr << " \n size: " << node->m_sizeBlock << "\n";
+	//s_insert(m_oustandingBlocks, nullptr, node);//insert at front
+	//std::cout << "\n inserted to outstanding and returning as void ptr: node address: " << node->m_pBlockStartAddr << " \n size: " << node->m_sizeBlock << "\n";
 	
 	//return node ->m_pBlockStartAddr;//return user pointer to data block - therefore the return address needs to be adjusted
-	return nullptr;
+	return (void*)userPtr;
 }
 
 void * HeapManager::_alloc(HeapManager * i_heapManager, size_t i_bytes, unsigned int i_alignment)
