@@ -1,0 +1,7 @@
+﻿  pch.cpp
+  MakeSentenceConsole.cpp
+d:\drivemyfiles\git\u1274217\makesentenceconsole\makesentenceconsole\makesentenceconsole.cpp(19): warning C4244: 'initializing': conversion from '__int64' to 'int', possible loss of data
+d:\drivemyfiles\git\u1274217\makesentenceconsole\makesentenceconsole\makesentenceconsole.cpp(29): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+d:\drivemyfiles\git\u1274217\makesentenceconsole\makesentenceconsole\makesentenceconsole.cpp(48): warning C4551: function call missing argument list
+d:\drivemyfiles\git\u1274217\makesentenceconsole\makesentenceconsole\makesentenceconsole.cpp(96): warning C4244: 'initializing': conversion from '__int64' to 'int', possible loss of data
+  MakeSentenceConsole.vcxproj -> D:\DriveMyFiles\Git\u1274217\MakeSentenceConsole\x64\Debug\MakeSentenceConsole.exe
