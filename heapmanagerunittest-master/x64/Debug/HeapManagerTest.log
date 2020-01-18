@@ -1,6 +1,0 @@
-﻿  HeapManager.cpp
-  HeapManager_UnitTest.cpp
-  main.cpp
-  Generating Code...
-HeapManager-Debug-x64.lib(HeapManager.obj) : error LNK2005: "public: static class HeapManager * __cdecl HeapManager::create(void *,unsigned __int64,unsigned int)" (?create@HeapManager@@SAPEAV1@PEAX_KI@Z) already defined in HeapManager.obj
-D:\DriveMyFiles\Git\u1274217\heapmanagerunittest-master\x64\Debug\HeapManagerTest.exe : fatal error LNK1169: one or more multiply defined symbols found

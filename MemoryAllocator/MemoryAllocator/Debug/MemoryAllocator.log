@@ -1,3 +1,0 @@
-﻿  HeapManager.cpp
-d:\drivemyfiles\git\u1274217\memoryallocator\memoryallocator\heapmanager.cpp(52): warning C4172: returning address of local variable or temporary
-  MemoryAllocator.vcxproj -> D:\DriveMyFiles\Git\u1274217\MemoryAllocator\Debug\MemoryAllocator.exe
