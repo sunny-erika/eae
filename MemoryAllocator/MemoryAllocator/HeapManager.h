@@ -30,7 +30,7 @@ public:
 		BlockDescriptor* prev;
 	};
 
-	BlockDescriptor * m_freeBlocks = nullptr;//freelist
+	BlockDescriptor * m_freeBlocks = nullptr;//freelist - queried in main
 	BlockDescriptor * m_oustandingBlocks;
 	
 
@@ -43,6 +43,7 @@ public:
 
 	void initialize(void* i_pHeapMemory, size_t i_HeapMemorySize);
 	void find(size_t size, size_t alignment, size_t &padding, BlockDescriptor* &previousNode, BlockDescriptor* &foundNode);
+	void find1(size_t size, size_t alignment, size_t &padding, BlockDescriptor* &previousNode, BlockDescriptor* &foundNode);
 	size_t calculateAlignment(size_t baseAddress, size_t alignment);
 	
 	//doubly
@@ -58,6 +59,7 @@ public:
 
 	// allocation with alignment. returns a block of memory with a given alignment
 	void* _alloc(size_t i_bytes, unsigned int i_alignment);
+	void* _alloc1(size_t i_bytes, unsigned int i_alignment);
 	void* _alloc(HeapManager * i_heapManager, size_t i_bytes, unsigned int i_alignment);
 	void * alloc(HeapManager * i_pManager, size_t i_size);
 	void * alloc(HeapManager * i_pManager, size_t i_size, unsigned int i_alignment);

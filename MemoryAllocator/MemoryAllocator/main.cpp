@@ -34,13 +34,25 @@ int main()
 	//pHeapManager->_alloc(20, 4);
 
 	HeapManager * pHeapManagerNew = new HeapManager(pHeapMemory, sizeHeapInPageMultiples);
+	//HeapManager * pHeapManager = HeapManager::create(pHeapMemory, sizeHeap, numDescriptors);//from unit test
+
+
 	std::cout << sizeHeapInPageMultiples << "\n";
 	std::cout << pHeapManagerNew->m_pHeapMemory << "\n";
 	std::cout << pHeapManagerNew->m_freeBlocks->m_pBlockStartAddr << "\n";
 	std::cout << pHeapManagerNew->m_freeBlocks->m_sizeBlock << "\n";
 	std::cout << "call to malloc:\n";
 
-	pHeapManagerNew->_alloc(20, 4);
+	//pHeapManagerNew->_alloc(20, 4);// void * HeapManager::_alloc(size_t i_bytes, unsigned int i_alignment)//cpp
+	//void * pPtr = pHeapManager->_alloc(pHeapManager, sizeAlloc, alignment);//from unit test
+	//pHeapManagerNew->_alloc(1052674, 4);
+	//pHeapManagerNew->_alloc1(1052674, 4);
+	//pHeapManagerNew->_alloc1(20, 4);
+
+	//void* allocatedMemoryPtr = pHeapManagerNew->_alloc1(20, 4);
+	void* allocatedMemoryPtr = pHeapManagerNew->_alloc1(1052674, 4);
+	std::cout << "in main - returned pointer " << allocatedMemoryPtr << "\n";
+
 
 	//void * pT1 = malloc(1);
 	//void * pT2 = malloc(1);
