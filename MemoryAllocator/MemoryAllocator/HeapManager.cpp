@@ -7,7 +7,7 @@ HeapManager::HeapManager() {
 	m_pHeapMemory = nullptr;
 	m_freeBlocks = nullptr;
 	m_oustandingBlocks = nullptr;
-	test = 3;
+	//test = 3;
 }
 
 //called in main
@@ -31,6 +31,9 @@ HeapManager::~HeapManager()
 {
 	m_pHeapMemory = nullptr;
 	m_freeBlocks = nullptr;
+	m_oustandingBlocks = nullptr;
+	//and within freeBlock & outstandingBlocks
+	m_freeBlocks->m_pBlockStartAddr = nullptr;
 	m_oustandingBlocks = nullptr;
 }
 
@@ -80,7 +83,12 @@ size_t HeapManager::calculateAlignment(size_t baseAddress, size_t alignment)
 
 }
 
-void HeapManager::insert(BlockDescriptor* head, BlockDescriptor * previousNode, BlockDescriptor * newNode)
+size_t HeapManager::alignSize(size_t requiredBytes) {//tutorial - aligns to machine word either 4 or 8
+	return (requiredBytes + 4 - 1) & ~(4 - 1);//32--bit machine
+}
+
+
+void HeapManager::insert(BlockDescriptor* head, BlockDescriptor * previousNode, BlockDescriptor * newNode)//doubly,insert at head
 {
 	if (previousNode == nullptr) {
 		// Is the first node
@@ -136,7 +144,7 @@ void HeapManager::remove(BlockDescriptor * head, BlockDescriptor * deleteNode)
 	}
 }
 
-void HeapManager::s_insert(BlockDescriptor * head, BlockDescriptor * previousNode, BlockDescriptor * newNode)
+void HeapManager::s_insert(BlockDescriptor * head, BlockDescriptor * previousNode, BlockDescriptor * newNode)//insert,single at head
 {
 	if (previousNode == nullptr) {
 		// Is the first node

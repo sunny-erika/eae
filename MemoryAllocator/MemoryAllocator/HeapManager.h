@@ -45,6 +45,7 @@ public:
 	void find(size_t size, size_t alignment, size_t &padding, BlockDescriptor* &previousNode, BlockDescriptor* &foundNode);
 	void find1(size_t size, size_t alignment, size_t &padding, BlockDescriptor* &previousNode, BlockDescriptor* &foundNode);
 	size_t calculateAlignment(size_t baseAddress, size_t alignment);
+	size_t alignSize(size_t requiredBytes);
 	
 	//doubly
 	void insert(BlockDescriptor* head, BlockDescriptor* previousNode, BlockDescriptor* newNode);
