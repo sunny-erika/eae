@@ -50,11 +50,12 @@ int main()
 	//pHeapManagerNew->_alloc1(20, 4);
 
 	
-	void* allocatedMemoryPtr = pHeapManagerNew->_alloc1(20, 4);	
+	//void* allocatedMemoryPtr = pHeapManagerNew->_alloc1(20, 4);	
+	void* allocatedMemoryPtr = pHeapManagerNew->_alloc2(20, 4);
 	//void* allocatedMemoryPtr = pHeapManagerNew->_alloc1(1052674, 4);
 	std::cout << "in main - returned pointer " << allocatedMemoryPtr << "\n";
-	size_t alignedSize = pHeapManagerNew->alignSize(3);
-	std::cout << "in main - aligned size " << alignedSize << "\n";
+	size_t alignedSize = pHeapManagerNew->alignSize(21);
+	std::cout << "in main - aligned size (required size + padding) " << alignedSize << "\n";
 
 	//void * pT1 = malloc(1);
 	//void * pT2 = malloc(1);
