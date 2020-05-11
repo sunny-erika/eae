@@ -422,36 +422,33 @@ void * HeapManager::_alloc2(size_t i_bytes, unsigned int i_alignment)//returning
 		//size_t * test = reinterpret_cast<size_t*>(node) + 16;
 		//size_t * test = reinterpret_cast<size_t*>(node) ;
 		//size_t * test = (size_t*)16;
-		size_t * test = reinterpret_cast<size_t*>(16);
-		size_t * test2 = reinterpret_cast<size_t*>(node);
+		//size_t * test = reinterpret_cast<size_t*>(16);
+		//size_t * test2 = reinterpret_cast<size_t*>(node);
 		//size_t * sumTests = test + test2;
 		//uint8_t * ptrTest = reinterpret_cast<uint8_t*> (m_freeBlocks->m_pBlockStartAddr);
-		void * ptrTest = m_freeBlocks->m_pBlockStartAddr;
+		//void * ptrTest = m_freeBlocks->m_pBlockStartAddr;
 		//uint8_t * ptrTestCast = reinterpret_cast<uint8_t*>(ptrTest);
 		//uint8_t * ptrTestCast = (uint8_t*)ptrTest;
-		uint8_t * ptrTestCast = (uint8_t*)m_freeBlocks;
+		//uint8_t * ptrTestCast = (uint8_t*)m_freeBlocks;
 		//void * test3 = reinterpret_cast<void*>(node + blockDescriptorSize);
-		void * test3 = reinterpret_cast<void*>((size_t)node + blockDescriptorSize);
+		//void * test3 = reinterpret_cast<void*>((size_t)node + blockDescriptorSize);
 		BlockDescriptor * test4 = reinterpret_cast<BlockDescriptor*>((size_t)node + blockDescriptorSize);
-		
-		
-				
-		std::cout << "test: 16 in HEX " << test << "\n";
-		std::cout << "test2: node (BDaddress) " << test2 << "\n";
-		std::cout << "ptrTest: void ptr from virtual alloc reinter " << ptrTest << "\n";
-		std::cout << "ptrTestCast: void ptr from virtual alloc reinter to uint8_t* " << ptrTestCast << "\n";
-		std::cout << "test 3 " << test3 << "\n";
-		std::cout << "test 4 " << test3 << "\n";
+						
+		//std::cout << "test: 16 in HEX " << test << "\n";
+		//std::cout << "test2: node (BDaddress) " << test2 << "\n";
+		//std::cout << "ptrTest: void ptr from virtual alloc reinter " << ptrTest << "\n";
+		//std::cout << "ptrTestCast: void ptr from virtual alloc reinter to uint8_t* " << ptrTestCast << "\n";
+		//std::cout << "test 3 " << test3 << "\n";
+		//std::cout << "test 4 " << test3 << "\n";
 		//std::cout << "alignmentPadding " << alignmentPadding << "\n";
 		
-
-
-		//size_t blockDescriptorAddress = (size_t)node + alignmentPadding;
+	    //size_t blockDescriptorAddress = (size_t)node + alignmentPadding;
 		//size_t blockDescriptorAddress = (size_t)node + padding;
 		//BlockDescriptor * blockDescriptorAddress = node;
 		//userPtr = blockDescriptorAddress + blockDescriptorSize;//includes padding for alignment
 		//userPtr = (size_t*)node + blockDescriptorSize;
-		userPtr = (size_t*)node + blockDescriptorSize;
+		//userPtr = (size_t*)node + blockDescriptorSize;
+		userPtr = reinterpret_cast<size_t*>((size_t)node + blockDescriptorSize);
 		((BlockDescriptor*)blockDescriptorAddress)->m_sizeBlock = requiredSize;
 		//std::cout << "BDaddress(node+alignment) " << blockDescriptorAddress << "\n";
 		std::cout << "BDaddress(node) " << blockDescriptorAddress << "\n";
@@ -467,8 +464,8 @@ void * HeapManager::_alloc2(size_t i_bytes, unsigned int i_alignment)//returning
 			std::cout << "in if - BDaddress(node) " << blockDescriptorAddress << "\n";
 
 			//BlockDescriptor* newFreeBlock = (BlockDescriptor*)node + blockDescriptorSize + requiredSize;
-
-			BlockDescriptor* newFreeBlock = (BlockDescriptor*)userPtr + requiredSize;
+			//BlockDescriptor * test4 = reinterpret_cast<BlockDescriptor*>((size_t)node + blockDescriptorSize);
+			BlockDescriptor* newFreeBlock = reinterpret_cast<BlockDescriptor*>((size_t)userPtr + requiredSize);
 
 			newFreeBlock->m_sizeBlock = sizeDifference;
 			//insert split free block in free list
