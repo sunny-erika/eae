@@ -51,6 +51,10 @@ public:
 	//doubly
 	void insert(BlockDescriptor* head, BlockDescriptor* previousNode, BlockDescriptor* newNode);
 	void remove(BlockDescriptor* head, BlockDescriptor* deleteNode);
+
+	void insertFront(BlockDescriptor ** head, BlockDescriptor* newNode);
+	void printList(BlockDescriptor* node);
+	
 	//singly
 	void s_insert(BlockDescriptor* head, BlockDescriptor* previousNode, BlockDescriptor* newNode);
 	void s_remove(BlockDescriptor* head, BlockDescriptor* previousNode, BlockDescriptor* deleteNode);

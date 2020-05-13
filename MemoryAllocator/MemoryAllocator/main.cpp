@@ -41,7 +41,7 @@ int main()
 	std::cout << pHeapManagerNew->m_pHeapMemory << " - in main m_pHeapMemory\n";
 	std::cout << pHeapManagerNew->m_freeBlocks->m_pBlockStartAddr << " - in main m_pBlockstartAddr \n";
 	std::cout << pHeapManagerNew->m_freeBlocks->m_sizeBlock << " - in main m_sizeBlock \n";
-	std::cout << "call to malloc:\n";
+	std::cout << "call to malloc - required size is 26:\n";
 	
 	//pHeapManagerNew->_alloc(20, 4);// void * HeapManager::_alloc(size_t i_bytes, unsigned int i_alignment)//cpp
 	//void * pPtr = pHeapManager->_alloc(pHeapManager, sizeAlloc, alignment);//from unit test
@@ -51,11 +51,30 @@ int main()
 
 	
 	//void* allocatedMemoryPtr = pHeapManagerNew->_alloc1(20, 4);	
-	void* allocatedMemoryPtr = pHeapManagerNew->_alloc2(20, 4);
+	//void* allocatedMemoryPtr = pHeapManagerNew->_alloc2(21, 4);
+	void* allocatedMemoryPtr = pHeapManagerNew->_alloc2(26, 4);
 	//void* allocatedMemoryPtr = pHeapManagerNew->_alloc1(1052674, 4);
-	std::cout << "in main - returned pointer " << allocatedMemoryPtr << "\n";
-	size_t alignedSize = pHeapManagerNew->alignSize(21);
+	size_t alignedSize = pHeapManagerNew->alignSize(26);
 	std::cout << "in main - aligned size (required size + padding) " << alignedSize << "\n";
+	std::cout << "in main - returned pointer " << allocatedMemoryPtr << "\n";
+		
+	std::cout << "\n ****************** " << "\n";
+	std::cout << "2nd alloc2 call - required size is 2" <<  "\n";
+	
+	std::cout << sizeHeapInPageMultiples << " - in main sizeHeapInPageMultiples \n";
+	std::cout << pHeapManagerNew->m_pHeapMemory << " - in main m_pHeapMemory\n";
+	std::cout << pHeapManagerNew->m_freeBlocks->m_pBlockStartAddr << " - in main m_pBlockstartAddr \n";
+	std::cout << pHeapManagerNew->m_freeBlocks->m_sizeBlock << " - in main m_sizeBlock \n";
+	
+	void* allocatedMemoryPtr2 = pHeapManagerNew->_alloc2(31, 4);
+	//void* allocatedMemoryPtr2 = pHeapManagerNew->_alloc2(2, 4);
+	size_t alignedSize2 = pHeapManagerNew->alignSize(3);
+	std::cout << "in main - aligned size (required size + padding) " << alignedSize2 << "\n";
+	std::cout << "in main - returned pointer " << allocatedMemoryPtr2 << "\n";
+
+	std::cout << "\n ****************** " << "\n";
+	pHeapManagerNew->printList(pHeapManagerNew->m_freeBlocks);
+
 
 	//void * pT1 = malloc(1);
 	//void * pT2 = malloc(1);
@@ -79,6 +98,7 @@ int main()
 	HeapManager* heapMgr = new HeapManager();
 	std::cout << heapMgr->test << "\n";
 	*/
+
 
 	
 
