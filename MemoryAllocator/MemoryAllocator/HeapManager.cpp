@@ -506,7 +506,7 @@ void * HeapManager::_alloc2(size_t i_bytes, unsigned int i_alignment)//returning
 			std::cout << "in if newFreeBlockBD's sizeDifference " << newFreeBlock->m_sizeBlock << "\n";
 			//insert split free block in free list
 			//s_insert(m_freeBlocks, node, newFreeBlock);
-			insert_front(&m_freeBlocks, newFreeBlock);
+			insertFront(&m_freeBlocks, newFreeBlock);
 			std::cout << "in if newFreeBlockBD's address " << newFreeBlock << "\n";
 		}
 		else {//remove from free list 
