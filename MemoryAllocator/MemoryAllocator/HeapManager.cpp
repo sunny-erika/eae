@@ -6,7 +6,7 @@
 HeapManager::HeapManager() {
 	m_pHeapMemory = nullptr;
 	m_freeBlocks = nullptr;
-	m_oustandingBlocks = nullptr;
+	m_outstandingBlocks = nullptr;
 	//test = 3;
 }
 
@@ -22,7 +22,7 @@ HeapManager::HeapManager(void * i_pHeapMemory, size_t i_HeapMemorySize)
 	std::cout << "***in constructor***m_freeBlocks: " << m_freeBlocks << " \n";
 	std::cout << "***in constructor***m_freeBlocks->m_pBlockStartAddr the memory assigned from main: " << m_freeBlocks->m_pBlockStartAddr << " \n";
 	m_freeBlocks->m_sizeBlock = m_HeapMemorySize;
-	m_oustandingBlocks = nullptr;
+	m_outstandingBlocks = nullptr;
 }
 
 HeapManager::HeapManager(int i_test)
@@ -34,10 +34,10 @@ HeapManager::~HeapManager()
 {
 	m_pHeapMemory = nullptr;
 	m_freeBlocks = nullptr;
-	m_oustandingBlocks = nullptr;
+	m_outstandingBlocks = nullptr;
 	//and within freeBlock & outstandingBlocks
 	m_freeBlocks->m_pBlockStartAddr = nullptr;
-	m_oustandingBlocks = nullptr;
+	m_outstandingBlocks = nullptr;
 }
 
 
@@ -74,7 +74,7 @@ void HeapManager::initialize(void * i_pHeapMemory, size_t i_HeapMemorySize)
 	m_pHeapMemory = i_pHeapMemory;
 	m_HeapMemorySize = i_HeapMemorySize;
 	m_freeBlocks = nullptr;
-	m_oustandingBlocks = nullptr;
+	m_outstandingBlocks = nullptr;
 }
 
 size_t HeapManager::calculateAlignment(size_t baseAddress, size_t alignment)
@@ -136,19 +136,27 @@ void HeapManager::insertFront(BlockDescriptor **head, BlockDescriptor *newNode) 
 	(*head) = newNode;
 }
 
-void HeapManager::printList(BlockDescriptor * node)
+
+void HeapManager::deleteFront(BlockDescriptor ** head)
 {
-	BlockDescriptor * last;
-	while (node != NULL) {
-		std::cout << node->m_sizeBlock << "<==> \n";
-		last = node;
-		node = node->next;
-	}
-	if (node == NULL)
-		std::cout << "NULL";
-
-
+	BlockDescriptor *temp = (*head);
+	(*head) = (*head)->next;
+	temp = nullptr;
 }
+
+void HeapManager::deleteLast(BlockDescriptor ** head)
+{
+	
+}
+
+void HeapManager::deleteMe(BlockDescriptor ** head, BlockDescriptor * deleteMe)
+{
+	if (*head == deleteMe) {
+		(*head) = (*head)->next;
+	}
+}
+
+
 
 
 void HeapManager::remove(BlockDescriptor * head, BlockDescriptor * deleteNode)
@@ -173,7 +181,136 @@ void HeapManager::remove(BlockDescriptor * head, BlockDescriptor * deleteNode)
 	}
 }
 
+void HeapManager::deleteNode(BlockDescriptor ** head, BlockDescriptor * node) {
+	/* base case */
+	if (*head == NULL || node == NULL)
+		return;
 
+	/* If node to be deleted is head node */
+	if (*head == node)
+		*head = node->next;
+
+	/* Change next only if node to be
+	deleted is NOT the last node */
+	if (node->next != NULL)
+		node->next->prev = node->prev;
+
+	/* Change prev only if node to be
+	deleted is NOT the first node */
+	if (node->prev != NULL)
+		node->prev->next = node->next;
+
+	//delete(node);
+	printList(*head);
+}
+
+void HeapManager::deleteNode1(BlockDescriptor *& head, BlockDescriptor * node) {
+	/* base case */
+	if (head == NULL || node == NULL)
+		return;
+
+	/* If node to be deleted is head node */
+	if (head == node)
+		head = node->next;
+
+	/* Change next only if node to be
+	deleted is NOT the last node */
+	if (node->next != NULL)
+		node->next->prev = node->prev;
+
+	/* Change prev only if node to be
+	deleted is NOT the first node */
+	if (node->prev != NULL)
+		node->prev->next = node->next;
+
+	//delete(node);
+	printList(head);
+}
+
+
+void HeapManager::removeFromList(BlockDescriptor *& head, BlockDescriptor * node) {
+
+	BlockDescriptor ** current = &head; 
+	std::cout << "\n inside removeFromList *current " << *current;
+	std::cout << "\n inside removeFromList current " << current;
+	std::cout << "\n inside removeFromList &(*current) " << &(*current);
+	std::cout << "\n inside removeFromList &(*current)->next " << &(*current)->next;
+	std::cout << "\n inside removeFromList &((*current)->next) " << &((*current)->next);
+	std::cout << "\n inside removeFromList head " << head;
+	std::cout << "\n inside removeFromList *&head " << *& head;
+	std::cout << "\n inside removeFromList &head " << & head;
+	std::cout << "\n inside removeFromList &head " << &head;
+	
+	while (*current) {//read access violation
+		if (*current == node) {
+			*current = node->next;
+			node->next = nullptr;
+			
+		}
+		current = &(*current)->next;
+		
+	}
+	BlockDescriptor ** curr = &((*current)->next);
+	std::cout << "\n inside removeFromList &(*current)->next after while " << &(*current)->next;
+	std::cout << "\n inside removeFromList curr " << curr;
+	std::cout << "\n printList inside removeFromList \n";
+
+	printList(head);
+}
+
+void HeapManager::removeFromList1(BlockDescriptor ** head, BlockDescriptor * node) {
+
+	BlockDescriptor ** current = head;
+
+	while (*current) {
+		if (*current == node) {
+			*current = node->next;
+			node->next = nullptr;
+
+		}
+		current = &(*current)->next;
+	}
+}
+
+void HeapManager::printList(BlockDescriptor * node)
+{
+	BlockDescriptor * last;
+	while (node != NULL) {
+		std::cout << "\n inside while of print list node " << node ;
+		std::cout << " size " << node->m_sizeBlock <<"\n" ;
+		last = node;
+		node = node->next;
+	}
+	if (node == NULL)
+		std::cout << "NULL";
+}
+
+void HeapManager::testingDelete() {
+	
+	BlockDescriptor *node1 = m_freeBlocks;
+	std::cout << "\n in testing node1 = " << node1 <<"\n";
+	//BlockDescriptor *node2 = reinterpret_cast<BlockDescriptor*>(217);
+	//BlockDescriptor *node3 = reinterpret_cast<BlockDescriptor*>(233);
+	   
+	//insertFront(&m_freeBlocks, node1);
+	//insertFront(&m_freeBlocks, node2);
+	//insertFront(&m_freeBlocks, node3);
+	std::cout << "in testing m_freeBlocks = " << m_freeBlocks << "\n";
+	std::cout << "in testing printing after insertion" << "\n";
+	printList(m_freeBlocks);
+	
+	//deleteNode(&m_freeBlocks, node1);
+	//deleteNode1(m_freeBlocks, node1);
+	//deleteFront(&m_freeBlocks);
+	deleteMe(&m_freeBlocks, node1);
+	//removeFromList1(&m_freeBlocks, node1);
+	//removeFromList(m_freeBlocks, node1);//not working here
+	std::cout << "\n in testing node1 after r() = " << node1 << "\n";
+	//remove(m_freeBlocks, node1);
+	//remove(m_freeBlocks, m_freeBlocks->next);
+	
+	printList(m_freeBlocks);
+}
 
 void HeapManager::s_insert(BlockDescriptor * head, BlockDescriptor * previousNode, BlockDescriptor * newNode)//insert,single at head
 {
@@ -508,9 +645,24 @@ void * HeapManager::_alloc2(size_t i_bytes, unsigned int i_alignment)//returning
 			//s_insert(m_freeBlocks, node, newFreeBlock);
 			insertFront(&m_freeBlocks, newFreeBlock);
 			std::cout << "in if newFreeBlockBD's address " << newFreeBlock << "\n";
+			insertFront(&m_outstandingBlocks, node);
+			//remove(m_freeBlocks, node);
+			//deleteNode(&m_freeBlocks, node);
+			//removeFromList(m_freeBlocks, &(*node));
+			std::cout << "in if before calling remove m_freeBlocks " << m_freeBlocks << "\n";
+			std::cout << "in if before calling remove &m_freeBlocks " << &m_freeBlocks << "\n";
+			std::cout << "in if before calling remove node " << node << "\n";
+			std::cout << "in if before calling remove &(*node) " << &(*node);
+			std::cout << "in if before calling remove &node " << &node;
+			
+			//removeFromList(m_freeBlocks, node);
 		}
 		else {//remove from free list 
-			s_remove(m_freeBlocks, prevNode, node);
+			insertFront(&m_outstandingBlocks, node);
+			//remove(m_freeBlocks, node);-
+			//deleteNode(&m_freeBlocks, node);
+		
+			//s_remove(m_freeBlocks, prevNode, node);
 		}
 
 		//s_insert(m_oustandingBlocks, nullptr, node);//insert at front
@@ -522,6 +674,7 @@ void * HeapManager::_alloc2(size_t i_bytes, unsigned int i_alignment)//returning
 		std::cout << "no node found " << node << "\n";
 		return (void*)node;
 	}
+
 	return (void*)userPtr;
 }
 

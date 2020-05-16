@@ -73,8 +73,18 @@ int main()
 	std::cout << "in main - returned pointer " << allocatedMemoryPtr2 << "\n";
 
 	std::cout << "\n ****************** " << "\n";
+	std::cout << "printing free list " << "\n";
 	pHeapManagerNew->printList(pHeapManagerNew->m_freeBlocks);
+	//std::cout << "\n printing outstanding list " << "\n";
+	//pHeapManagerNew->printList(pHeapManagerNew->m_outstandingBlocks);
 
+	//pHeapManagerNew->removeFromList(pHeapManagerNew->m_freeBlocks, pHeapManagerNew->m_freeBlocks->next);
+	//std::cout << "\n again printing free list " << "\n";
+	//pHeapManagerNew->printList(pHeapManagerNew->m_freeBlocks);
+	
+	//std::cout << "\ntesting free list " << "\n";
+	pHeapManagerNew->testingDelete();
+	
 
 	//void * pT1 = malloc(1);
 	//void * pT2 = malloc(1);
@@ -99,7 +109,7 @@ int main()
 	std::cout << heapMgr->test << "\n";
 	*/
 
-
+	
 	
 
 	_getch();

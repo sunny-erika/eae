@@ -31,7 +31,7 @@ public:
 	};
 
 	BlockDescriptor * m_freeBlocks = nullptr;//freelist - queried in main
-	BlockDescriptor * m_oustandingBlocks;
+	BlockDescriptor * m_outstandingBlocks;//allocated 
 	
 
 	HeapManager();
@@ -52,13 +52,23 @@ public:
 	void insert(BlockDescriptor* head, BlockDescriptor* previousNode, BlockDescriptor* newNode);
 	void remove(BlockDescriptor* head, BlockDescriptor* deleteNode);
 
+
 	void insertFront(BlockDescriptor ** head, BlockDescriptor* newNode);
+	void deleteFront(BlockDescriptor ** head);
+	void deleteLast(BlockDescriptor ** head);
+	void deleteMe(BlockDescriptor ** head, BlockDescriptor *deleteMe);
+	void deleteNode(BlockDescriptor** head, BlockDescriptor * node);
+	void deleteNode1(BlockDescriptor*& head, BlockDescriptor * node);
 	void printList(BlockDescriptor* node);
+	void testingDelete();
+	void removeFromList(BlockDescriptor*& head, BlockDescriptor * node);
+	void removeFromList1(BlockDescriptor** head, BlockDescriptor * node);
 	
 	//singly
 	void s_insert(BlockDescriptor* head, BlockDescriptor* previousNode, BlockDescriptor* newNode);
 	void s_remove(BlockDescriptor* head, BlockDescriptor* previousNode, BlockDescriptor* deleteNode);
 
+	
 	// allocation
 	//allocates memory. named with a underscore to resolve name clash 
 	void* _alloc(size_t i_bytes);
