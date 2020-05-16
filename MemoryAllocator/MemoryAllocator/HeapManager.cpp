@@ -154,6 +154,12 @@ void HeapManager::deleteMe(BlockDescriptor ** head, BlockDescriptor * deleteMe)
 	if (*head == deleteMe) {
 		(*head) = (*head)->next;
 	}
+
+	//if (deleteMe->next == NULL) {
+	if (deleteMe->next == nullptr) {
+		//deleteMe->prev = nullptr;
+		deleteMe->prev->next = nullptr;
+	}
 }
 
 
@@ -288,6 +294,9 @@ void HeapManager::printList(BlockDescriptor * node)
 void HeapManager::testingDelete() {
 	
 	BlockDescriptor *node1 = m_freeBlocks;
+	BlockDescriptor *firstNode = m_freeBlocks;
+	BlockDescriptor *middleNode = m_freeBlocks->next;
+	BlockDescriptor *lastNode = m_freeBlocks->next->next;
 	std::cout << "\n in testing node1 = " << node1 <<"\n";
 	//BlockDescriptor *node2 = reinterpret_cast<BlockDescriptor*>(217);
 	//BlockDescriptor *node3 = reinterpret_cast<BlockDescriptor*>(233);
@@ -302,7 +311,9 @@ void HeapManager::testingDelete() {
 	//deleteNode(&m_freeBlocks, node1);
 	//deleteNode1(m_freeBlocks, node1);
 	//deleteFront(&m_freeBlocks);
-	deleteMe(&m_freeBlocks, node1);
+	//deleteMe(&m_freeBlocks, node1);
+	//deleteMe(&m_freeBlocks, node1);
+	deleteMe(&m_freeBlocks, lastNode);
 	//removeFromList1(&m_freeBlocks, node1);
 	//removeFromList(m_freeBlocks, node1);//not working here
 	std::cout << "\n in testing node1 after r() = " << node1 << "\n";
