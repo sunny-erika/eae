@@ -54,6 +54,7 @@ public:
 
 
 	void insertFront(BlockDescriptor ** head, BlockDescriptor* newNode);
+	void insertFront1(BlockDescriptor ** head, BlockDescriptor** newNode);
 	void deleteFront(BlockDescriptor ** head);
 	void deleteLast(BlockDescriptor ** head);
 	void deleteMe(BlockDescriptor ** head, BlockDescriptor *deleteMe);
