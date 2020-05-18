@@ -52,8 +52,11 @@ int main()
 	
 	//void* allocatedMemoryPtr = pHeapManagerNew->_alloc1(20, 4);	
 	//void* allocatedMemoryPtr = pHeapManagerNew->_alloc2(21, 4);
-	void* allocatedMemoryPtr = pHeapManagerNew->_alloc2(26, 4);
+	//void* allocatedMemoryPtr = pHeapManagerNew->_alloc2(26, 4);
 	//void* allocatedMemoryPtr = pHeapManagerNew->_alloc1(1052674, 4);
+
+	void* allocatedMemoryPtr = pHeapManagerNew->_alloc3(26, 4);
+
 	size_t alignedSize = pHeapManagerNew->alignSize(26);
 	std::cout << "in main - aligned size (required size + padding) " << alignedSize << "\n";
 	std::cout << "in main - returned pointer " << allocatedMemoryPtr << "\n";
@@ -68,13 +71,18 @@ int main()
 	
 	void* allocatedMemoryPtr2 = pHeapManagerNew->_alloc2(31, 4);
 	//void* allocatedMemoryPtr2 = pHeapManagerNew->_alloc2(2, 4);
+
+	//void* allocatedMemoryPtr2 = pHeapManagerNew->_alloc3(2, 4);
+
 	size_t alignedSize2 = pHeapManagerNew->alignSize(3);
 	std::cout << "in main - aligned size (required size + padding) " << alignedSize2 << "\n";
 	std::cout << "in main - returned pointer " << allocatedMemoryPtr2 << "\n";
 
-	//void* allocatedMemoryPtr3 = pHeapManagerNew->_alloc2(15, 4);
+	void* allocatedMemoryPtr3 = pHeapManagerNew->_alloc2(15, 4);
+	//void* allocatedMemoryPtr3 = pHeapManagerNew->_alloc3(15, 4);
 
 	//void* allocatedMemoryPtr4 = pHeapManagerNew->_alloc2(7, 4);
+	//void* allocatedMemoryPtr4 = pHeapManagerNew->_alloc3(7, 4);
 
 	std::cout << "\n ****************** " << "\n";
 	std::cout << "printing free list " << "\n";
@@ -87,7 +95,8 @@ int main()
 	//pHeapManagerNew->printList(pHeapManagerNew->m_freeBlocks);
 	
 	//std::cout << "\ntesting free list " << "\n";
-	//pHeapManagerNew->testingDelete();
+	pHeapManagerNew->testingDelete();
+	//pHeapManagerNew->find3(20, 4);
 	
 
 	//void * pT1 = malloc(1);

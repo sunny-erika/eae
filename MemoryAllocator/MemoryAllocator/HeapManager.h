@@ -22,6 +22,7 @@ public:
 	size_t m_HeapMemorySize;
 	int test =8;
 
+	
 	struct BlockDescriptor
 	{
 		void* m_pBlockStartAddr; // pointer to the block of memory this BlockDescriptor describes
@@ -29,11 +30,20 @@ public:
 		BlockDescriptor* next;
 		BlockDescriptor* prev;
 	};
+	
+	/*
+	typedef struct BlockDescriptor
+	{
+		void* m_pBlockStartAddr; // pointer to the block of memory this BlockDescriptor describes
+		size_t m_sizeBlock; // size of that block of memory
+		BlockDescriptor* next;
+		BlockDescriptor* prev;
+	}BlockDescriptor1;
+	*/
 
 	BlockDescriptor * m_freeBlocks = nullptr;//freelist - queried in main
 	BlockDescriptor * m_outstandingBlocks;//allocated 
 	
-
 	HeapManager();
 	HeapManager(void* i_pHeapMemory, size_t i_HeapMemorySize);
 	HeapManager(int test);
@@ -45,8 +55,12 @@ public:
 	void find(size_t size, size_t alignment, size_t &padding, BlockDescriptor* &previousNode, BlockDescriptor* &foundNode);
 	void find1(size_t size, size_t alignment, size_t &padding, BlockDescriptor* &previousNode, BlockDescriptor* &foundNode);
 	void find2(size_t size, size_t alignment, size_t &padding, BlockDescriptor* &previousNode, BlockDescriptor* &foundNode);
+	BlockDescriptor * find3(size_t size, size_t alignment);
+
+	//size_t * find4();
 	size_t calculateAlignment(size_t baseAddress, size_t alignment);
 	size_t alignSize(size_t requiredBytes);
+
 	
 	//doubly
 	void insert(BlockDescriptor* head, BlockDescriptor* previousNode, BlockDescriptor* newNode);
@@ -82,6 +96,7 @@ public:
 	void* _alloc(size_t i_bytes, unsigned int i_alignment);
 	void* _alloc1(size_t i_bytes, unsigned int i_alignment);
 	void* _alloc2(size_t i_bytes, unsigned int i_alignment);
+	void* _alloc3(size_t i_bytes, unsigned int i_alignment);
 	void* _alloc(HeapManager * i_heapManager, size_t i_bytes, unsigned int i_alignment);
 	void * alloc(HeapManager * i_pManager, size_t i_size);
 	void * alloc(HeapManager * i_pManager, size_t i_size, unsigned int i_alignment);
