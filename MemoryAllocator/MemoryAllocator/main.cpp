@@ -69,17 +69,17 @@ int main()
 	std::cout << pHeapManagerNew->m_freeBlocks->m_pBlockStartAddr << " - in main m_pBlockstartAddr \n";
 	std::cout << pHeapManagerNew->m_freeBlocks->m_sizeBlock << " - in main m_sizeBlock \n";
 	
-	void* allocatedMemoryPtr2 = pHeapManagerNew->_alloc2(31, 4);
+	//void* allocatedMemoryPtr2 = pHeapManagerNew->_alloc2(31, 4);
 	//void* allocatedMemoryPtr2 = pHeapManagerNew->_alloc2(2, 4);
 
-	//void* allocatedMemoryPtr2 = pHeapManagerNew->_alloc3(2, 4);
+	void* allocatedMemoryPtr2 = pHeapManagerNew->_alloc3(2, 4);
 
 	size_t alignedSize2 = pHeapManagerNew->alignSize(3);
 	std::cout << "in main - aligned size (required size + padding) " << alignedSize2 << "\n";
 	std::cout << "in main - returned pointer " << allocatedMemoryPtr2 << "\n";
 
-	void* allocatedMemoryPtr3 = pHeapManagerNew->_alloc2(15, 4);
-	//void* allocatedMemoryPtr3 = pHeapManagerNew->_alloc3(15, 4);
+	//void* allocatedMemoryPtr3 = pHeapManagerNew->_alloc2(15, 4);
+	void* allocatedMemoryPtr3 = pHeapManagerNew->_alloc3(15, 4);
 
 	//void* allocatedMemoryPtr4 = pHeapManagerNew->_alloc2(7, 4);
 	//void* allocatedMemoryPtr4 = pHeapManagerNew->_alloc3(7, 4);
@@ -95,7 +95,7 @@ int main()
 	//pHeapManagerNew->printList(pHeapManagerNew->m_freeBlocks);
 	
 	//std::cout << "\ntesting free list " << "\n";
-	pHeapManagerNew->testingDelete();
+	//pHeapManagerNew->testingDelete();
 	//pHeapManagerNew->find3(20, 4);
 	
 
