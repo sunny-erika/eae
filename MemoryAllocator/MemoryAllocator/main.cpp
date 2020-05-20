@@ -36,13 +36,14 @@ int main()
 
 	HeapManager * pHeapManagerNew = new HeapManager(pHeapMemory, sizeHeapInPageMultiples);
 	//HeapManager * pHeapManager = HeapManager::create(pHeapMemory, sizeHeap, numDescriptors);//from unit test
+	std::cout << "in main calling new HeapManager\n";
+	std::cout << "in main sizeHeapInPageMultiples \n" << sizeHeapInPageMultiples;
+	std::cout << "in main m_pHeapMemory\n" <<pHeapManagerNew->m_pHeapMemory ;
+	std::cout << "in main m_pBlockstartAddr \n"<< pHeapManagerNew->m_freeBlocks->m_pBlockStartAddr ;
+	std::cout << "in main m_sizeBlock \n" << pHeapManagerNew->m_freeBlocks->m_sizeBlock;
+	std::cout << "*********************************\n";
+	std::cout << "\n";
 
-	std::cout << sizeHeapInPageMultiples << " - in main sizeHeapInPageMultiples \n";
-	std::cout << pHeapManagerNew->m_pHeapMemory << " - in main m_pHeapMemory\n";
-	std::cout << pHeapManagerNew->m_freeBlocks->m_pBlockStartAddr << " - in main m_pBlockstartAddr \n";
-	std::cout << pHeapManagerNew->m_freeBlocks->m_sizeBlock << " - in main m_sizeBlock \n";
-	std::cout << "call to malloc - required size is 26:\n";
-	
 	//pHeapManagerNew->_alloc(20, 4);// void * HeapManager::_alloc(size_t i_bytes, unsigned int i_alignment)//cpp
 	//void * pPtr = pHeapManager->_alloc(pHeapManager, sizeAlloc, alignment);//from unit test
 	//pHeapManagerNew->_alloc(1052674, 4);
@@ -54,33 +55,31 @@ int main()
 	//void* allocatedMemoryPtr = pHeapManagerNew->_alloc2(21, 4);
 	//void* allocatedMemoryPtr = pHeapManagerNew->_alloc2(26, 4);
 	//void* allocatedMemoryPtr = pHeapManagerNew->_alloc1(1052674, 4);
-
+	std::cout << "1st alloc call - required size is 26" << "\n";
 	void* allocatedMemoryPtr = pHeapManagerNew->_alloc3(26, 4);
+	std::cout << "in main - returned pointer of 1st alloc call " << allocatedMemoryPtr << "\n";
+	std::cout << "****************** " << "\n";
+	std::cout << "\n";
 
-	size_t alignedSize = pHeapManagerNew->alignSize(26);
-	std::cout << "in main - aligned size (required size + padding) " << alignedSize << "\n";
-	std::cout << "in main - returned pointer " << allocatedMemoryPtr << "\n";
-		
-	std::cout << "\n ****************** " << "\n";
-	std::cout << "2nd alloc2 call - required size is 2" <<  "\n";
 	
-	std::cout << sizeHeapInPageMultiples << " - in main sizeHeapInPageMultiples \n";
-	std::cout << pHeapManagerNew->m_pHeapMemory << " - in main m_pHeapMemory\n";
-	std::cout << pHeapManagerNew->m_freeBlocks->m_pBlockStartAddr << " - in main m_pBlockstartAddr \n";
-	std::cout << pHeapManagerNew->m_freeBlocks->m_sizeBlock << " - in main m_sizeBlock \n";
-	
+	std::cout << pHeapManagerNew->m_freeBlocks->m_pBlockStartAddr << "in main m_pBlockstartAddr \n";
+	std::cout << pHeapManagerNew->m_freeBlocks->m_sizeBlock << "in main m_sizeBlock \n";
+	std::cout << "2nd alloc call - required size is 2" << "\n";
+	void* allocatedMemoryPtr2 = pHeapManagerNew->_alloc3(2, 4);
+	std::cout << "in main - returned pointer of 2nd alloc call " << allocatedMemoryPtr2 << "\n";
+	std::cout << "*********************************\n";
+	std::cout << "\n";
 	//void* allocatedMemoryPtr2 = pHeapManagerNew->_alloc2(31, 4);
 	//void* allocatedMemoryPtr2 = pHeapManagerNew->_alloc2(2, 4);
 
-	void* allocatedMemoryPtr2 = pHeapManagerNew->_alloc3(2, 4);
-
-	size_t alignedSize2 = pHeapManagerNew->alignSize(3);
-	std::cout << "in main - aligned size (required size + padding) " << alignedSize2 << "\n";
-	std::cout << "in main - returned pointer " << allocatedMemoryPtr2 << "\n";
-
+	std::cout << pHeapManagerNew->m_freeBlocks->m_pBlockStartAddr << "in main m_pBlockstartAddr \n";
+	std::cout << pHeapManagerNew->m_freeBlocks->m_sizeBlock << "in main m_sizeBlock \n";
+	std::cout << "3rd alloc call - required size is 31" << "\n";
 	//void* allocatedMemoryPtr3 = pHeapManagerNew->_alloc2(15, 4);
-	void* allocatedMemoryPtr3 = pHeapManagerNew->_alloc3(15, 4);
-
+	void* allocatedMemoryPtr3 = pHeapManagerNew->_alloc3(31, 4);
+	std::cout << "in main - returned pointer of 3rd alloc call " << allocatedMemoryPtr3 << "\n";
+	std::cout << "*********************************\n";
+	std::cout << "\n";
 	//void* allocatedMemoryPtr4 = pHeapManagerNew->_alloc2(7, 4);
 	//void* allocatedMemoryPtr4 = pHeapManagerNew->_alloc3(7, 4);
 

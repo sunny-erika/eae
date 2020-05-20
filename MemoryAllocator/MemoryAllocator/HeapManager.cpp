@@ -876,68 +876,74 @@ void * HeapManager::_alloc3(size_t i_bytes, unsigned int i_alignment)
 {
 	BlockDescriptor* blockDescriptorForUserPtr = nullptr;//set by find()//foundNode in find() since passing a ptr
 	size_t *userPtr = nullptr;
-	std::cout << "BDnode in _alloc at start of function call: " << blockDescriptorForUserPtr << "\n";
+	std::cout << "\n";
+	std::cout << "in _alloc BDforUserPt at start of function call: " << blockDescriptorForUserPtr << "\n";
 	//BlockDescriptor* prevNode = nullptr;//set by find()
 
 	size_t padding = 0;//set by find2()
-
-	blockDescriptorForUserPtr = find3(i_bytes, i_alignment);
+	BlockDescriptor* foundNode = find3(i_bytes, i_alignment);//=blockDescriptorForUserPtr
+	//blockDescriptorForUserPtr = find3(i_bytes, i_alignment);//goes to outstanding, new free node to freelist
 	//find2(i_bytes, i_alignment, padding, prevNode, node);
 	//blockDescriptorForUserPtr = m_freeBlocks;//replacing with findx(i_bytes, i_alignment)
-	std::cout << "BDnode in _alloc after find(): " << blockDescriptorForUserPtr << "\n";
+	std::cout << "in _alloc FoundNode after find(): " << foundNode << "\n";
 
-	if (blockDescriptorForUserPtr != nullptr) {
-		std::cout << "node in _alloc after find function call: " << blockDescriptorForUserPtr << "\n";
-		std::cout << " blocksize: " << blockDescriptorForUserPtr->m_sizeBlock << "\n";
+	if (foundNode != nullptr) {
+		std::cout << "\n";
+		std::cout << "in _alloc in if !=null foundNode: " << foundNode << " blocksize: " << foundNode->m_sizeBlock << "\n"; 
 		//std::cout << "previous node : " << prevNode << "\n";
 
 		size_t blockDescriptorSize = sizeof(BlockDescriptor);
 		//size_t requiredSize = i_bytes + padding;
 		
 		size_t alignedSize = alignSize(i_bytes);
-		size_t sizeDifference = blockDescriptorForUserPtr->m_sizeBlock - alignedSize;
+		size_t sizeDifference = foundNode->m_sizeBlock - alignedSize;
 		//BlockDescriptor * blockDescriptorAddress = node;
-
+		/*
 		std::cout << "size of BD " << blockDescriptorSize << "\n";
 		std::cout << "padding = alignedSize(will be renamed)in alloc2 " << padding << "\n";
 		std::cout << "alignedSize = required bytes +padding: " << alignedSize << "\n";
-		std::cout << "sizedifference: " << sizeDifference << "\n";
+		std::cout << "sizedifference: " << sizeDifference << "\n";*/
 		//std::cout << "BDaddress( is BD* node) " << blockDescriptorAddress << "\n";
-		std::cout << "BDaddress(as size_t * ) " << (size_t*)blockDescriptorForUserPtr << "\n";
+		//std::cout << "BDaddress(as size_t * ) " << (size_t*)blockDescriptorForUserPtr << "\n";
 		//BlockDescriptor * test4 = reinterpret_cast<BlockDescriptor*>((size_t)blockDescriptorForUserPtr + blockDescriptorSize);
-		userPtr = reinterpret_cast<size_t*>((size_t)blockDescriptorForUserPtr + blockDescriptorSize);
+		//userPtr = reinterpret_cast<size_t*>((size_t)blockDescriptorForUserPtr + blockDescriptorSize);
+		userPtr = reinterpret_cast<size_t*>((size_t)foundNode + blockDescriptorSize);
 		//((BlockDescriptor*)blockDescriptorAddress)->m_sizeBlock = alignedSize;//found node-will be allocated
 		//std::cout << "BDaddress(node) " << blockDescriptorAddress << "\n";//the found node
-		std::cout << "userPtr(BDaddress+BDsize) " << userPtr << "\n";
+		std::cout << "in _alloc in if !=null userPtr " << userPtr << "\n";
 
 
 		if (sizeDifference > 0) {
-			std::cout << "in if - requiredSize = bytes +padding: " << alignedSize << "\n";
-			std::cout << "in if - size of BD " << blockDescriptorSize << "\n";
+			std::cout << "\n";
+			std::cout << "in _alloc in if >0 aligned size: " << alignedSize << "\n";
+			std::cout << "in _alloc in if >0 size of BD " << blockDescriptorSize << "\n";
 			//std::cout << "in if - BDaddress(node) " << blockDescriptorAddress << "\n";
 
 			BlockDescriptor* newFreeBlock = reinterpret_cast<BlockDescriptor*>((size_t)userPtr + alignedSize);//could split into requested and padding
-
+			blockDescriptorForUserPtr = foundNode;
+			blockDescriptorForUserPtr->m_sizeBlock = alignedSize;
 			newFreeBlock->m_sizeBlock = sizeDifference;
-			std::cout << "in if newFreeBlockBD's sizeDifference " << newFreeBlock->m_sizeBlock << "\n";
-
+			std::cout << "in _alloc in if >0 newFreeBlockBD " << newFreeBlock << "\n" << "in _alloc in if >0 newFreeBlockBD's sizeDifference " << newFreeBlock->m_sizeBlock << "\n";
+			std::cout << "in _alloc in if >0  calling insertFront newFreeBlock to free list " << "\n";
 			insertFront2(&m_freeBlocks, &newFreeBlock);
-			std::cout << "in if just added newFreeBlock to free list " << newFreeBlock->m_sizeBlock << "\n";
-
-			std::cout << "in if newFreeBlockBD's address " << newFreeBlock << "\n";
+			
+			std::cout << "\n";
+			std::cout << "in _alloc in if >0  calling insertFront blockDescriptorForUserPtr to outstanding list> adding " << blockDescriptorForUserPtr << "\n";
 			insertFront2(&m_outstandingBlocks, &blockDescriptorForUserPtr);
-			std::cout << "in if just added node to outstanding list " << blockDescriptorForUserPtr->m_sizeBlock << "\n";
-			std::cout << "in if node's address " << blockDescriptorForUserPtr << "\n";
+			//std::cout << "in if just added node to outstanding list " << blockDescriptorForUserPtr->m_sizeBlock << "\n";
+			//std::cout << "in if node's address " << blockDescriptorForUserPtr << "\n";
 
+			std::cout << "\n";
+			std::cout << "in _alloc in if >0  calling deleteMe blockDescriptorForUserPtr from free list> deleting " << blockDescriptorForUserPtr <<"\n";
 			deleteMe4(&m_freeBlocks, blockDescriptorForUserPtr);
-			std::cout << "in if just deleted node from free list " << blockDescriptorForUserPtr << "\n";
-			std::cout << "in if node size " << blockDescriptorForUserPtr->m_sizeBlock << "\n";
+			//std::cout << "in if just deleted node from free list " << blockDescriptorForUserPtr << "\n";
+			//std::cout << "in if node size " << blockDescriptorForUserPtr->m_sizeBlock << "\n";
 
-			std::cout << "in if before calling remove m_freeBlocks " << m_freeBlocks << "\n";
-			std::cout << "in if before calling remove &m_freeBlocks " << &m_freeBlocks << "\n";
-			std::cout << "in if before calling remove node " << blockDescriptorForUserPtr << "\n";
-			std::cout << "in if before calling remove &(*node) " << &(*blockDescriptorForUserPtr);
-			std::cout << "in if before calling remove &node " << &blockDescriptorForUserPtr;
+			//std::cout << "in if before calling remove m_freeBlocks " << m_freeBlocks << "\n";
+			//std::cout << "in if before calling remove &m_freeBlocks " << &m_freeBlocks << "\n";
+			//std::cout << "in if before calling remove node " << blockDescriptorForUserPtr << "\n";
+			//std::cout << "in if before calling remove &(*node) " << &(*blockDescriptorForUserPtr);
+			//std::cout << "in if before calling remove &node " << &blockDescriptorForUserPtr;
 
 		}
 		else {
