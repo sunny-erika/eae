@@ -25,7 +25,7 @@ public:
 	
 	struct BlockDescriptor
 	{
-		void* m_pBlockStartAddr; // pointer to the block of memory this BlockDescriptor describes
+		void* m_pBlockStartAddr; // pointer to the block of memory this BlockDescriptor describes (not needed since block is right next to it
 		size_t m_sizeBlock; // size of that block of memory
 		BlockDescriptor* next;
 		BlockDescriptor* prev;
@@ -70,6 +70,9 @@ public:
 	void insertFront(BlockDescriptor ** head, BlockDescriptor* newNode);
 	void insertFront1(BlockDescriptor ** head, BlockDescriptor** newNode);
 	void insertFront2(BlockDescriptor ** head, BlockDescriptor** newNode);
+	//void insertInAscendingOrderBySize(BlockDescriptor ** head, BlockDescriptor ** newNode);
+	void insertInAscendingOrderBySize(BlockDescriptor *& head, BlockDescriptor *& newNode);
+	void insertInAscendingOrderBySize1(BlockDescriptor *& head, BlockDescriptor *& newNode);
 	void deleteFront(BlockDescriptor ** head);
 	void deleteLast(BlockDescriptor ** head);
 	void deleteMe(BlockDescriptor ** head, BlockDescriptor *deleteMe);
@@ -80,6 +83,7 @@ public:
 	void deleteNode1(BlockDescriptor*& head, BlockDescriptor * node);
 	void printList(BlockDescriptor* node);
 	void testingDelete();
+	void testingInsert();
 	void removeFromList(BlockDescriptor*& head, BlockDescriptor * node);
 	void removeFromList1(BlockDescriptor** head, BlockDescriptor * node);
 	
@@ -97,6 +101,9 @@ public:
 	void* _alloc1(size_t i_bytes, unsigned int i_alignment);
 	void* _alloc2(size_t i_bytes, unsigned int i_alignment);
 	void* _alloc3(size_t i_bytes, unsigned int i_alignment);
+	void* _alloc4(size_t i_bytes, unsigned int i_alignment);
+	void* _alloc5(size_t i_bytes, unsigned int i_alignment);
+	void* _alloc6(size_t i_bytes, unsigned int i_alignment);
 	void* _alloc(HeapManager * i_heapManager, size_t i_bytes, unsigned int i_alignment);
 	void * alloc(HeapManager * i_pManager, size_t i_size);
 	void * alloc(HeapManager * i_pManager, size_t i_size, unsigned int i_alignment);
