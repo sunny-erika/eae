@@ -76,6 +76,7 @@ public:
 	void insertInAscendingOrderBySize2(BlockDescriptor ** head, BlockDescriptor * newNode);
 	void insertInAscendingOrderBySize3(BlockDescriptor ** head, BlockDescriptor * newNode);
 	void insertInAscendingOrderBySize4(BlockDescriptor ** head, BlockDescriptor * newNode);
+	void insertInAscendingOrderBySize5(BlockDescriptor ** head, BlockDescriptor * newNode);
 	void deleteFront(BlockDescriptor ** head);
 	void deleteLast(BlockDescriptor ** head);
 	void deleteMe(BlockDescriptor ** head, BlockDescriptor *deleteMe);

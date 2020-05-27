@@ -339,7 +339,7 @@ void HeapManager::insertInAscendingOrderBySize4(BlockDescriptor ** head, BlockDe
 		newNode->prev = nullptr;
 		*head = newNode;
 	}
-	else if (newNode->m_sizeBlock <= (*head)->m_sizeBlock) {//head is smallest
+	else if (newNode->m_sizeBlock <= (*head)->m_sizeBlock) {
 		std::cout << "***in insertAscending1 in else if *0* : \n";
 		newNode->next = *head;
 		newNode->next->prev = newNode;
@@ -360,9 +360,69 @@ void HeapManager::insertInAscendingOrderBySize4(BlockDescriptor ** head, BlockDe
 			newNode->prev = ppIterator->prev;
 			ppIterator->prev->next = newNode;
 			ppIterator->prev = newNode;
-		}
+		}//else if
 
 		if (ppIterator->next == nullptr) {//iterator last node - insert after iterator
+			std::cout << "***in insertAscending1 in first else after while *ppIterator *B* : " << ppIterator << " \n";
+			newNode->next = nullptr;
+			newNode->prev = ppIterator;
+			ppIterator->next = newNode;
+		}
+
+		if (ppIterator->next == nullptr && ppIterator->prev == nullptr) {//only one list item
+			if (ppIterator->m_sizeBlock >= newNode->m_sizeBlock) {//newNode becomes head
+				std::cout << "***in insertAscending1 in first else after while *ppIterator *C* : " << ppIterator << " \n";
+				newNode->next = ppIterator;
+				newNode->prev = nullptr;
+				ppIterator->prev = newNode;
+			}
+			else {//insert at end equivalent to iterator last node *B*
+				std::cout << "***in insertAscending1 in first else after while *ppIterator *D* : " << ppIterator << " \n";
+				newNode->prev = ppIterator;
+				newNode->next = nullptr;
+				ppIterator->next = newNode;
+			}
+		}
+	}
+}
+
+void HeapManager::insertInAscendingOrderBySize5(BlockDescriptor ** head, BlockDescriptor * newNode)
+{
+	BlockDescriptor * ppIterator;
+
+	//std::cout << "***in insertAscending1 head: " << ppIterator << " \n";
+	std::cout << "***in insertAscending1 newNode: " << newNode << " \n";
+
+	if (*head == nullptr) {//empty list - works
+		//std::cout << "***in insertAscending1 in if *ppIterator ==nullptr : " << ppIterator << " \n";
+		newNode->next = nullptr;
+		newNode->prev = nullptr;
+		*head = newNode;
+	}
+	else if (newNode->m_sizeBlock <= (*head)->m_sizeBlock) {
+		std::cout << "***in insertAscending1 in else if *0* : \n";
+		newNode->next = *head;
+		newNode->next->prev = newNode;
+		*head = newNode;
+	}
+	else {
+		ppIterator = *head;
+		//std::cout << "***in insertAscending1 in first else before while *ppIterator : " << ppIterator << " \n";
+		//while ((*ppIterator && (newNode)->m_sizeBlock >= (*ppIterator)->m_sizeBlock) || (*ppIterator && (*ppIterator)->next != nullptr)) {
+		while (ppIterator && (newNode)->m_sizeBlock >= ppIterator->m_sizeBlock && ppIterator->next != nullptr) {//endless
+			ppIterator = ppIterator->next;//should stop at first smaller node
+		}
+		std::cout << "***in insertAscending1 in first else after while *ppIterator : " << ppIterator << " \n";
+
+		if ((newNode)->m_sizeBlock <= ppIterator->m_sizeBlock) {//insert before iterator
+			std::cout << "***in insertAscending1 in first else after while *ppIterator *A* : " << ppIterator << " \n";
+			newNode->next = ppIterator;
+			newNode->prev = ppIterator->prev;
+			ppIterator->prev->next = newNode;
+			ppIterator->prev = newNode;
+		}//else if
+
+		if (ppIterator->next == nullptr && newNode->m_sizeBlock > ppIterator->m_sizeBlock) {//iterator last node - insert after iterator
 			std::cout << "***in insertAscending1 in first else after while *ppIterator *B* : " << ppIterator << " \n";
 			newNode->next = nullptr;
 			newNode->prev = ppIterator;
@@ -596,7 +656,7 @@ void HeapManager::deleteMe4(BlockDescriptor ** head, BlockDescriptor * deleteMe)
 {
 	std::cout << "***in deleteMe *head: " << *head << " \n";
 	std::cout << "***in deleteMe deleteMe: " << deleteMe << " \n";
-	std::cout << "***in deleteMe deleteMe->prev: " << deleteMe->prev << " \n";
+	//std::cout << "***in deleteMe deleteMe->prev: " << deleteMe->prev << " \n";
 	if (*head == deleteMe) {//first
 		(*head) = (*head)->next;//the next one becomes head
 	}
@@ -742,14 +802,16 @@ void HeapManager::printList(BlockDescriptor * node)
 }
 
 void HeapManager::testingDelete() {
+
+	std::cout << "\n in testing delete \n";
 	
 	BlockDescriptor *node1 = m_freeBlocks;
 	BlockDescriptor *firstNode = m_freeBlocks;
-	BlockDescriptor *middleNode = m_freeBlocks->next;
-	BlockDescriptor *lastNode = m_freeBlocks->next->next;
+	BlockDescriptor *secondNode = m_freeBlocks->next;
+	//BlockDescriptor *lastNode = m_freeBlocks->next->next;
 	std::cout << "\n in testing node1 = " << node1 <<"\n";
-	std::cout << "\n in testing middleNode = " << middleNode->m_sizeBlock << "\n";
-	std::cout << "\n in testing middleNode->prev = " << middleNode->prev << "\n";
+	//std::cout << "\n in testing middleNode = " << middleNode->m_sizeBlock << "\n";
+	//std::cout << "\n in testing middleNode->prev = " << secondNode->prev << "\n";
 	//BlockDescriptor *node2 = reinterpret_cast<BlockDescriptor*>(217);
 	//BlockDescriptor *node3 = reinterpret_cast<BlockDescriptor*>(233);
 	   
@@ -758,9 +820,8 @@ void HeapManager::testingDelete() {
 	//insertFront(&m_freeBlocks, node3);
 	std::cout << "in testing m_freeBlocks = " << m_freeBlocks << "\n";
 	std::cout << "in testing printing after insertion" << "\n";
-	printList(m_freeBlocks);
-	
-	deleteMe4(&m_freeBlocks, lastNode);//m_freeBlocks->next->next
+
+	deleteMe4(&m_freeBlocks, secondNode);//m_freeBlocks->next->next
 	//deleteMe3(&m_freeBlocks, firstNode);
 	//deleteMe3(&m_freeBlocks, middleNode);
 	//deleteMe3(&m_freeBlocks, lastNode);
@@ -788,7 +849,8 @@ void HeapManager::testingInsert()
 {
 	
 	//BlockDescriptor *testList = find3(400, 4);
-	BlockDescriptor *testList = nullptr;
+	//BlockDescriptor *testList = nullptr;
+	//BlockDescriptor *testList = m_freeBlocks;
 /*
 	BlockDescriptor *node1 = reinterpret_cast<BlockDescriptor*>((size_t)testList + 400);
 	BlockDescriptor *node2 = reinterpret_cast<BlockDescriptor*>((size_t)testList + 800);
@@ -796,7 +858,7 @@ void HeapManager::testingInsert()
 	BlockDescriptor *node4 = reinterpret_cast<BlockDescriptor*>((size_t)testList + 2000);
 */
 
-	BlockDescriptor *node1 = reinterpret_cast<BlockDescriptor*>((size_t)m_freeBlocks+400);
+	BlockDescriptor *node1 = reinterpret_cast<BlockDescriptor*>((size_t)m_freeBlocks + 400);
 	BlockDescriptor *node2 = reinterpret_cast<BlockDescriptor*>((size_t)m_freeBlocks + 800);
 	BlockDescriptor *node3 = reinterpret_cast<BlockDescriptor*>((size_t)m_freeBlocks + 1000);
 	BlockDescriptor *node4 = reinterpret_cast<BlockDescriptor*>((size_t)m_freeBlocks + 2000);
@@ -807,8 +869,10 @@ void HeapManager::testingInsert()
 
 
 	std::cout << "in testingInsert m_freeBlocks = " << m_freeBlocks << "\n";
-	std::cout << "in testingInsert testList = " << testList << "\n";
-	std::cout << "in testingInsert node1 = " << node1 << "\n";
+	std::cout << "**********************************************************************\n";
+	std::cout << "in testingInsert printing m_freeBlocks \n";
+	printList(m_freeBlocks);
+	std::cout << "**********************************************************************\n";
 
 	/*
 	node1->m_sizeBlock = 20;
@@ -831,8 +895,14 @@ void HeapManager::testingInsert()
 	//insertInAscendingOrderBySize1(testList, node1);
 	//insertInAscendingOrderBySize2(&testList, node1);
 	//insertInAscendingOrderBySize3(&testList, node1);
-	insertInAscendingOrderBySize4(&testList, node1);
-	std::cout << "in testingInsert after insert() testList " << testList << "\n" ;
+	//insertInAscendingOrderBySize4(&testList, node1);
+	insertInAscendingOrderBySize5(&m_freeBlocks, node1);
+	//std::cout << "in testingInsert after insert() testList " << testList << "\n" ;
+	std::cout << "in testingInsert after insert() testList " << m_freeBlocks << "\n";
+	std::cout << "**********************************************************************\n";
+	std::cout << "in testingInsert printing m_freeBlocks \n";
+	printList(m_freeBlocks);
+	std::cout << "**********************************************************************\n";
 
 	std::cout << "\n";
 	std::cout << "in testingInsert calling insert() node2, size" << node2->m_sizeBlock << "\n";
@@ -840,18 +910,28 @@ void HeapManager::testingInsert()
 	//insertInAscendingOrderBySize1(testList, node2);
 	//insertInAscendingOrderBySize2(&testList, node2);
 	//insertInAscendingOrderBySize3(&testList, node2);
-	insertInAscendingOrderBySize4(&testList, node6);
-	std::cout << "in testingInsert after insert() testList " << testList << "\n";
+	insertInAscendingOrderBySize5(&m_freeBlocks, node2);
+	//std::cout << "in testingInsert after insert() testList " << testList << "\n" ;
+	std::cout << "in testingInsert after insert() testList " << m_freeBlocks << "\n";
+	std::cout << "**********************************************************************\n";
+	std::cout << "in testingInsert printing m_freeBlocks \n";
+	printList(m_freeBlocks);
+	std::cout << "**********************************************************************\n";
 
-	/*
+	
 	std::cout << "\n";
 	std::cout << "in testingInsert calling insert() node3, size" << node3->m_sizeBlock << "\n";
 	//insertInAscendingOrderBySize(testList, node3);
 	//insertInAscendingOrderBySize1(testList, node3);
 	//insertInAscendingOrderBySize2(&testList, node3);
 	//insertInAscendingOrderBySize3(&testList, node3);
-	insertInAscendingOrderBySize4(&testList, node3);
-	std::cout << "in testingInsert after insert() testList " << testList << "\n";
+	insertInAscendingOrderBySize5(&m_freeBlocks, node3);
+	//std::cout << "in testingInsert after insert() testList " << testList << "\n" ;
+	std::cout << "in testingInsert after insert() testList " << m_freeBlocks << "\n";
+	std::cout << "**********************************************************************\n";
+	std::cout << "in testingInsert printing m_freeBlocks \n";
+	printList(m_freeBlocks);
+	std::cout << "**********************************************************************\n";
 
 	std::cout << "\n";
 	std::cout << "in testingInsert calling insert() node4, size" << node4->m_sizeBlock << "\n";
@@ -859,8 +939,13 @@ void HeapManager::testingInsert()
 	//insertInAscendingOrderBySize1(testList, node4);
 	//insertInAscendingOrderBySize2(&testList, node4);
 	//insertInAscendingOrderBySize3(&testList, node4);
-	insertInAscendingOrderBySize4(&testList, node4);
-	std::cout << "in testingInsert after insert() testList " << testList << "\n";
+	insertInAscendingOrderBySize5(&m_freeBlocks, node4);
+	//std::cout << "in testingInsert after insert() testList " << testList << "\n" ;
+	std::cout << "in testingInsert after insert() testList " << m_freeBlocks << "\n";
+	std::cout << "**********************************************************************\n";
+	std::cout << "in testingInsert printing m_freeBlocks \n";
+	printList(m_freeBlocks);
+	std::cout << "**********************************************************************\n";
 
 	std::cout << "\n";
 	std::cout << "in testingInsert calling insert() node5, size" << node5->m_sizeBlock << "\n";
@@ -868,8 +953,13 @@ void HeapManager::testingInsert()
 	//insertInAscendingOrderBySize1(testList, node5);
 	//insertInAscendingOrderBySize2(&testList, node5);
 	//insertInAscendingOrderBySize3(&testList, node5);
-	insertInAscendingOrderBySize4(&testList, node5);
-	std::cout << "in testingInsert after insert() testList " << testList << "\n";
+	insertInAscendingOrderBySize5(&m_freeBlocks, node5);
+	//std::cout << "in testingInsert after insert() testList " << testList << "\n" ;
+	std::cout << "in testingInsert after insert() testList " << m_freeBlocks << "\n";
+	std::cout << "**********************************************************************\n";
+	std::cout << "in testingInsert printing m_freeBlocks \n";
+	printList(m_freeBlocks);
+	std::cout << "**********************************************************************\n";
 
 	std::cout << "\n";
 	std::cout << "in testingInsert calling insert() node6, size" << node6->m_sizeBlock << "\n";
@@ -877,8 +967,13 @@ void HeapManager::testingInsert()
 	//insertInAscendingOrderBySize1(testList, node6);
 	//insertInAscendingOrderBySize2(&testList, node6);
 	//insertInAscendingOrderBySize3(&testList, node6);
-	insertInAscendingOrderBySize4(&testList, node6);
-	std::cout << "in testingInsert after insert() testList " << testList << "\n";
+	insertInAscendingOrderBySize5(&m_freeBlocks, node6);
+	//std::cout << "in testingInsert after insert() testList " << testList << "\n" ;
+	std::cout << "in testingInsert after insert() testList " << m_freeBlocks << "\n";
+	std::cout << "**********************************************************************\n";
+	std::cout << "in testingInsert printing m_freeBlocks \n";
+	printList(m_freeBlocks);
+	std::cout << "**********************************************************************\n";
 
 	std::cout << "\n";
 	std::cout << "in testingInsert calling insert() node7, size" << node7->m_sizeBlock << "\n";
@@ -886,14 +981,23 @@ void HeapManager::testingInsert()
 	//insertInAscendingOrderBySize1(testList, node7);
 	//insertInAscendingOrderBySize2(&testList, node7);
 	//insertInAscendingOrderBySize3(&testList, node7);
-	insertInAscendingOrderBySize4(&testList, node7);
-	std::cout << "in testingInsert after insert() testList " << testList << "\n";
+	insertInAscendingOrderBySize5(&m_freeBlocks, node7);
+	//std::cout << "in testingInsert after insert() testList " << testList << "\n" ;
+	std::cout << "in testingInsert after insert() testList " << m_freeBlocks << "\n";
+	std::cout << "**********************************************************************\n";
+	std::cout << "in testingInsert printing m_freeBlocks \n";
+	printList(m_freeBlocks);
+	std::cout << "**********************************************************************\n";
 
-	*/
 
+/*
 	std::cout << "\n";
 	std::cout << "in testingInsert printing testList" << testList << "\n";;
 	printList(testList);
+*/
+	std::cout << "\n";
+	//std::cout << "in testingInsert printing m_freeBlocks" << m_freeBlocks << "\n";;
+	//printList(m_freeBlocks);
 
 	std::cout << "\n";
 	//insertInAscendingOrderBySize(m_freeBlocks, node1);
@@ -1598,7 +1702,8 @@ void * HeapManager::_alloc6(size_t i_bytes, unsigned int i_alignment)
 			newFreeBlock->next = nullptr;
 			newFreeBlock->prev = nullptr;
 			//insertFront2(&m_freeBlocks, &newFreeBlock);
-			insertInAscendingOrderBySize1(m_freeBlocks, newFreeBlock);
+			//insertInAscendingOrderBySize1(m_freeBlocks, newFreeBlock);
+			//insertInAscendingOrderBySize4(&m_freeBlocks, newFreeBlock);
 
 			std::cout << "\n";
 			std::cout << "in _alloc in if >0  calling insertFront blockDescriptorForUserPtr to outstanding list> adding " << blockDescriptorForUserPtr << "\n";
@@ -1606,14 +1711,15 @@ void * HeapManager::_alloc6(size_t i_bytes, unsigned int i_alignment)
 			blockDescriptorForUserPtr->next = nullptr;
 			blockDescriptorForUserPtr->prev = nullptr;
 			//insertFront2(&m_outstandingBlocks, &blockDescriptorForUserPtr);
-			insertInAscendingOrderBySize1(m_outstandingBlocks, blockDescriptorForUserPtr);
+			//insertInAscendingOrderBySize1(m_outstandingBlocks, blockDescriptorForUserPtr);
+			//insertInAscendingOrderBySize4(&m_freeBlocks, newFreeBlock);
 
 			std::cout << "\n";
 			std::cout << "in _alloc in if >0  calling deleteMe blockDescriptorForUserPtr from free list> deleting " << blockDescriptorForUserPtr << "\n";
 			std::cout << "in _alloc in if >0  passing free list to deleteMe() " << m_freeBlocks << "\n";
 			std::cout << "\n";
 
-			deleteMe4(&m_freeBlocks, blockDescriptorForUserPtr);
+			//deleteMe4(&m_freeBlocks, blockDescriptorForUserPtr);
 		}
 		else {
 			std::cout << "NOW IN ELSE OF ALLOC " << &blockDescriptorForUserPtr;

@@ -51,6 +51,9 @@ int main()
 	//pHeapManagerNew->_alloc1(20, 4);
 
 	pHeapManagerNew->testingInsert();
+	std::cout << "\n";
+	pHeapManagerNew->testingDelete();
+	std::cout << "\n";
 
 	//void* allocatedMemoryPtr = pHeapManagerNew->_alloc1(20, 4);	
 	//void* allocatedMemoryPtr = pHeapManagerNew->_alloc2(21, 4);
@@ -104,7 +107,7 @@ int main()
 	//pHeapManagerNew->printList(pHeapManagerNew->m_freeBlocks);
 	
 	//std::cout << "\ntesting free list " << "\n";
-	pHeapManagerNew->testingDelete();
+	//pHeapManagerNew->testingDelete();
 	//pHeapManagerNew->find3(20, 4);
 	
 
