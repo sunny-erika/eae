@@ -56,6 +56,7 @@ public:
 	void find1(size_t size, size_t alignment, size_t &padding, BlockDescriptor* &previousNode, BlockDescriptor* &foundNode);
 	void find2(size_t size, size_t alignment, size_t &padding, BlockDescriptor* &previousNode, BlockDescriptor* &foundNode);
 	BlockDescriptor * find3(size_t size, size_t alignment);
+	BlockDescriptor * find4(size_t size, size_t alignment);
 
 	//size_t * find4();
 	size_t calculateAlignment(size_t baseAddress, size_t alignment);
@@ -77,6 +78,8 @@ public:
 	void insertInAscendingOrderBySize3(BlockDescriptor ** head, BlockDescriptor * newNode);
 	void insertInAscendingOrderBySize4(BlockDescriptor ** head, BlockDescriptor * newNode);
 	void insertInAscendingOrderBySize5(BlockDescriptor ** head, BlockDescriptor * newNode);
+	void insertInAscendingOrderBySize6(BlockDescriptor *& head, BlockDescriptor * newNode);
+
 	void deleteFront(BlockDescriptor ** head);
 	void deleteLast(BlockDescriptor ** head);
 	void deleteMe(BlockDescriptor ** head, BlockDescriptor *deleteMe);
@@ -108,6 +111,7 @@ public:
 	void* _alloc4(size_t i_bytes, unsigned int i_alignment);
 	void* _alloc5(size_t i_bytes, unsigned int i_alignment);
 	void* _alloc6(size_t i_bytes, unsigned int i_alignment);
+	void* _alloc7(size_t i_bytes, unsigned int i_alignment);
 	void* _alloc(HeapManager * i_heapManager, size_t i_bytes, unsigned int i_alignment);
 	void * alloc(HeapManager * i_pManager, size_t i_size);
 	void * alloc(HeapManager * i_pManager, size_t i_size, unsigned int i_alignment);

@@ -3,6 +3,13 @@
 #include <Windows.h>
 #include <iostream>
 
+
+//TODO
+/*
+only split when big, if it just about fits I will allocate it as it is
+
+
+*/
 HeapManager::HeapManager() {
 	m_pHeapMemory = nullptr;
 	m_freeBlocks = nullptr;
@@ -390,7 +397,7 @@ void HeapManager::insertInAscendingOrderBySize5(BlockDescriptor ** head, BlockDe
 {
 	BlockDescriptor * ppIterator;
 
-	//std::cout << "***in insertAscending1 head: " << ppIterator << " \n";
+	std::cout << "***in insertAscending1 head: " << *head << " \n";
 	std::cout << "***in insertAscending1 newNode: " << newNode << " \n";
 
 	if (*head == nullptr) {//empty list - works
@@ -427,6 +434,8 @@ void HeapManager::insertInAscendingOrderBySize5(BlockDescriptor ** head, BlockDe
 			newNode->next = nullptr;
 			newNode->prev = ppIterator;
 			ppIterator->next = newNode;
+			std::cout << "***in *B* printing list \n";
+			printList(*head);
 		}
 
 		if (ppIterator->next == nullptr && ppIterator->prev == nullptr) {//only one list item
@@ -445,6 +454,73 @@ void HeapManager::insertInAscendingOrderBySize5(BlockDescriptor ** head, BlockDe
 		}
 	}
 }
+
+
+void HeapManager::insertInAscendingOrderBySize6(BlockDescriptor *& head, BlockDescriptor * newNode)
+{
+	BlockDescriptor * ppIterator;
+
+	std::cout << "***in insertAscending1 head: " << head << " \n";
+	std::cout << "***in insertAscending1 newNode: " << newNode << " \n";
+
+	if (head == nullptr) {//empty list - works
+		//std::cout << "***in insertAscending1 in if *ppIterator ==nullptr : " << ppIterator << " \n";
+		newNode->next = nullptr;
+		newNode->prev = nullptr;
+		head = newNode;
+	}
+	else if (newNode->m_sizeBlock <= (head)->m_sizeBlock) {
+		std::cout << "***in insertAscending1 in else if *0* : \n";
+		newNode->next = head;
+		newNode->next->prev = newNode;
+		head = newNode;
+	}
+	else {
+		ppIterator = head;
+		//std::cout << "***in insertAscending1 in first else before while *ppIterator : " << ppIterator << " \n";
+		//while ((*ppIterator && (newNode)->m_sizeBlock >= (*ppIterator)->m_sizeBlock) || (*ppIterator && (*ppIterator)->next != nullptr)) {
+		while (ppIterator && (newNode)->m_sizeBlock >= ppIterator->m_sizeBlock && ppIterator->next != nullptr) {//endless
+			ppIterator = ppIterator->next;//should stop at first smaller node
+		}
+		std::cout << "***in insertAscending1 in first else after while *ppIterator : " << ppIterator << " \n";
+
+		if ((newNode)->m_sizeBlock <= ppIterator->m_sizeBlock) {//insert before iterator
+			std::cout << "***in insertAscending1 in first else after while *ppIterator *A* : " << ppIterator << " \n";
+			newNode->next = ppIterator;
+			newNode->prev = ppIterator->prev;
+			ppIterator->prev->next = newNode;
+			ppIterator->prev = newNode;
+		}//else if
+
+		if (ppIterator->next == nullptr && newNode->m_sizeBlock > ppIterator->m_sizeBlock) {//iterator last node - insert after iterator
+			std::cout << "***in insertAscending1 in first else after while *ppIterator *B* : " << ppIterator << " \n";
+			newNode->next = nullptr;
+			newNode->prev = ppIterator;
+			ppIterator->next = newNode;
+			std::cout << "***in *B* printing list \n";
+			printList(head);
+		}
+
+		if (ppIterator->next == nullptr && ppIterator->prev == nullptr) {//only one list item
+			if (ppIterator->m_sizeBlock >= newNode->m_sizeBlock) {//newNode becomes head
+				std::cout << "***in insertAscending1 in first else after while *ppIterator *C* : " << ppIterator << " \n";
+				newNode->next = ppIterator;
+				newNode->prev = nullptr;
+				ppIterator->prev = newNode;
+			}
+			else {//insert at end equivalent to iterator last node *B*
+				std::cout << "***in insertAscending1 in first else after while *ppIterator *D* : " << ppIterator << " \n";
+				newNode->prev = ppIterator;
+				newNode->next = nullptr;
+				ppIterator->next = newNode;
+			}
+		}
+	}
+
+}
+
+
+
 
 void HeapManager::insertInAscendingOrderBySize(BlockDescriptor *& head, BlockDescriptor *& newNode)
 {
@@ -821,7 +897,7 @@ void HeapManager::testingDelete() {
 	std::cout << "in testing m_freeBlocks = " << m_freeBlocks << "\n";
 	std::cout << "in testing printing after insertion" << "\n";
 
-	deleteMe4(&m_freeBlocks, secondNode);//m_freeBlocks->next->next
+	//deleteMe4(&m_freeBlocks, secondNode);//m_freeBlocks->next->next
 	//deleteMe3(&m_freeBlocks, firstNode);
 	//deleteMe3(&m_freeBlocks, middleNode);
 	//deleteMe3(&m_freeBlocks, lastNode);
@@ -835,7 +911,7 @@ void HeapManager::testingDelete() {
 	//deleteMe(&m_freeBlocks, lastNode);
 	//deleteMe(&m_freeBlocks, middleNode);
 	//removeFromList1(&m_freeBlocks, node1);
-	//removeFromList(m_freeBlocks, node1);//not working here
+	removeFromList(m_freeBlocks, node1);//not working here
 	//std::cout << "\n in testing node1 after r() = " << node1 << "\n";
 	//BlockDescriptor *found = find3(500, 4);
 	//std::cout << "\n in testing node found after find3() = " << found << "\n";
@@ -1161,6 +1237,46 @@ HeapManager::BlockDescriptor * HeapManager::find3(size_t size, size_t alignment)
 	std::cout << "***in found3 nodeFound: " << nodeFound << " \n";
 	return nodeFound;
 }
+
+HeapManager::BlockDescriptor * HeapManager::find4(size_t size, size_t alignment)
+{
+	std::cout << "***in found4  \n";
+	BlockDescriptor* nodeFound = nullptr;
+
+	BlockDescriptor* pIterator = m_freeBlocks;
+	std::cout << "***in found4  pIterator" << pIterator << "\n";
+
+	std::cout << "***in found4  pIterator size" << pIterator->m_sizeBlock << "\n";
+	size_t alignedSize = alignSize(size);
+	size_t requiredSize = alignSize(size) + sizeof(BlockDescriptor);
+
+	std::cout << "***in found4  aligned size" << alignedSize << "\n";
+
+	while (pIterator != nullptr) {
+		
+		if (pIterator->m_sizeBlock >= requiredSize) {
+			std::cout << "***in found3  pIterator size in if" << pIterator->m_sizeBlock << "\n";
+			//std::cout << "***in found3 in if  \n";
+			nodeFound = pIterator;
+			break;
+		}
+		else if (pIterator->next == nullptr && pIterator->m_sizeBlock <= requiredSize) {//reached last node
+			pIterator = nullptr;
+			std::cout << "within find()3: ******NOTHING FOUND******* ";
+			nodeFound = pIterator;
+			return pIterator;
+		}
+		
+		pIterator = pIterator->next;
+		std::cout << "***in found4  pIterator next" << pIterator->m_sizeBlock << "\n";
+	}
+
+
+	return nodeFound;
+}
+
+
+
 
 //within find() split()
 
@@ -1734,6 +1850,78 @@ void * HeapManager::_alloc6(size_t i_bytes, unsigned int i_alignment)
 }
 
 
+void * HeapManager::_alloc7(size_t i_bytes, unsigned int i_alignment)
+{
+	BlockDescriptor* blockDescriptorForUserPtr = nullptr;
+	size_t *userPtr = nullptr;
+	std::cout << "\n";
+	std::cout << "in _alloc BDforUserPt at start of function call: " << blockDescriptorForUserPtr << "\n";
+
+	size_t padding = 0;//set by find2()
+	BlockDescriptor* foundNode = find4(i_bytes, i_alignment);//=blockDescriptorForUserPtr
+
+	std::cout << "in _alloc FoundNode after find(): " << foundNode << "\n";
+
+	if (foundNode != nullptr) {
+		std::cout << "\n";
+		std::cout << "in _alloc in if !=null foundNode: " << foundNode << " blocksize: " << foundNode->m_sizeBlock << "\n";
+
+		size_t blockDescriptorSize = sizeof(BlockDescriptor);
+
+		size_t alignedSize = alignSize(i_bytes);
+		size_t sizeDifference = foundNode->m_sizeBlock - alignedSize;
+		userPtr = reinterpret_cast<size_t*>((size_t)foundNode + blockDescriptorSize);
+
+		std::cout << "in _alloc in if !=null userPtr " << userPtr << " blocksize in blockDescriptorForUserPtr (not set yet): \n";
+
+		if (sizeDifference > 0) {
+			std::cout << "\n";
+
+			BlockDescriptor* newFreeBlock = reinterpret_cast<BlockDescriptor*>((size_t)userPtr + alignedSize);//could split into requested and padding
+			blockDescriptorForUserPtr = foundNode;
+			blockDescriptorForUserPtr->m_sizeBlock = alignedSize;
+			newFreeBlock->m_sizeBlock = sizeDifference;
+			std::cout << "in _alloc in if >0 newFreeBlockBD " << newFreeBlock << "\n" << "in _alloc in if >0 newFreeBlockBD's sizeDifference " << newFreeBlock->m_sizeBlock << "\n";
+			std::cout << "in _alloc in if >0  calling insertFront newFreeBlock to free list " << newFreeBlock << "\n";
+			std::cout << "in _alloc in if >0  free list>  " << m_freeBlocks << "\n";
+			//newFreeBlock->next = nullptr;
+			//newFreeBlock->prev = nullptr;
+			//insertFront2(&m_freeBlocks, &newFreeBlock);
+			//insertInAscendingOrderBySize1(m_freeBlocks, newFreeBlock);
+			insertInAscendingOrderBySize5(&m_freeBlocks, newFreeBlock);
+			//insertInAscendingOrderBySize6(m_freeBlocks, newFreeBlock);
+	
+			std::cout << "in _alloc in if >0  printing free list after insert>  " << m_freeBlocks << "\n";
+			printList(m_freeBlocks);
+
+			std::cout << "\n";
+			std::cout << "in _alloc in if >0  calling insertFront blockDescriptorForUserPtr to outstanding list> adding " << blockDescriptorForUserPtr << "\n";
+			std::cout << "in _alloc in if >0  outstanding list>  " << m_outstandingBlocks << "\n";
+			//blockDescriptorForUserPtr->next = nullptr;
+			//blockDescriptorForUserPtr->prev = nullptr;
+			//insertFront2(&m_outstandingBlocks, &blockDescriptorForUserPtr);
+			//insertInAscendingOrderBySize1(m_outstandingBlocks, blockDescriptorForUserPtr);
+			//insertInAscendingOrderBySize5(&m_outstandingBlocks, blockDescriptorForUserPtr);
+
+			std::cout << "\n";
+			std::cout << "in _alloc in if >0  calling deleteMe blockDescriptorForUserPtr from free list> deleting " << blockDescriptorForUserPtr << "\n";
+			std::cout << "in _alloc in if >0  passing free list to deleteMe() " << m_freeBlocks << "\n";
+			std::cout << "\n";
+
+			deleteMe4(&m_freeBlocks, blockDescriptorForUserPtr);
+			insertInAscendingOrderBySize5(&m_outstandingBlocks, blockDescriptorForUserPtr);
+		}
+		else {
+			std::cout << "NOW IN ELSE OF ALLOC " << &blockDescriptorForUserPtr;
+			insertFront2(&m_outstandingBlocks, &blockDescriptorForUserPtr);
+		}
+	}
+	else {
+		std::cout << "no node found " << blockDescriptorForUserPtr << "\n";
+		return (void*)blockDescriptorForUserPtr;
+	}
+	return (void*)userPtr;
+}
 
 void HeapManager::_free(void * i_ptr)
 {

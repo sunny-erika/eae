@@ -50,46 +50,58 @@ int main()
 	//pHeapManagerNew->_alloc1(1052674, 4);
 	//pHeapManagerNew->_alloc1(20, 4);
 
-	pHeapManagerNew->testingInsert();
+	//pHeapManagerNew->testingInsert();
 	std::cout << "\n";
-	pHeapManagerNew->testingDelete();
+	//pHeapManagerNew->testingDelete();
 	std::cout << "\n";
 
+                   
 	//void* allocatedMemoryPtr = pHeapManagerNew->_alloc1(20, 4);	
 	//void* allocatedMemoryPtr = pHeapManagerNew->_alloc2(21, 4);
 	//void* allocatedMemoryPtr = pHeapManagerNew->_alloc2(26, 4);
 	//void* allocatedMemoryPtr = pHeapManagerNew->_alloc1(1052674, 4);
-	std::cout << "1st alloc call - required size is 26" << "\n";
+	std::cout << "1st alloc call - requested size is 26" << "\n";
 	//void* allocatedMemoryPtr = pHeapManagerNew->_alloc3(26, 4);
 	//void* allocatedMemoryPtr = pHeapManagerNew->_alloc4(26, 4);
 	//void* allocatedMemoryPtr = pHeapManagerNew->_alloc5(26, 4);
-	void* allocatedMemoryPtr = pHeapManagerNew->_alloc6(26, 4);
+	//void* allocatedMemoryPtr = pHeapManagerNew->_alloc6(26, 4);
+	void* allocatedMemoryPtr = pHeapManagerNew->_alloc7(26, 4);
 	std::cout << "in main - returned pointer of 1st alloc call " << allocatedMemoryPtr << "\n";
 	std::cout << "****************** " << "\n";
 	std::cout << "\n";
-
+	std::cout << "\n ****************** " << "\n";
+	std::cout << "printing free list " << "\n";
+	pHeapManagerNew->printList(pHeapManagerNew->m_freeBlocks);
+	std::cout << "\n printing outstanding list " << "\n";
+	pHeapManagerNew->printList(pHeapManagerNew->m_outstandingBlocks);
 	
-	std::cout << "in main m_pBlockstartAddr \n" << pHeapManagerNew->m_freeBlocks->m_pBlockStartAddr ;
-	std::cout << "in main m_sizeBlock \n" << pHeapManagerNew->m_freeBlocks->m_sizeBlock;
-	std::cout << "2nd alloc call - required size is 2" << "\n";
+	std::cout << "\n in main m_pBlockstartAddr " << pHeapManagerNew->m_freeBlocks->m_pBlockStartAddr ;
+	std::cout << "\n in main m_sizeBlock " << pHeapManagerNew->m_freeBlocks->m_sizeBlock;
+	std::cout << "\n 2nd alloc call - requested size is 2" << "\n";
 	//void* allocatedMemoryPtr2 = pHeapManagerNew->_alloc3(2, 4);
 	//void* allocatedMemoryPtr2 = pHeapManagerNew->_alloc4(2, 4);
 	//void* allocatedMemoryPtr2 = pHeapManagerNew->_alloc5(2, 4);
-	void* allocatedMemoryPtr2 = pHeapManagerNew->_alloc6(2, 4);
+	//void* allocatedMemoryPtr2 = pHeapManagerNew->_alloc6(2, 4);
+	void* allocatedMemoryPtr2 = pHeapManagerNew->_alloc7(2, 4);
 	std::cout << "in main - returned pointer of 2nd alloc call " << allocatedMemoryPtr2 << "\n";
 	std::cout << "*********************************\n";
 	std::cout << "\n";
 	//void* allocatedMemoryPtr2 = pHeapManagerNew->_alloc2(31, 4);
 	//void* allocatedMemoryPtr2 = pHeapManagerNew->_alloc2(2, 4);
-
-	std::cout << pHeapManagerNew->m_freeBlocks->m_pBlockStartAddr << "in main m_pBlockstartAddr \n";
-	std::cout << pHeapManagerNew->m_freeBlocks->m_sizeBlock << "in main m_sizeBlock \n";
-	std::cout << "3rd alloc call - required size is 31" << "\n";
+	std::cout << "\n ****************** " << "\n";
+	std::cout << "printing free list " << "\n";
+	pHeapManagerNew->printList(pHeapManagerNew->m_freeBlocks);
+	std::cout << "\n printing outstanding list " << "\n";
+	pHeapManagerNew->printList(pHeapManagerNew->m_outstandingBlocks);
+	std::cout << "\n in main m_pBlockstartAddr " << pHeapManagerNew->m_freeBlocks->m_pBlockStartAddr;
+	std::cout << "\n in main m_sizeBlock " << pHeapManagerNew->m_freeBlocks->m_sizeBlock;
+	std::cout << "\n 3rd alloc call - requested size is 31" << "\n";
 	//void* allocatedMemoryPtr3 = pHeapManagerNew->_alloc2(15, 4);
 	//void* allocatedMemoryPtr3 = pHeapManagerNew->_alloc3(31, 4);
 	//void* allocatedMemoryPtr3 = pHeapManagerNew->_alloc4(31, 4);
 	//void* allocatedMemoryPtr3 = pHeapManagerNew->_alloc5(31, 4);
-	void* allocatedMemoryPtr3 = pHeapManagerNew->_alloc6(31, 4);
+	//void* allocatedMemoryPtr3 = pHeapManagerNew->_alloc6(31, 4);
+	void* allocatedMemoryPtr3 = pHeapManagerNew->_alloc7(31, 4);
 	std::cout << "in main - returned pointer of 3rd alloc call " << allocatedMemoryPtr3 << "\n";
 	std::cout << "*********************************\n";
 	std::cout << "\n";
