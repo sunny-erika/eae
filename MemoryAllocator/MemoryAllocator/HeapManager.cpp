@@ -749,7 +749,7 @@ void HeapManager::deleteMe4(BlockDescriptor ** head, BlockDescriptor * deleteMe)
 	}
 }
 
-void HeapManager::deleteMe5(BlockDescriptor ** head, BlockDescriptor * deleteMe)//based on 3
+void HeapManager::deleteMe5(BlockDescriptor ** head, BlockDescriptor * deleteMe)//based on 4
 {
 	std::cout << "***in deleteMe *head: " << *head << " \n";
 	std::cout << "***in deleteMe deleteMe: " << deleteMe << " \n";
@@ -1300,7 +1300,9 @@ HeapManager::BlockDescriptor * HeapManager::find4(size_t size, size_t alignment)
 
 
 
-//within find() split()
+
+
+
 
 void * HeapManager::_alloc(size_t i_bytes)
 {
@@ -1950,7 +1952,18 @@ void * HeapManager::_alloc7(size_t i_bytes, unsigned int i_alignment)
 
 void HeapManager::_free(void * i_ptr)
 {
-	//insertFront1()
+	std::cout << "\n**********\n ";
+	std::cout << "in _free() i_ptr " <<i_ptr<<"\n";
+	std::cout << "in _free() cast to BD* (size_t) i_ptr - sizeof(BD)" << reinterpret_cast<BlockDescriptor*>( (size_t)i_ptr - sizeof(BlockDescriptor)) << "\n";
+	BlockDescriptor * blockDescriptorForUserPtr = reinterpret_cast<BlockDescriptor*>((size_t)i_ptr - sizeof(BlockDescriptor));
+	std::cout << "in _free() blockDescriptorForUserPtr " << blockDescriptorForUserPtr << "\n";
+
+
+
+	//calculate BDaddress
+	//delete from outstanding
+	//insert in freelist
+
 }
 
 void * HeapManager::_alloc(HeapManager * i_heapManager, size_t i_bytes, unsigned int i_alignment)
