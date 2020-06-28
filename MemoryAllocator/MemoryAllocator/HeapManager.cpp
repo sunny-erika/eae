@@ -519,6 +519,70 @@ void HeapManager::insertInAscendingOrderBySize6(BlockDescriptor *& head, BlockDe
 
 }
 
+void HeapManager::insertInAscendingOrderBySize7(BlockDescriptor ** head, BlockDescriptor * newNode)
+{
+	newNode->next = nullptr;
+	newNode-> prev = nullptr;
+	BlockDescriptor * ppIterator;
+
+	std::cout << "***in insertAscending1 head: " << *head << " \n";
+	std::cout << "***in insertAscending1 newNode: " << newNode << " \n";
+
+	if (*head == nullptr) {//empty list - works
+		//std::cout << "***in insertAscending1 in if *ppIterator ==nullptr : " << ppIterator << " \n";
+		newNode->next = nullptr;
+		newNode->prev = nullptr;
+		*head = newNode;
+	}
+	else if (newNode->m_sizeBlock <= (*head)->m_sizeBlock) {
+		std::cout << "***in insertAscending1 in else if *0* : \n";
+		newNode->next = *head;
+		newNode->next->prev = newNode;
+		*head = newNode;
+	}
+	else {
+		ppIterator = *head;
+		//std::cout << "***in insertAscending1 in first else before while *ppIterator : " << ppIterator << " \n";
+		//while ((*ppIterator && (newNode)->m_sizeBlock >= (*ppIterator)->m_sizeBlock) || (*ppIterator && (*ppIterator)->next != nullptr)) {
+		while (ppIterator && (newNode)->m_sizeBlock >= ppIterator->m_sizeBlock && ppIterator->next != nullptr) {//endless
+			ppIterator = ppIterator->next;//should stop at first smaller node
+		}
+		std::cout << "***in insertAscending1 in first else after while *ppIterator : " << ppIterator << " \n";
+
+		if ((newNode)->m_sizeBlock <= ppIterator->m_sizeBlock) {//insert before iterator
+			std::cout << "***in insertAscending1 in first else after while *ppIterator *A* : " << ppIterator << " \n";
+			newNode->next = ppIterator;
+			newNode->prev = ppIterator->prev;
+			ppIterator->prev->next = newNode;
+			ppIterator->prev = newNode;
+		}//else if
+
+		if (ppIterator->next == nullptr && newNode->m_sizeBlock > ppIterator->m_sizeBlock) {//iterator last node - insert after iterator
+			std::cout << "***in insertAscending1 in first else after while *ppIterator *B* : " << ppIterator << " \n";
+			newNode->next = nullptr;
+			newNode->prev = ppIterator;
+			ppIterator->next = newNode;
+			std::cout << "***in *B* printing list \n";
+			printList(*head);
+		}
+
+		if (ppIterator->next == nullptr && ppIterator->prev == nullptr) {//only one list item
+			if (ppIterator->m_sizeBlock >= newNode->m_sizeBlock) {//newNode becomes head
+				std::cout << "***in insertAscending1 in first else after while *ppIterator *C* : " << ppIterator << " \n";
+				newNode->next = ppIterator;
+				newNode->prev = nullptr;
+				ppIterator->prev = newNode;
+			}
+			else {//insert at end equivalent to iterator last node *B*
+				std::cout << "***in insertAscending1 in first else after while *ppIterator *D* : " << ppIterator << " \n";
+				newNode->prev = ppIterator;
+				newNode->next = nullptr;
+				ppIterator->next = newNode;
+			}
+		}
+	}
+}
+
 
 
 
@@ -1914,8 +1978,10 @@ void * HeapManager::_alloc7(size_t i_bytes, unsigned int i_alignment)
 			//newFreeBlock->prev = nullptr;
 			//insertFront2(&m_freeBlocks, &newFreeBlock);
 			//insertInAscendingOrderBySize1(m_freeBlocks, newFreeBlock);
-			insertInAscendingOrderBySize5(&m_freeBlocks, newFreeBlock);
+			
 			//insertInAscendingOrderBySize6(m_freeBlocks, newFreeBlock);
+			//insertInAscendingOrderBySize5(&m_freeBlocks, newFreeBlock);
+			insertInAscendingOrderBySize7(&m_freeBlocks, newFreeBlock);
 			
 			std::cout << "in _alloc in if >0  printing free list after insert>  " << m_freeBlocks << "\n";
 			printList(m_freeBlocks);
@@ -1936,7 +2002,8 @@ void * HeapManager::_alloc7(size_t i_bytes, unsigned int i_alignment)
 
 			//deleteMe4(&m_freeBlocks, blockDescriptorForUserPtr);
 			deleteMe5(&m_freeBlocks, blockDescriptorForUserPtr);
-			insertInAscendingOrderBySize5(&m_outstandingBlocks, blockDescriptorForUserPtr);
+			//insertInAscendingOrderBySize5(&m_outstandingBlocks, blockDescriptorForUserPtr);
+			insertInAscendingOrderBySize7(&m_outstandingBlocks, blockDescriptorForUserPtr);
 		}
 		else {
 			std::cout << "NOW IN ELSE OF ALLOC " << &blockDescriptorForUserPtr;
@@ -1958,7 +2025,13 @@ void HeapManager::_free(void * i_ptr)
 	BlockDescriptor * blockDescriptorForUserPtr = reinterpret_cast<BlockDescriptor*>((size_t)i_ptr - sizeof(BlockDescriptor));
 	std::cout << "in _free() blockDescriptorForUserPtr " << blockDescriptorForUserPtr << "\n";
 
+	deleteMe5(&m_outstandingBlocks, blockDescriptorForUserPtr);
+	insertInAscendingOrderBySize7(&m_freeBlocks, blockDescriptorForUserPtr);
 
+	std::cout << "in _free() printing freeList \n";
+	printList(m_freeBlocks);
+	std::cout << "in _free() printing outstanding list \n";
+	printList(m_outstandingBlocks);
 
 	//calculate BDaddress
 	//delete from outstanding
