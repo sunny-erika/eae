@@ -86,6 +86,7 @@ public:
 	void deleteMe2(BlockDescriptor ** head, BlockDescriptor **deleteMe);
 	void deleteMe3(BlockDescriptor ** head, BlockDescriptor *deleteMe);
 	void deleteMe4(BlockDescriptor ** head, BlockDescriptor *deleteMe);
+	void deleteMe5(BlockDescriptor ** head, BlockDescriptor *deleteMe);
 	void deleteNode(BlockDescriptor** head, BlockDescriptor * node);
 	void deleteNode1(BlockDescriptor*& head, BlockDescriptor * node);
 	void printList(BlockDescriptor* node);

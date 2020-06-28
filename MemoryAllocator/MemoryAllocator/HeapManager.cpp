@@ -748,6 +748,28 @@ void HeapManager::deleteMe4(BlockDescriptor ** head, BlockDescriptor * deleteMe)
 		deleteMe->next->prev = deleteMe->prev;//takes my previous
 	}
 }
+
+void HeapManager::deleteMe5(BlockDescriptor ** head, BlockDescriptor * deleteMe)//based on 3
+{
+	std::cout << "***in deleteMe *head: " << *head << " \n";
+	std::cout << "***in deleteMe deleteMe: " << deleteMe << " \n";
+	//std::cout << "***in deleteMe deleteMe->prev: " << deleteMe->prev << " \n";
+	if (*head == deleteMe) {//first
+		(*head) = (*head)->next;//the next one becomes head
+		(*head)->prev = nullptr;
+	}
+
+	//if (deleteMe->next == NULL) {
+	if (deleteMe->next == nullptr && deleteMe->prev != nullptr) {//last
+		//deleteMe->prev = nullptr;
+		deleteMe->prev->next = nullptr;//makes me null
+	}
+
+	if (deleteMe->next != nullptr && deleteMe->prev != nullptr) {//middle
+		deleteMe->prev->next = deleteMe->next;//skips me, takes my next
+		deleteMe->next->prev = deleteMe->prev;//takes my previous
+	}
+}
  
 void HeapManager::remove(BlockDescriptor * head, BlockDescriptor * deleteNode)
 {
@@ -1881,7 +1903,9 @@ void * HeapManager::_alloc7(size_t i_bytes, unsigned int i_alignment)
 			blockDescriptorForUserPtr = foundNode;
 			blockDescriptorForUserPtr->m_sizeBlock = alignedSize;
 			newFreeBlock->m_sizeBlock = sizeDifference;
-			std::cout << "in _alloc in if >0 newFreeBlockBD " << newFreeBlock << "\n" << "in _alloc in if >0 newFreeBlockBD's sizeDifference " << newFreeBlock->m_sizeBlock << "\n";
+			std::cout << "in _alloc in if >0  BD for userptr = foundNode  " << blockDescriptorForUserPtr << "\n";
+			std::cout << "in _alloc in if >0  BD for userptr m_sizeBlock  " << blockDescriptorForUserPtr->m_sizeBlock << "\n";
+			std::cout << "in _alloc in if >0 newFreeBlockBD " << newFreeBlock << "\n" << "in _alloc in if >0 newFreeBlockBD's m_sizeBlock " << newFreeBlock->m_sizeBlock << "\n";
 			std::cout << "in _alloc in if >0  calling insertFront newFreeBlock to free list " << newFreeBlock << "\n";
 			std::cout << "in _alloc in if >0  free list>  " << m_freeBlocks << "\n";
 			//newFreeBlock->next = nullptr;
@@ -1890,7 +1914,7 @@ void * HeapManager::_alloc7(size_t i_bytes, unsigned int i_alignment)
 			//insertInAscendingOrderBySize1(m_freeBlocks, newFreeBlock);
 			insertInAscendingOrderBySize5(&m_freeBlocks, newFreeBlock);
 			//insertInAscendingOrderBySize6(m_freeBlocks, newFreeBlock);
-	
+			
 			std::cout << "in _alloc in if >0  printing free list after insert>  " << m_freeBlocks << "\n";
 			printList(m_freeBlocks);
 
@@ -1908,7 +1932,8 @@ void * HeapManager::_alloc7(size_t i_bytes, unsigned int i_alignment)
 			std::cout << "in _alloc in if >0  passing free list to deleteMe() " << m_freeBlocks << "\n";
 			std::cout << "\n";
 
-			deleteMe4(&m_freeBlocks, blockDescriptorForUserPtr);
+			//deleteMe4(&m_freeBlocks, blockDescriptorForUserPtr);
+			deleteMe5(&m_freeBlocks, blockDescriptorForUserPtr);
 			insertInAscendingOrderBySize5(&m_outstandingBlocks, blockDescriptorForUserPtr);
 		}
 		else {

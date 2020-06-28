@@ -77,7 +77,11 @@ int main()
 	
 	std::cout << "\n in main m_pBlockstartAddr " << pHeapManagerNew->m_freeBlocks->m_pBlockStartAddr ;
 	std::cout << "\n in main m_sizeBlock " << pHeapManagerNew->m_freeBlocks->m_sizeBlock;
-	std::cout << "\n 2nd alloc call - requested size is 2" << "\n";
+	
+	std::cout << "\n";
+	std::cout << "\n";
+	std::cout << "*********************************\n";
+	std::cout << "2nd alloc call - requested size is 2" << "\n";
 	//void* allocatedMemoryPtr2 = pHeapManagerNew->_alloc3(2, 4);
 	//void* allocatedMemoryPtr2 = pHeapManagerNew->_alloc4(2, 4);
 	//void* allocatedMemoryPtr2 = pHeapManagerNew->_alloc5(2, 4);
@@ -95,6 +99,10 @@ int main()
 	pHeapManagerNew->printList(pHeapManagerNew->m_outstandingBlocks);
 	std::cout << "\n in main m_pBlockstartAddr " << pHeapManagerNew->m_freeBlocks->m_pBlockStartAddr;
 	std::cout << "\n in main m_sizeBlock " << pHeapManagerNew->m_freeBlocks->m_sizeBlock;
+	
+	std::cout << "\n";
+	std::cout << "\n";
+	std::cout << "*********************************\n";
 	std::cout << "\n 3rd alloc call - requested size is 31" << "\n";
 	//void* allocatedMemoryPtr3 = pHeapManagerNew->_alloc2(15, 4);
 	//void* allocatedMemoryPtr3 = pHeapManagerNew->_alloc3(31, 4);
