@@ -90,6 +90,8 @@ public:
 	void deleteMe3(BlockDescriptor ** head, BlockDescriptor *deleteMe);
 	void deleteMe4(BlockDescriptor ** head, BlockDescriptor *deleteMe);
 	void deleteMe5(BlockDescriptor ** head, BlockDescriptor *deleteMe);
+	void deleteMe6(BlockDescriptor ** head, BlockDescriptor *deleteMe);
+
 	void deleteNode(BlockDescriptor** head, BlockDescriptor * node);
 	void deleteNode1(BlockDescriptor*& head, BlockDescriptor * node);
 	void printList(BlockDescriptor* node);
@@ -119,6 +121,8 @@ public:
 	void* _alloc(HeapManager * i_heapManager, size_t i_bytes, unsigned int i_alignment);
 	void * alloc(HeapManager * i_pManager, size_t i_size);
 	void * alloc(HeapManager * i_pManager, size_t i_size, unsigned int i_alignment);
+
+	void _coalesce(BlockDescriptor *pThisBlock, size_t * pUserPtr);
 
 	void Destroy(HeapManager * i_pManager);
 

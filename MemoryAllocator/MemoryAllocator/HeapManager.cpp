@@ -884,7 +884,7 @@ void HeapManager::deleteMe5(BlockDescriptor ** head, BlockDescriptor * deleteMe)
 	std::cout << "***in deleteMe *head: " << *head << " \n";
 	std::cout << "***in deleteMe deleteMe: " << deleteMe << " \n";
 	//std::cout << "***in deleteMe deleteMe->prev: " << deleteMe->prev << " \n";
-	if (*head == deleteMe) {//first
+	if (*head == deleteMe) {//first - TODO further distinquish between first and only one node
 		(*head) = (*head)->next;//the next one becomes head
 		(*head)->prev = nullptr;
 	}
@@ -900,6 +900,37 @@ void HeapManager::deleteMe5(BlockDescriptor ** head, BlockDescriptor * deleteMe)
 		deleteMe->next->prev = deleteMe->prev;//takes my previous
 	}
 }
+
+void HeapManager::deleteMe6(BlockDescriptor ** head, BlockDescriptor * deleteMe)//based on 5
+{
+	std::cout << "***in deleteMe *head: " << *head << " \n";
+	std::cout << "***in deleteMe deleteMe: " << deleteMe << " \n";
+	//std::cout << "***in deleteMe deleteMe->prev: " << deleteMe->prev << " \n";
+	if (*head == deleteMe) {//first
+		if ((*head)->next == nullptr) {//and only node 
+			*head = nullptr;//then list becomes empty
+		}
+		else {
+			//first - TODO further distinquish between first and only one node
+			(*head) = (*head)->next;//the next one becomes head
+			(*head)->prev = nullptr;
+		}
+	}
+
+	//if (deleteMe->next == NULL) {
+	if (deleteMe->next == nullptr && deleteMe->prev != nullptr) {//last
+		//deleteMe->prev = nullptr;
+		deleteMe->prev->next = nullptr;//makes me null
+	}
+
+	if (deleteMe->next != nullptr && deleteMe->prev != nullptr) {//middle
+		deleteMe->prev->next = deleteMe->next;//skips me, takes my next
+		deleteMe->next->prev = deleteMe->prev;//takes my previous
+	}
+
+}
+
+
  
 void HeapManager::remove(BlockDescriptor * head, BlockDescriptor * deleteNode)
 {
@@ -2068,7 +2099,9 @@ void * HeapManager::_alloc7(size_t i_bytes, unsigned int i_alignment)
 			std::cout << "\n";
 
 			//deleteMe4(&m_freeBlocks, blockDescriptorForUserPtr);
-			deleteMe5(&m_freeBlocks, blockDescriptorForUserPtr);
+			//deleteMe5(&m_freeBlocks, blockDescriptorForUserPtr);
+			deleteMe6(&m_freeBlocks, blockDescriptorForUserPtr);
+
 			//insertInAscendingOrderBySize5(&m_outstandingBlocks, blockDescriptorForUserPtr);
 			//insertInAscendingOrderBySize7(&m_outstandingBlocks, blockDescriptorForUserPtr);
 			insertInAscendingOrderByAddress(&m_outstandingBlocks, blockDescriptorForUserPtr);
@@ -2093,7 +2126,8 @@ void HeapManager::_free(void * i_ptr)
 	BlockDescriptor * blockDescriptorForUserPtr = reinterpret_cast<BlockDescriptor*>((size_t)i_ptr - sizeof(BlockDescriptor));
 	std::cout << "in _free() blockDescriptorForUserPtr " << blockDescriptorForUserPtr << "\n";
 
-	deleteMe5(&m_outstandingBlocks, blockDescriptorForUserPtr);
+	//deleteMe5(&m_outstandingBlocks, blockDescriptorForUserPtr);
+	deleteMe6(&m_outstandingBlocks, blockDescriptorForUserPtr);
 	//insertInAscendingOrderBySize7(&m_freeBlocks, blockDescriptorForUserPtr);
 	insertInAscendingOrderByAddress(&m_freeBlocks, blockDescriptorForUserPtr);
 
@@ -2107,6 +2141,28 @@ void HeapManager::_free(void * i_ptr)
 	//insert in freelist
 
 }
+
+
+void HeapManager::_coalesce(BlockDescriptor * pThisBlock, size_t* pUserPtr)
+{
+
+	std::cout << "\n in _coalesce() pThisBlock " << pThisBlock <<"\n";
+	std::cout << "in _coalesce() pUserPtr " << pUserPtr << "\n";
+	//if userptr+BD->m_blocksize == bd->next
+	BlockDescriptor * pNextBlock = pThisBlock->next;
+	std::cout << "in _coalesce() pNextBlock " << pNextBlock << "\n";
+		
+	size_t* pUserPtrEnd = pUserPtr + pThisBlock->m_sizeBlock;
+	std::cout << "in _coalesce() pUserPtrEnd " << pUserPtrEnd << "\n";
+
+	if ((size_t*) pNextBlock == pUserPtrEnd +1) {
+
+	}
+
+
+}
+
+
 
 void * HeapManager::_alloc(HeapManager * i_heapManager, size_t i_bytes, unsigned int i_alignment)
 {
@@ -2122,6 +2178,8 @@ void * HeapManager::alloc(HeapManager * i_pManager, size_t i_size, unsigned int 
 {
 	return nullptr;
 }
+
+
 
 void HeapManager::Destroy(HeapManager * i_pManager)
 {

@@ -124,6 +124,8 @@ int main()
 
 	std::cout << "\n ****************** " << "\n";
 	pHeapManagerNew->_free(allocatedMemoryPtr);
+	pHeapManagerNew->_free(allocatedMemoryPtr2);
+	pHeapManagerNew->_free(allocatedMemoryPtr3);
 
 	//pHeapManagerNew->removeFromList(pHeapManagerNew->m_freeBlocks, pHeapManagerNew->m_freeBlocks->next);
 	//std::cout << "\n again printing free list " << "\n";
