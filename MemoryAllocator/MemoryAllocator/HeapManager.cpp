@@ -2136,29 +2136,46 @@ void HeapManager::_free(void * i_ptr)
 	std::cout << "in _free() printing outstanding list \n";
 	printList(m_outstandingBlocks);
 
+	_coalesce(blockDescriptorForUserPtr, (size_t*) i_ptr);
+
 	//calculate BDaddress
 	//delete from outstanding
 	//insert in freelist
-
+	printList(m_freeBlocks);
+	printList(m_outstandingBlocks);
 }
 
 
-void HeapManager::_coalesce(BlockDescriptor * pThisBlock, size_t* pUserPtr)
+void HeapManager::_coalesce(BlockDescriptor * pThisBlock, size_t* pUserPtr)//pThisBlock is the current blockdescriptor being freed(inserted into the freeList)
 {
+	//called in _free()
 
 	std::cout << "\n in _coalesce() pThisBlock " << pThisBlock <<"\n";
 	std::cout << "in _coalesce() pUserPtr " << pUserPtr << "\n";
+	std::cout << "in _coalesce() pUserPtr req size " << pThisBlock->m_sizeBlock << "\n";
 	//if userptr+BD->m_blocksize == bd->next
+		
+	BlockDescriptor* pCompareBlock = reinterpret_cast<BlockDescriptor*>((size_t)pUserPtr + pThisBlock->m_sizeBlock);
+	std::cout << "in _coalesce() compareBlock = pUserPtr + memoryblock " << pCompareBlock << "\n";
+
 	BlockDescriptor * pNextBlock = pThisBlock->next;
 	std::cout << "in _coalesce() pNextBlock " << pNextBlock << "\n";
-		
-	size_t* pUserPtrEnd = pUserPtr + pThisBlock->m_sizeBlock;
-	std::cout << "in _coalesce() pUserPtrEnd " << pUserPtrEnd << "\n";
 
-	if ((size_t*) pNextBlock == pUserPtrEnd +1) {
+	if (pNextBlock == pCompareBlock) {
 
+		//merging thisBlock with nextBlock
+		pThisBlock->m_sizeBlock = pThisBlock->m_sizeBlock + pThisBlock->next->m_sizeBlock;
+
+		//if (pThisBlock->next->next != nullptr) {
+		if (pThisBlock->next->next == nullptr) {
+			pThisBlock->next = nullptr;
+		} else {
+			pThisBlock->next = pThisBlock->next->next;
+			pThisBlock->next->next->prev = pThisBlock;
+		}		
+						
+		deleteMe6(&m_freeBlocks, pNextBlock);
 	}
-
 
 }
 

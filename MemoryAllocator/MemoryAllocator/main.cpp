@@ -123,9 +123,11 @@ int main()
 	pHeapManagerNew->printList(pHeapManagerNew->m_outstandingBlocks);
 
 	std::cout << "\n ****************** " << "\n";
-	pHeapManagerNew->_free(allocatedMemoryPtr);
-	pHeapManagerNew->_free(allocatedMemoryPtr2);
-	pHeapManagerNew->_free(allocatedMemoryPtr3);
+	pHeapManagerNew->_free(allocatedMemoryPtr);//28
+	//pHeapManagerNew->_free(allocatedMemoryPtr2);//4
+	pHeapManagerNew->_free(allocatedMemoryPtr3);//32
+
+	pHeapManagerNew->_free(allocatedMemoryPtr2);//4
 
 	//pHeapManagerNew->removeFromList(pHeapManagerNew->m_freeBlocks, pHeapManagerNew->m_freeBlocks->next);
 	//std::cout << "\n again printing free list " << "\n";
