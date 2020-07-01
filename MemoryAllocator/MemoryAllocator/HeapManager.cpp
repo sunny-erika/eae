@@ -2177,6 +2177,23 @@ void HeapManager::_coalesce(BlockDescriptor * pThisBlock, size_t* pUserPtr)//pTh
 		deleteMe6(&m_freeBlocks, pNextBlock);
 	}
 
+	std::cout << "\n in _coalesce() pThisBlock " << pThisBlock << "\n";
+	if (pThisBlock->prev != nullptr) {
+		if (pThisBlock == pThisBlock->prev->next) {
+			
+			//merging previous Block with this block
+			if (pThisBlock->next == nullptr) {
+				pThisBlock->prev->next = nullptr;
+			}
+			else {
+				pThisBlock->prev->next = pThisBlock->next;
+				pThisBlock->next->prev = pThisBlock->prev;
+			}
+			pThisBlock->prev->m_sizeBlock = pThisBlock->prev->m_sizeBlock + pThisBlock->m_sizeBlock;
+			deleteMe6(&m_freeBlocks, pThisBlock);
+		}
+	}
+
 }
 
 
