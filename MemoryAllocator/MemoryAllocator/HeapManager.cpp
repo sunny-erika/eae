@@ -2182,19 +2182,14 @@ void HeapManager::_coalesce(BlockDescriptor * pThisBlock, size_t* pUserPtr)//pTh
 	std::cout << "\n in _coalesce() pThisBlock->prev " << pThisBlock->prev << "\n";
 	
 	if (pThisBlock->prev != nullptr) {
-
-
+		
 			BlockDescriptor * pPrevBlock = pThisBlock->prev;
 			pCompareBlock = reinterpret_cast<BlockDescriptor*>(((size_t)pPrevBlock + sizeof(BlockDescriptor)) + pPrevBlock->m_sizeBlock);
-		//pCompareBlock = reinterpret_cast<BlockDescriptor*>(((size_t)pUserPtr - sizeof(BlockDescriptor)) -pThisBlock->prev->m_sizeBlock - sizeof(BlockDescriptor));
+		
 		std::cout << "\n in _coalesce() pCompareBlock " << pCompareBlock << "\n";
 		std::cout << "\n in _coalesce() pPrevBlock " << pPrevBlock << "\n";
 
-		//if (pThisBlock->prev->next == pCompareBlock) {
-		//if (pThisBlock->prev->next == pCompareBlock) {
 		if (pThisBlock == pCompareBlock) {
-			//if (pThisBlock == pCompareBlock) {//same
-			
 			//merging previous Block with this block
 			if (pThisBlock->next == nullptr) {
 				pThisBlock->prev->next = nullptr;
