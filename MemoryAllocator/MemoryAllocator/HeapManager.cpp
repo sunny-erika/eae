@@ -2118,12 +2118,12 @@ void * HeapManager::_alloc7(size_t i_bytes, unsigned int i_alignment)
 	return (void*)userPtr;
 }
 
-void HeapManager::_free(void * i_ptr)
+void HeapManager::_free(void * i_userPtr)
 {
 	std::cout << "\n**********\n ";
-	std::cout << "in _free() i_ptr " <<i_ptr<<"\n";
-	std::cout << "in _free() cast to BD* (size_t) i_ptr - sizeof(BD)" << reinterpret_cast<BlockDescriptor*>( (size_t)i_ptr - sizeof(BlockDescriptor)) << "\n";
-	BlockDescriptor * blockDescriptorForUserPtr = reinterpret_cast<BlockDescriptor*>((size_t)i_ptr - sizeof(BlockDescriptor));
+	std::cout << "in _free() i_ptr " <<i_userPtr<<"\n";
+	std::cout << "in _free() cast to BD* (size_t) i_ptr - sizeof(BD)" << reinterpret_cast<BlockDescriptor*>( (size_t)i_userPtr - sizeof(BlockDescriptor)) << "\n";
+	BlockDescriptor * blockDescriptorForUserPtr = reinterpret_cast<BlockDescriptor*>((size_t)i_userPtr - sizeof(BlockDescriptor));
 	std::cout << "in _free() blockDescriptorForUserPtr " << blockDescriptorForUserPtr << "\n";
 
 	//deleteMe5(&m_outstandingBlocks, blockDescriptorForUserPtr);
@@ -2136,7 +2136,7 @@ void HeapManager::_free(void * i_ptr)
 	std::cout << "in _free() printing outstanding list \n";
 	printList(m_outstandingBlocks);
 
-	_coalesce(blockDescriptorForUserPtr, (size_t*) i_ptr);
+	_coalesce(blockDescriptorForUserPtr, (size_t*) i_userPtr);
 
 	//calculate BDaddress
 	//delete from outstanding
@@ -2177,9 +2177,23 @@ void HeapManager::_coalesce(BlockDescriptor * pThisBlock, size_t* pUserPtr)//pTh
 		deleteMe6(&m_freeBlocks, pNextBlock);
 	}
 
+	std::cout << "\n in _coalesce() now backwards\n";
 	std::cout << "\n in _coalesce() pThisBlock " << pThisBlock << "\n";
+	std::cout << "\n in _coalesce() pThisBlock->prev " << pThisBlock->prev << "\n";
+	
 	if (pThisBlock->prev != nullptr) {
-		if (pThisBlock == pThisBlock->prev->next) {
+
+
+			BlockDescriptor * pPrevBlock = pThisBlock->prev;
+			pCompareBlock = reinterpret_cast<BlockDescriptor*>(((size_t)pPrevBlock + sizeof(BlockDescriptor)) + pPrevBlock->m_sizeBlock);
+		//pCompareBlock = reinterpret_cast<BlockDescriptor*>(((size_t)pUserPtr - sizeof(BlockDescriptor)) -pThisBlock->prev->m_sizeBlock - sizeof(BlockDescriptor));
+		std::cout << "\n in _coalesce() pCompareBlock " << pCompareBlock << "\n";
+		std::cout << "\n in _coalesce() pPrevBlock " << pPrevBlock << "\n";
+
+		//if (pThisBlock->prev->next == pCompareBlock) {
+		//if (pThisBlock->prev->next == pCompareBlock) {
+		if (pThisBlock == pCompareBlock) {
+			//if (pThisBlock == pCompareBlock) {//same
 			
 			//merging previous Block with this block
 			if (pThisBlock->next == nullptr) {

@@ -127,7 +127,7 @@ public:
 	void Destroy(HeapManager * i_pManager);
 
 	// frees an allocation
-	void _free(void* i_ptr);
+	void _free(void* i_userPptr);
 	bool free(HeapManager * i_pManager, void * i_ptr);
 
 	// attempt to merge abutting blocks.
