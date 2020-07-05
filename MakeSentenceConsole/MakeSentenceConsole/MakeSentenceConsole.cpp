@@ -107,6 +107,8 @@ int main()
 
 	}
 
+	free(buffer);
+
 	getchar();
 
 #if defined(_DEBUG)
