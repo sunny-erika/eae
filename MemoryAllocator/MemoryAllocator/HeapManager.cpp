@@ -2,7 +2,7 @@
 #include "HeapManager.h"
 #include <Windows.h>
 #include <iostream>
-
+#include <assert.h>
 
 //TODO
 /*
@@ -20,17 +20,36 @@ HeapManager::HeapManager() {
 //called in main
 HeapManager::HeapManager(void * i_pHeapMemory, size_t i_HeapMemorySize)
 {
+	std::cout << "***in constructor***i_pHeampMemory: " << i_pHeapMemory << " \n";
+	std::cout << "***in constructor***i_HeapMemorySize: " << i_HeapMemorySize << " \n";
 	m_pHeapMemory = i_pHeapMemory;
 	m_HeapMemorySize = i_HeapMemorySize;
-	m_freeBlocks = (BlockDescriptor*)m_pHeapMemory;
+	//m_freeBlocks = (BlockDescriptor*)m_pHeapMemory;
+	m_freeBlocks = (BlockDescriptor*)i_pHeapMemory;
 	//m_freeBlocks = nullptr;
 	//m_freeBlocks->m_pBlockStartAddr = m_pHeapMemory;
 	m_freeBlocks->m_pBlockStartAddr = m_pHeapMemory;
 	std::cout << "***in constructor***m_freeBlocks: " << m_freeBlocks << " \n";
-	std::cout << "***in constructor***m_freeBlocks->m_pBlockStartAddr the memory assigned from main: " << m_freeBlocks->m_pBlockStartAddr << " \n";
+	std::cout << "***in constructor***m_freeBlocks->m_pBlockStartAddr: " << m_freeBlocks->m_pBlockStartAddr << " \n";
 	m_freeBlocks->m_sizeBlock = m_HeapMemorySize;
 	m_outstandingBlocks = nullptr;
 }
+
+HeapManager::HeapManager(void ** i_pHeapMemory, size_t i_HeapMemorySize)
+{
+	m_pHeapMemory = *i_pHeapMemory;
+	m_HeapMemorySize = i_HeapMemorySize;
+	m_freeBlocks = (BlockDescriptor*)m_pHeapMemory;
+	//m_freeBlocks = nullptr;
+	m_freeBlocks->m_pBlockStartAddr = m_pHeapMemory;
+	std::cout << "***in constructor***m_freeBlocks: " << m_freeBlocks << " \n";
+	std::cout << "***in constructor***m_freeBlocks->m_pBlockStartAddr: " << m_freeBlocks->m_pBlockStartAddr << " \n";
+	m_freeBlocks->m_sizeBlock = m_HeapMemorySize;
+	m_outstandingBlocks = nullptr;
+
+}
+
+
 
 HeapManager::HeapManager(int i_test)
 {
@@ -43,9 +62,99 @@ HeapManager::~HeapManager()
 	m_freeBlocks = nullptr;
 	m_outstandingBlocks = nullptr;
 	//and within freeBlock & outstandingBlocks
-	m_freeBlocks->m_pBlockStartAddr = nullptr;
-	m_outstandingBlocks = nullptr;
+	//m_freeBlocks->m_pBlockStartAddr = nullptr;
+
 }
+
+HeapManager * HeapManager::_create1(size_t i_HeapMemorySize)
+{
+	//const size_t sizeHeap = 256;
+	const size_t sizeHeap = i_HeapMemorySize;
+	SYSTEM_INFO SysInfo;
+	GetSystemInfo(&SysInfo);
+	assert(SysInfo.dwPageSize > 0);
+	size_t sizeHeapInPageMultiples = SysInfo.dwPageSize * ((sizeHeap + SysInfo.dwPageSize) / SysInfo.dwPageSize);//4096
+	void* pHeapMemory = VirtualAlloc(NULL, sizeHeapInPageMultiples, MEM_RESERVE | MEM_COMMIT, PAGE_READWRITE);
+	std::cout << "in _create pHeapMemory " << pHeapMemory << "\n";
+	std::cout << "in _create sizeHeapInPageMultiples " << sizeHeapInPageMultiples << "\n";
+
+	if (pHeapMemory == nullptr) {
+		return nullptr;
+	}
+
+
+	//HeapManager * pHeapManager = &HeapManager::HeapManager(&pHeapMemory, sizeHeap);
+	//HeapManager * pHeapManager = &HeapManager::HeapManager(pHeapMemory, sizeHeap);
+	//HeapManager * pHeapManager = &HeapManager::HeapManager(pHeapMemory, sizeHeapInPageMultiples);
+	HeapManager * pHeapManager = reinterpret_cast<HeapManager*>(pHeapMemory);
+	//HeapManager * pHeapManager = reinterpret_cast<HeapManager*>(&pHeapMemory);
+	//HeapManager::HeapManager(pHeapMemory, sizeHeapInPageMultiples);
+	HeapManager::HeapManager(++pHeapManager, sizeHeapInPageMultiples);//temp
+
+	//HeapManager * pHeapManager = &HeapManager::HeapManager();
+	/*
+	pHeapManager->m_pHeapMemory = pHeapMemory;
+	std::cout << "in _create pHeapManager->m_pHeapMemory " << pHeapManager->m_pHeapMemory << "\n";
+	pHeapManager->m_freeBlocks = (BlockDescriptor*) pHeapMemory;
+	pHeapManager->m_freeBlocks->m_sizeBlock = sizeHeapInPageMultiples;
+	std::cout << "in _create pHeapManager->m_freeBlocks->m_sizeBlock " << pHeapManager->m_freeBlocks->m_sizeBlock << "\n";
+	pHeapManager->m_outstandingBlocks = nullptr;
+	*/
+	pHeapManager->m_freeBlocks = (BlockDescriptor*)pHeapMemory;//will be done in constructor
+	pHeapManager->m_freeBlocks->m_sizeBlock = sizeHeapInPageMultiples;///will be done in constructor
+	std::cout << "in _create pHeapManager " << pHeapManager << "\n";
+	std::cout << "in _create pHeapMemory " << pHeapMemory << "\n";
+	std::cout << "in _create m_pHeapMemory " << pHeapManager->m_pHeapMemory << "\n";
+	//std::cout << "in _create pHeapManager " << pHeapManager->m_freeBlocks->m_pBlockStartAddr << "\n";
+
+
+	//pHeapManager->m_pHeapMemory = pHeapMemory;
+	std::cout << "in _create m_pHeapMemory " << pHeapManager->m_pHeapMemory << "\n";
+
+	return pHeapManager;
+}
+
+
+HeapManager * HeapManager::_create(size_t i_HeapMemorySize)
+{
+	//const size_t sizeHeap = 256;
+	const size_t sizeHeap = i_HeapMemorySize;
+	SYSTEM_INFO SysInfo;
+	GetSystemInfo(&SysInfo);
+	assert(SysInfo.dwPageSize > 0);
+	size_t sizeHeapInPageMultiples = SysInfo.dwPageSize * ((sizeHeap + SysInfo.dwPageSize) / SysInfo.dwPageSize);//4096
+	void* pHeapMemory = VirtualAlloc(NULL, sizeHeapInPageMultiples, MEM_RESERVE | MEM_COMMIT, PAGE_READWRITE);
+	std::cout << "in _create pHeapMemory " << pHeapMemory << "\n";
+	std::cout << "in _create sizeHeapInPageMultiples " << sizeHeapInPageMultiples << "\n";
+
+	if (pHeapMemory == nullptr) {
+		return nullptr;
+	}
+
+
+	//HeapManager * pHeapManager = &HeapManager::HeapManager(&pHeapMemory, sizeHeap);
+	//HeapManager * pHeapManager = &HeapManager::HeapManager(pHeapMemory, sizeHeap);
+	HeapManager * pHeapManager = &HeapManager::HeapManager(pHeapMemory, sizeHeapInPageMultiples);
+	//HeapManager * pHeapManager = &HeapManager::HeapManager();
+	/*
+	pHeapManager->m_pHeapMemory = pHeapMemory;
+	std::cout << "in _create pHeapManager->m_pHeapMemory " << pHeapManager->m_pHeapMemory << "\n";
+	pHeapManager->m_freeBlocks = (BlockDescriptor*) pHeapMemory;
+	pHeapManager->m_freeBlocks->m_sizeBlock = sizeHeapInPageMultiples;
+	std::cout << "in _create pHeapManager->m_freeBlocks->m_sizeBlock " << pHeapManager->m_freeBlocks->m_sizeBlock << "\n";
+	pHeapManager->m_outstandingBlocks = nullptr;
+	*/
+
+	std::cout << "in _create pHeapManager " << pHeapManager << "\n";
+	std::cout << "in _create pHeapMemory " << pHeapMemory << "\n";
+	std::cout << "in _create m_pHeapMemory " << pHeapManager ->m_pHeapMemory << "\n";
+
+	pHeapManager->m_pHeapMemory = pHeapMemory;
+	std::cout << "in _create m_pHeapMemory " << pHeapManager->m_pHeapMemory << "\n";
+
+	return pHeapManager;
+}
+
 
 
 HeapManager * HeapManager::create(void * i_pHeapMemory, size_t i_HeapMemorySize, unsigned int i_numDescriptors)
@@ -60,13 +169,22 @@ HeapManager * HeapManager::create(void * i_pHeapMemory, size_t i_HeapMemorySize,
 	HeapManager * pHeapManager = &HeapManager::HeapManager();
 	pHeapManager->m_pHeapMemory = i_pHeapMemory;
 	pHeapManager->m_HeapMemorySize = i_HeapMemorySize;
-	pHeapManager->m_freeBlocks = (BlockDescriptor*)pHeapManager->m_pHeapMemory;
+	//pHeapManager->m_freeBlocks = (BlockDescriptor*)pHeapManager->m_pHeapMemory;
 	//pHeapManager->m_freeBlocks->m_pBlockStartAddr = i_pHeapMemory;
 	pHeapManager->m_freeBlocks->m_pBlockStartAddr = pHeapManager->m_pHeapMemory;
+
+
 	return pHeapManager;
 
 	//return o_pHeapManager;
 }
+
+
+
+
+
+
+
 
 /*
 HeapManager * HeapManager::create(void * i_pHeapMemory, size_t i_HeapMemorySize, unsigned int i_numDescriptors)
@@ -2101,6 +2219,7 @@ void * HeapManager::_alloc7(size_t i_bytes, unsigned int i_alignment)
 			//deleteMe4(&m_freeBlocks, blockDescriptorForUserPtr);
 			//deleteMe5(&m_freeBlocks, blockDescriptorForUserPtr);
 			deleteMe6(&m_freeBlocks, blockDescriptorForUserPtr);
+			std::cout << "in _alloc in if >0  free list after deleting blockdescriptorforuserptr " << m_freeBlocks << "\n";
 
 			//insertInAscendingOrderBySize5(&m_outstandingBlocks, blockDescriptorForUserPtr);
 			//insertInAscendingOrderBySize7(&m_outstandingBlocks, blockDescriptorForUserPtr);

@@ -46,10 +46,13 @@ public:
 	
 	HeapManager();
 	HeapManager(void* i_pHeapMemory, size_t i_HeapMemorySize);
+	HeapManager(void** i_pHeapMemory, size_t i_HeapMemorySize);
 	HeapManager(int test);
 	~HeapManager();
 	   
 	static HeapManager* create(void* i_pHeapMemory, size_t i_HeapMemorySize, unsigned int i_numDescriptors);
+	static HeapManager* _create(size_t i_HeapMemorySize);
+	static HeapManager* _create1(size_t i_HeapMemorySize);
 
 	void initialize(void* i_pHeapMemory, size_t i_HeapMemorySize);
 	void find(size_t size, size_t alignment, size_t &padding, BlockDescriptor* &previousNode, BlockDescriptor* &foundNode);
